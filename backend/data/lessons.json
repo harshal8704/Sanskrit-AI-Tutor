@@ -1,0 +1,133 @@
+{
+  "lessons": [
+    {
+      "id": 1,
+      "title": "Sanskrit Alphabet (Devanagari Script)",
+      "description": "Learn the basic building blocks of Sanskrit",
+      "level": "beginner",
+      "duration": 15,
+      "difficulty": 3,
+      "content": "# Sanskrit Alphabet\n\nSanskrit is written in **Devanagari** script...",
+      "quiz": [
+        {
+          "id": 1,
+          "question": "How many vowels are there in Sanskrit?",
+          "options": ["10", "13", "15", "20"],
+          "answer": "13",
+          "explanation": "Sanskrit has 13 vowel sounds"
+        }
+      ],
+      "prerequisites": []
+    },
+    {
+      "id": 2,
+      "title": "Basic Greetings and Phrases",
+      "description": "Learn common Sanskrit greetings and expressions",
+      "level": "beginner",
+      "duration": 20,
+      "difficulty": 4,
+      "content": "# Common Greetings\n\n1. **नमस्ते** (Namaste) - Hello...",
+      "quiz": [
+        {
+          "id": 1,
+          "question": "What does 'धन्यवादः' mean?",
+          "options": ["Hello", "Thank you", "Goodbye", "Please"],
+          "answer": "Thank you",
+          "explanation": "धन्यवादः means 'Thank you'"
+        }
+      ],
+      "prerequisites": [1]
+    },
+    {
+      "id": 3,
+      "title": "Numbers 1-10 in Sanskrit",
+      "description": "Learn to count in Sanskrit",
+      "level": "beginner",
+      "duration": 15,
+      "difficulty": 3,
+      "content": "# Numbers in Sanskrit\n\n1 - एकः (ekaḥ)\n2 - द्वौ (dvau)...",
+      "quiz": [
+        {
+          "id": 1,
+          "question": "What is the Sanskrit word for 5?",
+          "options": ["एकः", "द्वौ", "त्रयः", "पञ्च"],
+          "answer": "पञ्च",
+          "explanation": "पञ्च (pañca) means 5"
+        }
+      ],
+      "prerequisites": [1]
+    },
+    {
+      "id": 4,
+      "title": "Self Introduction in Sanskrit",
+      "description": "Learn to introduce yourself - name, age, profession, and where you live",
+      "level": "beginner",
+      "duration": 25,
+      "difficulty": 4,
+      "content": "self_introduction_special",
+      "quiz": [
+        {
+          "id": 1,
+          "question": "How do you say 'My name is Rama' in Sanskrit?",
+          "options": [
+            "रामः अस्ति।",
+            "मम नाम रामः अस्ति।",
+            "अहं रामः।",
+            "रामः नाम।"
+          ],
+          "answer": "मम नाम रामः अस्ति।",
+          "explanation": "'मम नाम' means 'my name', 'रामः' is Rama, 'अस्ति' means 'is'"
+        },
+        {
+          "id": 2,
+          "question": "What is the correct translation of 'I am 25 years old'?",
+          "options": [
+            "मम वयः पञ्चविंशति वर्षाणि सन्ति।",
+            "अहं पञ्चविंशति।",
+            "मम पञ्चविंशति वर्ष।",
+            "अहं पञ्चविंशति वर्षाणि।"
+          ],
+          "answer": "मम वयः पञ्चविंशति वर्षाणि सन्ति।",
+          "explanation": "'मम वयः' means 'my age', 'पञ्चविंशति' is 25, 'वर्षाणि सन्ति' means 'years are'"
+        },
+        {
+          "id": 3,
+          "question": "How do you say 'I am a student' in Sanskrit?",
+          "options": [
+            "अहं छात्रः अस्मि।",
+            "मम छात्रः।",
+            "अहं पठामि।",
+            "छात्रः अहम्।"
+          ],
+          "answer": "अहं छात्रः अस्मि।",
+          "explanation": "'अहं' means 'I', 'छात्रः' means 'student', 'अस्मि' means 'am'"
+        },
+        {
+          "id": 4,
+          "question": "What is 'I live in Mumbai' in Sanskrit?",
+          "options": [
+            "अहं मुम्बई नगरे वसामि।",
+            "मम मुम्बई।",
+            "अहं मुम्बई गच्छामि।",
+            "मुम्बई नगरम्।"
+          ],
+          "answer": "अहं मुम्बई नगरे वसामि।",
+          "explanation": "'अहं' means 'I', 'मुम्बई नगरे' means 'in Mumbai city', 'वसामि' means 'live'"
+        },
+        {
+          "id": 5,
+          "question": "How would you say 'Nice to meet you'?",
+          "options": [
+            "नमस्ते",
+            "भवता सह मेलनं सुखदम् अस्ति।",
+            "धन्यवादः",
+            "पुनः मिलामः"
+          ],
+          "answer": "भवता सह मेलनं सुखदम् अस्ति।",
+          "explanation": "This phrase literally means 'Meeting with you is pleasant'"
+        }
+      ],
+      "prerequisites": [1, 2]
+    }
+  ]
+}
