@@ -1,0 +1,44 @@
+sanskrit,devanagari,english,pronunciation,word_type,meaning,example,category,tags,source
+agniḥ,अग्निः,fire,agniḥ,noun,fire; heat,अग्निः उष्णः अस्ति।,elements,"basic,fire",database
+jalaṃ,जलं,water,jalam,noun,water; fluid,जलं शीतलं अस्ति।,elements,"basic,water",database
+vāyuḥ,वायुः,air,vāyuḥ,noun,air; wind,वायुः वहति।,elements,"basic,air",database
+bhūmiḥ,भूमिः,earth,bhūmiḥ,noun,earth; ground,भूमिः स्थिरा अस्ति।,elements,"basic,earth",database
+sūryaḥ,सूर्यः,sun,sūryaḥ,noun,sun,सूर्यः उदेति।,celestial,"sun,celestial",database
+candraḥ,चन्द्रः,moon,candraḥ,noun,moon,चन्द्रः शोभते।,celestial,"moon,celestial",database
+putraḥ,पुत्रः,son,putraḥ,noun,son; child,पुत्रः पठति।,family,"family,people",database
+phalam,फलम्,fruit,phalam,noun,fruit,फलं मधुरम् अस्ति।,food,"food,fruit",database
+granthaḥ,ग्रन्थः,book,granthaḥ,noun,book; text,ग्रन्थः विशालः अस्ति।,objects,"education,objects",database
+gacchati,गच्छति,goes,gacchati,verb,to go; to move,रामः गच्छति।,actions,"verb,movement",database
+asti,अस्ति,is,asti,verb,to be; exists,सीता अस्ति।,actions,"verb,existence",database
+khādati,खादति,eats,khādati,verb,to eat,बालः खादति।,actions,"verb,eating",database
+मित्रम्,मित्रम्,friend,मित्रम्,noun,Translation of friend,,api-added,"api,google_api",google_api
+नामः,नामः,name,नामः,noun,Translation of name,,api-added,"api,google_api",google_api
+क्रिकेट् इति,क्रिकेट् इति,cricket,क्रिकेट् इति,noun,Translation of cricket,,api-added,"api,google_api",google_api
+अग्नयः,अग्नयः,agnih,अग्नयः,noun,Translation of agnih,,api-added,"api,mymemory_api",mymemory_api
+अग्नयः ।,अग्नयः ।,agnih:,अग्नयः ।,noun,Translation of agnih:,,api-added,"api,mymemory_api",mymemory_api
+क्षणिक,क्षणिक,instant,क्षणिक,noun,Translation of instant,,api-added,"api,google_api",google_api
+भविष्यति,भविष्यति,will,भविष्यति,noun,Translation of will,,api-added,"api,google_api",google_api
+इच्छाशक्तिः,इच्छाशक्तिः,willpower,इच्छाशक्तिः,noun,Translation of willpower,,api-added,"api,google_api",google_api
+अन्विष्यति,अन्विष्यति,seek,अन्विष्यति,noun,Translation of seek,,api-added,"api,google_api",google_api
+भवान् किं करोति,भवान् किं करोति,hello how are you doing,भवान् किं करोति,noun,Translation of hello how are you doing,,api-added,"api,google_api",google_api
+प्रयासः,प्रयासः,effort,प्रयासः,noun,Translation of effort,,api-added,"api,google_api",google_api
+अहं भद्रं करोमि,अहं भद्रं करोमि,i am doing good,अहं भद्रं करोमि,noun,Translation of i am doing good,,api-added,"api,google_api",google_api
+अहं फुटबॉलक्रीडां कुर्वन् आसीत्,अहं फुटबॉलक्रीडां कुर्वन् आसीत्,i was playing football,अहं फुटबॉलक्रीडां कुर्वन् आसीत्,noun,Translation of i was playing football,,api-added,"api,google_api",google_api
+अहं जारीं अङ्गीकृतवान्,अहं जारीं अङ्गीकृतवान्,अहं फुटबॉलक्रीडां कुर्वन् आसीत्,अहं जारीं अङ्गीकृतवान्,noun,Translation of अहं फुटबॉलक्रीडां कुर्वन् आसीत्,,api-added,"api,google_api",google_api
+नियोग,नियोग,function,नियोग,noun,Translation of function,,api-added,"api,google_api",google_api
+मध्ये,मध्ये,between,मध्ये,noun,Translation of between,,api-added,"api,google_api",google_api
+अंतर,अंतर,gap,अंतर,noun,Translation of gap,,api-added,"api,google_api",google_api
+स्वस्थः,स्वस्थः,healthy,स्वस्थः,noun,Translation of healthy,,api-added,"api,google_api",google_api
+शाश्वत,शाश्वत,Eternal,शाश्वत,noun,Eternal,,api-discovery,"api,google_api",google_api
+अर्हति,अर्हति,deserve,अर्हति,noun,Translation of deserve,,api-added,"api,google_api",google_api
+अहं क्रीडां क्रीडामि,अहं क्रीडां क्रीडामि,i am playing game,अहं क्रीडां क्रीडामि,noun,Translation of i am playing game,,api-added,"api,google_api",google_api
+अहं भोजनं खादामि,अहं भोजनं खादामि,i eat food,अहं भोजनं खादामि,noun,Translation of i eat food,,api-added,"api,google_api",google_api
+आहारः,आहारः,food,आहारः,noun,Translation of food,,api-added,"api,google_api",google_api
+अहम्‌,अहम्‌,i,अहम्‌,noun,Translation of i,,api-added,"api,google_api",google_api
+अहं भोजनं खादामि।,अहं भोजनं खादामि।,i eat food.,अहं भोजनं खादामि।,noun,Translation of i eat food.,,api-added,"api,google_api",google_api
+सेवफल,सेवफल,apple,सेवफल,noun,Translation of apple,,api-added,"api,google_api",google_api
+पवित्र,पवित्र,divine,पवित्र,noun,Translation of divine,,api-added,"api,google_api",google_api
+पुनः संयोजयन्तु,पुनः संयोजयन्तु,reassemble,पुनः संयोजयन्तु,noun,Translation of reassemble,,api-added,"api,google_api",google_api
+नमस्कार जगत्,नमस्कार जगत्,hello world,नमस्कार जगत्,noun,Translation of hello world,,api-added,"api,google_api",google_api
+मम क्रीडनं रोचते,मम क्रीडनं रोचते,i like playing,मम क्रीडनं रोचते,noun,Translation of i like playing,,api-added,"api,google_api",google_api
+aham bhakshami,अहं भक्षामि,I eat,ah-hum bhak-shah-mee,sentence,to consume food,अहं भक्षामि फलम् (aham bhakshami phalam) - I eat a fruit,api-added,"api,Groq_ai",Groq_ai

@@ -1,0 +1,39 @@
+{
+  "admin": {
+    "password": "hashed_admin123",
+    "role": "admin",
+    "created_at": "2026-02-15T02:09:05.166034",
+    "level": "advanced",
+    "completed": 10,
+    "streak_days": 5
+  },
+  "demo": {
+    "password": "hashed_demo123",
+    "role": "student",
+    "created_at": "2026-02-15T02:09:05.166034",
+    "level": "beginner",
+    "completed": 2,
+    "streak_days": 3
+  },
+  "user": {
+    "password": "$2b$12$3npZ49cGGmILU9bMRkkvVulIFjOxCz/DyPHTf.YYdWUubnRTQ68.i",
+    "role": "student",
+    "created_at": "2026-02-15T02:17:10.130553",
+    "level": "beginner",
+    "completed": 0
+  },
+  "user789": {
+    "password": "$2b$12$EZx763s1lQRB.S4gP2ByGOVOCiR1D/DoJIWU9JJCE4pAM1yKOjfQy",
+    "role": "student",
+    "created_at": "2026-03-15T00:54:22.844877",
+    "level": "beginner",
+    "completed": 0
+  },
+  "test_new": {
+    "password": "$2b$12$JMFmiYQ88XR4n/wmR39fLetdhSGorAltt1xbp2duoxawYdly80Kre",
+    "role": "student",
+    "created_at": "2026-03-15T00:59:58.365945",
+    "level": "beginner",
+    "completed": 0
+  }
+}

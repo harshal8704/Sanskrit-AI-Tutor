@@ -1,0 +1,217 @@
+"use client";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { api } from "@/lib/api";
+import Sidebar from "@/components/Sidebar";
+import { motion, AnimatePresence } from "framer-motion";
+import { 
+  ShieldCheck, 
+  Sparkles, 
+  Info, 
+  AlertCircle,
+  FileText,
+  Loader2,
+  Zap,
+  Globe
+} from "lucide-react";
+
+export default function Grammar() {
+  const [user, setUser] = useState<any>(null);
+  const [inputText, setInputText] = useState("");
+  const [analysis, setAnalysis] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [useAi, setUseAi] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (!storedUser) {
+      router.push("/");
+      return;
+    }
+    setUser(JSON.parse(storedUser));
+  }, [router]);
+
+  const handleCheck = async () => {
+    if (!inputText) return;
+    setLoading(true);
+    setAnalysis(null);
+    try {
+      const res = await api.tools.checkGrammar(inputText, useAi);
+      setAnalysis(res);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (!user) return null;
+
+  return (
+    <div className="page-layout">
+      <Sidebar user={user} />
+      
+      <main className="main-content">
+        <motion.header 
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{ marginBottom: '40px' }}
+        >
+          <h1 style={{ fontSize: '2.5rem', marginBottom: '8px' }}>Vyakaraņa Check</h1>
+          <p style={{ color: 'var(--text-dim)' }}>Precision analysis of your Sanskrit construction and syntax.</p>
+        </motion.header>
+
+        <section className="grid" style={{ gridTemplateColumns: '1fr 1.2fr', gap: '30px' }}>
+          
+          <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}>
+            <div className="zen-card" style={{ padding: '30px', marginBottom: '30px' }}>
+              <div className="flex items-center gap-2 mb-6" style={{ color: 'var(--primary)' }}>
+                <FileText size={20} />
+                <h3 style={{ margin: 0 }}>Input Sentence</h3>
+              </div>
+              <textarea 
+                className="w-full mb-6 devanagari" 
+                style={{ 
+                  minHeight: '200px', 
+                  fontSize: '2rem',
+                  lineHeight: '1.5',
+                  background: 'var(--bg-main)',
+                  border: 'none',
+                  padding: '30px',
+                  color: 'var(--text-main)',
+                  width: '100%'
+                }}
+                placeholder="रामः वनं गच्छति..."
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+              />
+              <div className="flex justify-between items-center">
+                <div className="flex items-center gap-6">
+                  <label className="flex items-center gap-2 cursor-pointer group">
+                    <div className="relative flex items-center">
+                      <input 
+                        type="checkbox" 
+                        className="sr-only"
+                        checked={useAi} 
+                        onChange={(e) => setUseAi(e.target.checked)}
+                      />
+                      <div className={`w-10 h-5 rounded-full transition-colors ${useAi ? 'bg-primary' : 'bg-gray-300'}`} style={{ backgroundColor: useAi ? 'var(--primary)' : 'var(--border-soft)' }}></div>
+                      <div className={`absolute w-3 h-3 bg-white rounded-full transition-transform ${useAi ? 'translate-x-6' : 'translate-x-1'}`}></div>
+                    </div>
+                    <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'var(--text-dim)' }} className="group-hover:text-primary transition-colors">AI VERIFICATION (GROK)</span>
+                  </label>
+                </div>
+                <button className="btn-primary" onClick={handleCheck} disabled={loading || !inputText} style={{ padding: '12px 30px' }}>
+                  {loading ? <Loader2 className="animate-spin" size={18} /> : useAi ? <Zap size={18} fill="currentColor" /> : <ShieldCheck size={18} />}
+                  <span>{loading ? "Analyzing..." : useAi ? "AI Deep Scan" : "Verify Syntax"}</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="zen-card" style={{ padding: '24px' }}>
+              <h4 style={{ fontSize: '0.85rem', color: 'var(--text-dim)', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '1px' }}>Quick Practice</h4>
+              <div className="flex flex-wrap gap-2">
+                {["रामः वनं गच्छति।", "सीता फलं खादति।", "बालकाः पठन्ति।"].map(t => (
+                  <button 
+                    key={t} 
+                    className="btn-secondary" 
+                    style={{ fontSize: '0.85rem', padding: '8px 16px', border: '1px solid var(--border-soft)', color: 'var(--text-dim)' }} 
+                    onClick={() => setInputText(t)}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Result Area */}
+          <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }}>
+            <div className="zen-card" style={{ padding: '40px', minHeight: '100%' }}>
+              <h3 className="mb-8">Verification Result</h3>
+              
+              <AnimatePresence mode="wait">
+                {!analysis ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '300px', color: 'var(--text-light)', textAlign: 'center' }}>
+                    <Sparkles size={40} style={{ opacity: 0.1, marginBottom: '20px' }} />
+                    <p>Enter a sentence and verify to see linguistic breakdown.</p>
+                  </div>
+                ) : (
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    <div className="flex items-center justify-between p-6 mb-10" style={{ background: 'var(--bg-main)', borderRadius: '20px' }}>
+                      <div className="flex items-center gap-8">
+                        <div style={{ fontSize: '2.5rem', fontWeight: '800', color: analysis.score >= 80 ? '#27ae60' : 'var(--primary)' }}>
+                          {analysis.score}%
+                        </div>
+                        <div>
+                          <h4 style={{ margin: 0 }}>Accuracy Score</h4>
+                          <p style={{ fontSize: '0.9rem', color: 'var(--text-dim)' }}>
+                            {analysis.issues.length === 0 ? "Perfect formation." : `${analysis.issues.length} linguistic note${analysis.issues.length === 1 ? '' : 's'}.`}
+                          </p>
+                        </div>
+                      </div>
+                      {analysis.ai_verified && (
+                        <div className="flex items-center gap-2" style={{ color: 'var(--primary)', padding: '6px 12px', background: 'rgba(var(--primary-rgb), 0.1)', borderRadius: '10px', fontSize: '0.7rem', fontWeight: '800' }}>
+                          <Zap size={14} fill="currentColor" /> GROK VERIFIED
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="mb-10">
+                      <h4 className="mb-4" style={{ fontSize: '0.9rem', color: 'var(--text-light)', textTransform: 'uppercase' }}>Detailed Issues</h4>
+                      {analysis.issues.length > 0 ? (
+                        <div className="flex flex-col gap-3">
+                          {analysis.issues.map((issue: string, i: number) => (
+                            <div key={i} className="flex items-center gap-3 p-4 rounded-xl" style={{ border: '1.5px solid rgba(192, 90, 43, 0.1)', color: 'var(--primary)', background: 'rgba(192, 90, 43, 0.02)' }}>
+                              <AlertCircle size={18} />
+                              <span style={{ fontSize: '0.95rem' }}>{issue}</span>
+                            </div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div style={{ color: 'var(--success)', fontWeight: '700', fontSize: '0.95rem' }}>
+                          ✨ Linguistic structure is impeccable.
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="mb-10">
+                      <h4 className="mb-4" style={{ fontSize: '0.9rem', color: 'var(--text-light)', textTransform: 'uppercase', letterSpacing: '1px' }}>Linguistic Breakdown</h4>
+                      <div className="grid" style={{ gridTemplateColumns: '1fr', gap: '12px' }}>
+                        {analysis.breakdown.map((item: any, i: number) => (
+                          <div key={i} className="p-5" style={{ background: 'var(--bg-main)', borderRadius: '18px', border: '1px solid var(--border-soft)' }}>
+                            <div className="flex justify-between items-start mb-4">
+                                <div>
+                                    <div className="devanagari" style={{ fontSize: '1.6rem', color: 'var(--primary)', lineHeight: 1 }}>{item.word}</div>
+                                    <div style={{ fontWeight: '700', fontSize: '1rem', marginTop: '6px' }}>{item.meaning}</div>
+                                </div>
+                                <span style={{ padding: '4px 10px', background: 'rgba(var(--primary-rgb), 0.08)', borderRadius: '8px', fontSize: '0.65rem', fontWeight: '900', color: 'var(--primary)', textTransform: 'uppercase' }}>
+                                    {item.pos}
+                                </span>
+                            </div>
+                            <div className="flex flex-wrap gap-x-6 gap-y-2">
+                                {Object.entries(item.analysis).map(([key, value]: [string, any]) => (
+                                    <div key={key}>
+                                        <span style={{ fontSize: '0.65rem', color: 'var(--text-light)', textTransform: 'uppercase', fontWeight: '800', display: 'block', marginBottom: '2px' }}>{key.replace('_', ' ')}</span>
+                                        <span style={{ fontSize: '0.85rem', fontWeight: '600', color: 'var(--text-dim)' }}>{String(value)}</span>
+                                    </div>
+                                ))}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        </section>
+      </main>
+    </div>
+  );
+}
