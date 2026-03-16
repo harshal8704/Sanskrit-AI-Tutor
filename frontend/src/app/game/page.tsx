@@ -81,174 +81,186 @@ const GameBoard = ({ currentPosition }: { currentPosition: number }) => {
 
   return (
     <div className="board-outer-container" style={{ position: 'relative' }}>
-      <div className="zen-card board-grid" style={{
+      <div className="zen-card" style={{
         padding: '24px',
         background: 'var(--bg-card)',
         position: 'relative',
         aspectRatio: '2/1',
-        display: 'grid',
-        gridTemplateColumns: `repeat(${GRID_COLS}, 1fr)`,
-        gridTemplateRows: `repeat(${GRID_ROWS}, 1fr)`,
-        gap: '6px',
         border: '6px solid #5d3f9b',
         borderRadius: '32px',
         boxShadow: '0 30px 60px rgba(0,0,0,0.15)',
-        zIndex: 1
+        zIndex: 1,
+        overflow: 'hidden'
       }}>
-        {/* SVG Layer for Connections */}
-        <svg style={{
-          position: 'absolute',
-          top: 0, left: 0,
-          width: '100%', height: '100%',
-          pointerEvents: 'none',
-          zIndex: 5
+        <div className="board-grid" style={{
+          position: 'relative',
+          width: '100%',
+          height: '100%',
+          display: 'grid',
+          gridTemplateColumns: `repeat(${GRID_COLS}, 1fr)`,
+          gridTemplateRows: `repeat(${GRID_ROWS}, 1fr)`,
+          gap: '6px',
         }}>
-          <defs>
-            <linearGradient id="snakeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#2ecc71" />
-              <stop offset="100%" stopColor="#27ae60" />
-            </linearGradient>
-            <linearGradient id="ladderGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#d35400" />
-              <stop offset="100%" stopColor="#e67e22" />
-            </linearGradient>
-          </defs>
-
-          {/* Draw Ladders */}
-          {ladderData.map((l, i) => {
-            const start = getCellCoords(l.start);
-            const end = getCellCoords(l.end);
-            const x1 = (start.x + 0.5) * 10;
-            const y1 = (start.y + 0.5) * 20;
-            const x2 = (end.x + 0.5) * 10;
-            const y2 = (end.y + 0.5) * 20;
-            return (
-              <g key={`l-${i}`}>
-                <line
-                  x1={x1} y1={y1} x2={x2} y2={y2}
-                  stroke="url(#ladderGrad)"
-                  strokeWidth="12"
-                  strokeLinecap="round"
-                  opacity="0.2"
-                />
-                <line
-                  x1={x1} y1={y1} x2={x2} y2={y2}
-                  stroke="url(#ladderGrad)"
-                  strokeWidth="2"
-                  strokeDasharray="1,4"
-                  className="ladder-step-anim"
-                />
-                {/* Rungs of the ladder */}
-                {[0.2, 0.4, 0.6, 0.8].map((prog, j) => {
-                  const rx1 = x1 + (x2 - x1) * prog - 1.5;
-                  const ry1 = y1 + (y2 - y1) * prog;
-                  const rx2 = x1 + (x2 - x1) * prog + 1.5;
-                  const ry2 = y1 + (y2 - y1) * prog;
-                  return (
-                    <line
-                      key={j}
-                      x1={rx1} y1={ry1} x2={rx2} y2={ry2}
-                      stroke="#d35400"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                    />
-                  );
-                })}
-              </g>
-            );
-          })}
-
-          {/* Draw Snakes */}
-          {snakeData.map((s, i) => {
-            const start = getCellCoords(s.start);
-            const end = getCellCoords(s.end);
-            const x1 = (start.x + 0.5) * 10;
-            const y1 = (start.y + 0.5) * 20;
-            const x2 = (end.x + 0.5) * 10;
-            const y2 = (end.y + 0.5) * 20;
-            const midX = (x1 + x2) / 2 + (Math.random() * 10 - 5);
-            const midY = (y1 + y2) / 2;
-            const d = `M ${x1} ${y1} Q ${midX} ${y1} ${midX} ${midY} T ${x2} ${y2}`;
-            return (
-              <path
-                key={`s-${i}`}
-                d={d}
-                className="cobra-path"
-                stroke="url(#snakeGrad)"
-                strokeWidth="8"
-                fill="none"
-                strokeLinecap="round"
-                opacity="0.7"
-                style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))' }}
-              />
-            );
-          })}
-        </svg>
-
-        {cells.map((cellNum) => {
-          const coords = getCellCoords(cellNum);
-          const isDark = (Math.floor((cellNum - 1) / 10) + (cellNum - 1) % 10) % 2 === 1;
-          return (
-            <div
-              key={cellNum}
-              style={{
-                gridColumnStart: coords.x + 1,
-                gridRowStart: coords.y + 1,
-                background: isDark ? 'rgba(136,84,208,0.08)' : 'rgba(136,84,208,0.02)',
-                border: '1px solid var(--border-soft)',
-                borderRadius: '12px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '0.8rem',
-                fontWeight: '900',
-                color: isDark ? 'var(--text-dim)' : 'var(--text-light)',
-                position: 'relative',
-                transition: 'all 0.3s'
-              }}
-            >
-              <span style={{ position: 'relative', zIndex: 2 }}>
-                {cellNum === 50 ? '🏆' : cellNum === 1 ? '🏁' : cellNum}
-              </span>
-            </div>
-          );
-        })}
-
-        {/* The Player Pawn */}
-        <motion.div
-          animate={{
-            left: `${(getCellCoords(currentPosition).x * 10) + 5}%`,
-            top: `${(getCellCoords(currentPosition).y * 20) + 10}%`,
-          }}
-          transition={{ type: "spring", stiffness: 80, damping: 15 }}
-          style={{
-            position: 'absolute',
-            width: '40px',
-            height: '40px',
-            transform: 'translate(-50%, -50%)',
-            zIndex: 100,
-            pointerEvents: 'none',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-        >
-          <motion.div
-            animate={{ y: [0, -8, 0], rotate: [0, 5, -5, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
+          {/* SVG Layer for Connections */}
+          <svg 
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
             style={{
-              width: '32px',
-              height: '32px',
-              background: '#8854d0',
-              borderRadius: '50% 50% 20% 20%',
-              boxShadow: '0 8px 20px rgba(136,84,208,0.4)',
-              border: '3px solid white',
-              position: 'relative'
+              position: 'absolute',
+              top: 0, left: 0,
+              width: '100%', height: '100%',
+              pointerEvents: 'none',
+              zIndex: 5
             }}
           >
-            <div style={{ position: 'absolute', top: '4px', left: '50%', transform: 'translateX(-50%)', width: '6px', height: '6px', background: 'white', borderRadius: '50%', opacity: 0.6 }} />
+            <defs>
+              <linearGradient id="snakeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#2ecc71" />
+                <stop offset="100%" stopColor="#27ae60" />
+              </linearGradient>
+              <linearGradient id="ladderGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#d35400" />
+                <stop offset="100%" stopColor="#e67e22" />
+              </linearGradient>
+            </defs>
+
+            {/* Draw Ladders */}
+            {ladderData.map((l, i) => {
+              const start = getCellCoords(l.start);
+              const end = getCellCoords(l.end);
+              const x1 = (start.x + 0.5) * 10;
+              const y1 = (start.y + 0.5) * 20;
+              const x2 = (end.x + 0.5) * 10;
+              const y2 = (end.y + 0.5) * 20;
+              return (
+                <g key={`l-${i}`}>
+                  <line
+                    x1={x1} y1={y1} x2={x2} y2={y2}
+                    stroke="url(#ladderGrad)"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                    opacity="0.2"
+                  />
+                  <line
+                    x1={x1} y1={y1} x2={x2} y2={y2}
+                    stroke="url(#ladderGrad)"
+                    strokeWidth="1"
+                    strokeDasharray="1,4"
+                    className="ladder-step-anim"
+                  />
+                  {/* Rungs of the ladder */}
+                  {[0.2, 0.4, 0.6, 0.8].map((prog, j) => {
+                    const rx1 = x1 + (x2 - x1) * prog - 1.5;
+                    const ry1 = y1 + (y2 - y1) * prog;
+                    const rx2 = x1 + (x2 - x1) * prog + 1.5;
+                    const ry2 = y1 + (y2 - y1) * prog;
+                    return (
+                      <line
+                        key={j}
+                        x1={rx1} y1={ry1} x2={rx2} y2={ry2}
+                        stroke="#d35400"
+                        strokeWidth="1"
+                        strokeLinecap="round"
+                      />
+                    );
+                  })}
+                </g>
+              );
+            })}
+
+            {/* Draw Snakes */}
+            {snakeData.map((s, i) => {
+              const start = getCellCoords(s.start);
+              const end = getCellCoords(s.end);
+              const x1 = (start.x + 0.5) * 10;
+              const y1 = (start.y + 0.5) * 20;
+              const x2 = (end.x + 0.5) * 10;
+              const y2 = (end.y + 0.5) * 20;
+              // Stable mid points to avoid jitter
+              const midX = (x1 + x2) / 2 + (i % 2 === 0 ? 5 : -5);
+              const midY = (y1 + y2) / 2;
+              const d = `M ${x1} ${y1} Q ${midX} ${y1} ${midX} ${midY} T ${x2} ${y2}`;
+              return (
+                <path
+                  key={`s-${i}`}
+                  d={d}
+                  className="cobra-path"
+                  stroke="url(#snakeGrad)"
+                  strokeWidth="2"
+                  fill="none"
+                  strokeLinecap="round"
+                  opacity="0.8"
+                  style={{ filter: 'drop-shadow(0 0.5px 1px rgba(0,0,0,0.3))' }}
+                />
+              );
+            })}
+          </svg>
+
+          {cells.map((cellNum) => {
+            const coords = getCellCoords(cellNum);
+            const isDark = (Math.floor((cellNum - 1) / 10) + (cellNum - 1) % 10) % 2 === 1;
+            return (
+              <div
+                key={cellNum}
+                style={{
+                  gridColumnStart: coords.x + 1,
+                  gridRowStart: coords.y + 1,
+                  background: isDark ? 'rgba(136,84,208,0.08)' : 'rgba(136,84,208,0.02)',
+                  border: '1px solid var(--border-soft)',
+                  borderRadius: '12px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '0.8rem',
+                  fontWeight: '900',
+                  color: isDark ? 'var(--text-dim)' : 'var(--text-light)',
+                  position: 'relative',
+                  transition: 'all 0.3s'
+                }}
+              >
+                <span style={{ position: 'relative', zIndex: 2 }}>
+                  {cellNum === 50 ? '🏆' : cellNum === 1 ? '🏁' : cellNum}
+                </span>
+              </div>
+            );
+          })}
+
+          {/* The Player Pawn */}
+          <motion.div
+            animate={{
+              left: `${(getCellCoords(currentPosition).x * 10) + 5}%`,
+              top: `${(getCellCoords(currentPosition).y * 20) + 10}%`,
+            }}
+            transition={{ type: "spring", stiffness: 80, damping: 15 }}
+            style={{
+              position: 'absolute',
+              width: '40px',
+              height: '40px',
+              transform: 'translate(-50%, -50%)',
+              zIndex: 100,
+              pointerEvents: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
+            }}
+          >
+            <motion.div
+              animate={{ y: [0, -8, 0], rotate: [0, 5, -5, 0] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              style={{
+                width: '32px',
+                height: '32px',
+                background: '#8854d0',
+                borderRadius: '50% 50% 20% 20%',
+                boxShadow: '0 8px 20px rgba(136,84,208,0.4)',
+                border: '3px solid white',
+                position: 'relative'
+              }}
+            >
+              <div style={{ position: 'absolute', top: '4px', left: '50%', transform: 'translateX(-50%)', width: '6px', height: '6px', background: 'white', borderRadius: '50%', opacity: 0.6 }} />
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </div>
   );

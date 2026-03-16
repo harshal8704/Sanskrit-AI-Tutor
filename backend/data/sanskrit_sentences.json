@@ -1654,6 +1654,294 @@
         "api-added"
       ],
       "created_at": "2026-03-15T14:24:00.229043"
+    },
+    {
+      "id": 104,
+      "sanskrit": "ahamapi bhavatA saha AgacchAmi vA अस्ति।",
+      "devanagari": "ahamapi bhavatA saha AgacchAmi vA अस्ति।",
+      "translation": "I Will Come With You Too is.",
+      "words": [
+        "ahamapi bhavatA saha AgacchAmi vA"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-03-16T20:46:14.115472"
+    },
+    {
+      "id": 105,
+      "sanskrit": "ahamapi bhavatA saha AgacchAmi vA गच्छति।",
+      "devanagari": "ahamapi bhavatA saha AgacchAmi vA गच्छति।",
+      "translation": "I Will Come With You Too goes.",
+      "words": [
+        "ahamapi bhavatA saha AgacchAmi vA"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-03-16T20:46:14.115490"
+    },
+    {
+      "id": 106,
+      "sanskrit": "ahamapi bhavatA saha AgacchAmi vA पठति।",
+      "devanagari": "ahamapi bhavatA saha AgacchAmi vA पठति।",
+      "translation": "I Will Come With You Too reads.",
+      "words": [
+        "ahamapi bhavatA saha AgacchAmi vA"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-03-16T20:46:14.115496"
+    },
+    {
+      "id": 107,
+      "sanskrit": "aham gantum na shaknomi अस्ति।",
+      "devanagari": "aham gantum na shaknomi अस्ति।",
+      "translation": "I Am Not Able To Go is.",
+      "words": [
+        "aham gantum na shaknomi"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-03-16T20:47:07.867222"
+    },
+    {
+      "id": 108,
+      "sanskrit": "aham gantum na shaknomi गच्छति।",
+      "devanagari": "aham gantum na shaknomi गच्छति।",
+      "translation": "I Am Not Able To Go goes.",
+      "words": [
+        "aham gantum na shaknomi"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-03-16T20:47:07.867234"
+    },
+    {
+      "id": 109,
+      "sanskrit": "aham gantum na shaknomi पठति।",
+      "devanagari": "aham gantum na shaknomi पठति।",
+      "translation": "I Am Not Able To Go reads.",
+      "words": [
+        "aham gantum na shaknomi"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-03-16T20:47:07.867237"
+    },
+    {
+      "id": 110,
+      "sanskrit": "aham nagapure vasami अस्ति।",
+      "devanagari": "aham nagapure vasami अस्ति।",
+      "translation": "I Live In Nagpur is.",
+      "words": [
+        "aham nagapure vasami"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-03-16T21:00:04.548819"
+    },
+    {
+      "id": 111,
+      "sanskrit": "aham nagapure vasami गच्छति।",
+      "devanagari": "aham nagapure vasami गच्छति।",
+      "translation": "I Live In Nagpur goes.",
+      "words": [
+        "aham nagapure vasami"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-03-16T21:00:04.548825"
+    },
+    {
+      "id": 112,
+      "sanskrit": "aham nagapure vasami पठति।",
+      "devanagari": "aham nagapure vasami पठति।",
+      "translation": "I Live In Nagpur reads.",
+      "words": [
+        "aham nagapure vasami"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-03-16T21:00:04.548827"
+    },
+    {
+      "id": 113,
+      "sanskrit": "Aham golaakaandasya praatiyaa battingaprekshayaa adhikam prīti karoṣi अस्ति।",
+      "devanagari": "Aham golaakaandasya praatiyaa battingaprekshayaa adhikam prīti karoṣi अस्ति।",
+      "translation": "I Like Bowling More Than Batting is.",
+      "words": [
+        "Aham golaakaandasya praatiyaa battingaprekshayaa adhikam prīti karoṣi"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-03-16T21:01:25.299147"
+    },
+    {
+      "id": 114,
+      "sanskrit": "Aham golaakaandasya praatiyaa battingaprekshayaa adhikam prīti karoṣi गच्छति।",
+      "devanagari": "Aham golaakaandasya praatiyaa battingaprekshayaa adhikam prīti karoṣi गच्छति।",
+      "translation": "I Like Bowling More Than Batting goes.",
+      "words": [
+        "Aham golaakaandasya praatiyaa battingaprekshayaa adhikam prīti karoṣi"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-03-16T21:01:25.299161"
+    },
+    {
+      "id": 115,
+      "sanskrit": "Aham golaakaandasya praatiyaa battingaprekshayaa adhikam prīti karoṣi पठति।",
+      "devanagari": "Aham golaakaandasya praatiyaa battingaprekshayaa adhikam prīti karoṣi पठति।",
+      "translation": "I Like Bowling More Than Batting reads.",
+      "words": [
+        "Aham golaakaandasya praatiyaa battingaprekshayaa adhikam prīti karoṣi"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-03-16T21:01:25.299165"
+    },
+    {
+      "id": 116,
+      "sanskrit": "ahaM tvaM pashyaami tvaM khadati vaartaam अस्ति।",
+      "devanagari": "ahaM tvaM pashyaami tvaM khadati vaartaam अस्ति।",
+      "translation": "I Like To Watch Television While Eating Food is.",
+      "words": [
+        "ahaM tvaM pashyaami tvaM khadati vaartaam"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-03-16T21:02:28.597530"
+    },
+    {
+      "id": 117,
+      "sanskrit": "ahaM tvaM pashyaami tvaM khadati vaartaam गच्छति।",
+      "devanagari": "ahaM tvaM pashyaami tvaM khadati vaartaam गच्छति।",
+      "translation": "I Like To Watch Television While Eating Food goes.",
+      "words": [
+        "ahaM tvaM pashyaami tvaM khadati vaartaam"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-03-16T21:02:28.597537"
+    },
+    {
+      "id": 118,
+      "sanskrit": "ahaM tvaM pashyaami tvaM khadati vaartaam पठति।",
+      "devanagari": "ahaM tvaM pashyaami tvaM khadati vaartaam पठति।",
+      "translation": "I Like To Watch Television While Eating Food reads.",
+      "words": [
+        "ahaM tvaM pashyaami tvaM khadati vaartaam"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-03-16T21:02:28.597539"
+    },
+    {
+      "id": 119,
+      "sanskrit": "bhojanaM khadan dUradarshanaM draShTuM rocate अस्ति।",
+      "devanagari": "bhojanaM khadan dUradarshanaM draShTuM rocate अस्ति।",
+      "translation": "He Likes To Watch Tv While Eating is.",
+      "words": [
+        "bhojanaM khadan dUradarshanaM draShTuM rocate"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-03-16T21:13:58.713229"
+    },
+    {
+      "id": 120,
+      "sanskrit": "bhojanaM khadan dUradarshanaM draShTuM rocate गच्छति।",
+      "devanagari": "bhojanaM khadan dUradarshanaM draShTuM rocate गच्छति।",
+      "translation": "He Likes To Watch Tv While Eating goes.",
+      "words": [
+        "bhojanaM khadan dUradarshanaM draShTuM rocate"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-03-16T21:13:58.713241"
+    },
+    {
+      "id": 121,
+      "sanskrit": "bhojanaM khadan dUradarshanaM draShTuM rocate पठति।",
+      "devanagari": "bhojanaM khadan dUradarshanaM draShTuM rocate पठति।",
+      "translation": "He Likes To Watch Tv While Eating reads.",
+      "words": [
+        "bhojanaM khadan dUradarshanaM draShTuM rocate"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-03-16T21:13:58.713244"
     }
   ],
   "patterns": [
