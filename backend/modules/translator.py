@@ -232,13 +232,17 @@ class SanskritTranslator:
             translation = translator.translate(text)
             
             if translation and translation != text:
+                # If it's a sentence, the primary meaning is the translation itself
+                is_sentence = ' ' in text.strip() or len(text) > 20
+                meanings = [translation] if is_sentence else [f"Translation of {text}"]
+                
                 return {
                     'sanskrit': translation if target == 'sa' else text,
                     'devanagari': translation if target == 'sa' else text,
                     'english': translation if target == 'en' else text,
                     'pronunciation': translation,
-                    'word_type': 'noun',
-                    'meanings': [f"Translation of {text}"],
+                    'word_type': 'sentence' if is_sentence else 'noun',
+                    'meanings': meanings,
                     'example': '',
                     'category': 'api-added',
                     'source': 'google_api'
@@ -263,17 +267,21 @@ class SanskritTranslator:
                 translation = data['responseData']['translatedText']
                 translation = translation.replace('&#39;', "'").replace('&quot;', '"')
                 
-                return {
-                    'sanskrit': translation if target == 'sa' else text,
-                    'devanagari': translation if target == 'sa' else text,
-                    'english': translation if target == 'en' else text,
-                    'pronunciation': translation,
-                    'word_type': 'noun',
-                    'meanings': [f"Translation of {text}"],
-                    'example': '',
-                    'category': 'api-added',
-                    'source': 'mymemory_api'
-                }
+                if translation and translation != text:
+                    is_sentence = ' ' in text.strip() or len(text) > 20
+                    meanings = [translation] if is_sentence else [f"Translation of {text}"]
+                    
+                    return {
+                        'sanskrit': translation if target == 'sa' else text,
+                        'devanagari': translation if target == 'sa' else text,
+                        'english': translation if target == 'en' else text,
+                        'pronunciation': translation,
+                        'word_type': 'sentence' if is_sentence else 'noun',
+                        'meanings': meanings,
+                        'example': '',
+                        'category': 'api-added',
+                        'source': 'mymemory_api'
+                    }
         except Exception as e:
             print(f"MyMemory API error: {e}")
         return None
@@ -295,17 +303,21 @@ class SanskritTranslator:
             if response.status_code == 200 and 'translatedText' in data:
                 translation = data['translatedText']
                 
-                return {
-                    'sanskrit': translation if target == 'sa' else text,
-                    'devanagari': translation if target == 'sa' else text,
-                    'english': translation if target == 'en' else text,
-                    'pronunciation': translation,
-                    'word_type': 'noun',
-                    'meanings': [f"Translation of {text}"],
-                    'example': '',
-                    'category': 'api-added',
-                    'source': 'libretranslate_api'
-                }
+                if translation and translation != text:
+                    is_sentence = ' ' in text.strip() or len(text) > 20
+                    meanings = [translation] if is_sentence else [f"Translation of {text}"]
+                    
+                    return {
+                        'sanskrit': translation if target == 'sa' else text,
+                        'devanagari': translation if target == 'sa' else text,
+                        'english': translation if target == 'en' else text,
+                        'pronunciation': translation,
+                        'word_type': 'sentence' if is_sentence else 'noun',
+                        'meanings': meanings,
+                        'example': '',
+                        'category': 'api-added',
+                        'source': 'libretranslate_api'
+                    }
         except Exception as e:
             print(f"LibreTranslate error: {e}")
         return None
@@ -438,14 +450,18 @@ class SanskritTranslator:
         for _, row in self.df.iterrows():
             row_english = str(row.get('english', '')).strip().lower()
             if English_word == row_english and row_english != 'nan' and row_english != '':
+                # Sanitize meanigns and example to avoid NaN floats in JSON
+                meaning_val = row.get('meaning', '')
+                meanings = str(meaning_val).split('; ') if pd.notna(meaning_val) else [str(row.get('english', ''))]
+                
                 results.append({
                     'sanskrit': str(row.get('sanskrit', '')),
                     'devanagari': str(row.get('devanagari', '')),
                     'english': str(row.get('english', '')),
                     'pronunciation': str(row.get('pronunciation', '')),
                     'word_type': str(row.get('word_type', '')),
-                    'meanings': str(row.get('meaning', '')).split('; ') if pd.notna(row.get('meaning')) else [str(row.get('english', ''))],
-                    'example': str(row.get('example', '')),
+                    'meanings': meanings,
+                    'example': str(row.get('example', '')) if pd.notna(row.get('example')) else '',
                     'category': str(row.get('category', '')),
                     'source': str(row.get('source', 'database'))
                 })
@@ -495,16 +511,21 @@ class SanskritTranslator:
                 sanskrit_word == d_val or
                 sanskrit_word.lower() in s_val or
                 sanskrit_word in d_val):
+                
+                # Sanitize meanigns and example
+                meaning_val = row.get('meaning', '')
+                meanings = str(meaning_val).split('; ') if pd.notna(meaning_val) else [str(row.get('english', ''))]
+                
                 results.append({
-                    'sanskrit': row['sanskrit'],
-                    'devanagari': row['devanagari'],
-                    'english': row['english'],
-                    'pronunciation': row.get('pronunciation', ''),
-                    'word_type': row.get('word_type', ''),
-                    'meanings': str(row.get('meaning', '')).split('; ') if pd.notna(row.get('meaning')) else [str(row.get('english', ''))],
-                    'example': row.get('example', ''),
-                    'category': row.get('category', ''),
-                    'source': row.get('source', 'database')
+                    'sanskrit': str(row.get('sanskrit', '')),
+                    'devanagari': str(row.get('devanagari', '')),
+                    'english': str(row.get('english', '')),
+                    'pronunciation': str(row.get('pronunciation', '')),
+                    'word_type': str(row.get('word_type', '')),
+                    'meanings': meanings,
+                    'example': str(row.get('example', '')) if pd.notna(row.get('example')) else '',
+                    'category': str(row.get('category', '')),
+                    'source': str(row.get('source', 'database'))
                 })
         
         if results:
