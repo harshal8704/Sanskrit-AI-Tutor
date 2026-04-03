@@ -12,8 +12,140 @@ import {
   CheckCircle2,
   Lock,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Sparkles
 } from "lucide-react";
+import GreetingsLesson from "@/components/lessons/GreetingsLesson";
+import NumbersLesson from "@/components/lessons/NumbersLesson";
+
+const AlphabetFlashcards = () => {
+  const [vowelImages, setVowelImages] = useState<string[]>([]);
+  const [consonantImages, setConsonantImages] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAlphabets = async () => {
+      try {
+        const [vResponse, cResponse] = await Promise.all([
+          fetch('/api/alphabets?type=vowels'),
+          fetch('/api/alphabets?type=consonants')
+        ]);
+        const [vData, cData] = await Promise.all([vResponse.json(), cResponse.json()]);
+        if (vData.images) setVowelImages(vData.images);
+        if (cData.images) setConsonantImages(cData.images);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAlphabets();
+  }, []);
+
+  if (loading) return (
+    <div className="flex flex-col items-center justify-center py-40 gap-6">
+        <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 2 }} className="text-[var(--primary)]">
+            <Sparkles size={60} />
+        </motion.div>
+        <p className="text-[var(--text-dim)] font-medium">Preparing visual aids...</p>
+    </div>
+  );
+
+  return (
+    <div className="flex flex-col gap-12 mt-12 pb-20 max-w-6xl mx-auto">
+      <AnimatePresence>
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="zen-card overflow-hidden border border-[var(--border-soft)] shadow-2xl relative"
+        >
+          {/* Header Strip */}
+          <div className="bg-gradient-to-r from-[var(--primary)] to-transparent p-10 flex items-center justify-between border-b border-[var(--border-soft)]">
+            <div className="flex items-center gap-6">
+              <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center text-white font-bold text-4xl shadow-xl ring-1 ring-white/30">अ</div>
+              <div>
+                <h3 className="text-3xl font-bold text-white tracking-tight">Sanskrit Vowels</h3>
+                <p className="text-white/70 text-sm font-semibold tracking-[4px] uppercase mt-1">Swaras (Foundations)</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="p-10 bg-[var(--bg-card)]">
+            {vowelImages.length > 0 ? (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                {vowelImages.map((src, idx) => (
+                  <motion.div 
+                    key={idx}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="relative group p-4 bg-[var(--bg-main)] rounded-[32px] border border-[var(--border-soft)] shadow-inner"
+                  >
+                    <img 
+                      src={src} 
+                      alt="Sanskrit Vowels" 
+                      className="w-full h-auto rounded-2xl shadow-lg group-hover:scale-[1.01] transition-transform duration-500" 
+                      style={{ maxHeight: '600px', objectFit: 'contain' }} 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[rgba(var(--primary-rgb),0.1)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[32px] pointer-events-none"></div>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="p-32 text-center bg-[var(--bg-main)] rounded-[40px] border-4 border-dashed border-[var(--border-soft)]">
+                <p className="text-[var(--text-light)] text-xl font-bold italic tracking-wide">Manuscripts for vowels arriving soon...</p>
+              </div>
+            )}
+          </div>
+        </motion.div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="zen-card overflow-hidden border border-[var(--border-soft)] shadow-2xl relative"
+        >
+          {/* Header Strip */}
+          <div className="bg-gradient-to-r from-[var(--primary)] to-transparent p-10 flex items-center justify-between border-b border-[var(--border-soft)]">
+            <div className="flex items-center gap-6">
+              <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center text-white font-bold text-4xl shadow-xl ring-1 ring-white/30">क</div>
+              <div>
+                <h3 className="text-3xl font-bold text-white tracking-tight">Sanskrit Consonants</h3>
+                <p className="text-white/70 text-sm font-semibold tracking-[4px] uppercase mt-1">Vyanjanas (Structures)</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="p-10 bg-[var(--bg-card)]">
+            {consonantImages.length > 0 ? (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                {consonantImages.map((src, idx) => (
+                  <motion.div 
+                    key={idx}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="relative group p-4 bg-[var(--bg-main)] rounded-[32px] border border-[var(--border-soft)] shadow-inner"
+                  >
+                    <img 
+                      src={src} 
+                      alt="Sanskrit Consonants" 
+                      className="w-full h-auto rounded-2xl shadow-lg group-hover:scale-[1.01] transition-transform duration-500" 
+                      style={{ maxHeight: '600px', objectFit: 'contain' }} 
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[rgba(var(--primary-rgb),0.1)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[32px] pointer-events-none"></div>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="p-32 text-center bg-[var(--bg-main)] rounded-[40px] border-4 border-dashed border-[var(--border-soft)]">
+                <p className="text-[var(--text-light)] text-xl font-bold italic tracking-wide">Consonant charts currently being prepared by the acharya...</p>
+              </div>
+            )}
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+};
 
 export default function Lessons() {
   const [user, setUser] = useState<any>(null);
@@ -88,16 +220,25 @@ export default function Lessons() {
             </div>
 
             <div style={{ fontSize: '1.2rem', lineHeight: '2', color: 'var(--text-main)', padding: '40px', background: 'var(--bg-main)', borderRadius: '24px', marginBottom: '40px' }}>
-              {selectedLesson.content}
-              <motion.div 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.5 }}
-                className="devanagari" 
-                style={{ fontSize: '3rem', textAlign: 'center', marginTop: '60px', color: 'var(--primary)' }}
-              >
-                {selectedLesson.id === 1 ? "अ आ इ ई उ ऊ ऋ ऌ ए ऐ ओ औ" : selectedLesson.id === 2 ? "नमस्ते! सुप्रभातम्।" : "सत्यं वद। धर्मं चर।"}
-              </motion.div>
+              {selectedLesson.id !== 1 && selectedLesson.id !== 2 && selectedLesson.id !== 3 && selectedLesson.content}
+              
+              {selectedLesson.id === 1 ? (
+                <AlphabetFlashcards />
+              ) : selectedLesson.id === 2 ? (
+                <GreetingsLesson onBack={() => setSelectedLesson(null)} />
+              ) : selectedLesson.id === 3 ? (
+                <NumbersLesson onBack={() => setSelectedLesson(null)} />
+              ) : (
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  className="devanagari" 
+                  style={{ fontSize: '3rem', textAlign: 'center', marginTop: '60px', color: 'var(--primary)' }}
+                >
+                  {"सत्यं वद। धर्मं चर।"}
+                </motion.div>
+              )}
             </div>
 
             <div className="flex justify-between items-center mt-12">

@@ -98,6 +98,16 @@ def get_lesson(lesson_id: int):
         raise HTTPException(status_code=404, detail="Lesson not found")
     return lesson
 
+@app.get("/api/lessons/greetings")
+def get_greetings_lesson():
+    data = db.get_greetings()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/numbers")
+def get_numbers_lesson():
+    data = db.get_numbers()
+    return {"success": True, "data": data}
+
 @app.get("/progress/{username}")
 def get_progress(username: str):
     return db.get_user_progress(username)

@@ -3,13 +3,13 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { motion } from "framer-motion";
-import { 
-  LayoutGrid, 
-  Library, 
-  Languages, 
-  ShieldCheck, 
-  BarChart3, 
-  Settings, 
+import {
+  LayoutGrid,
+  Library,
+  Languages,
+  ShieldCheck,
+  BarChart3,
+  Settings,
   LogOut,
   Sun,
   Moon,
@@ -38,7 +38,7 @@ const Sidebar = ({ user }: { user: any }) => {
     { label: "Overview", path: "/dashboard", icon: LayoutGrid },
     { label: "Lessons", path: "/lessons", icon: Library },
     { label: "Translator", path: "/translation", icon: Languages },
-    { label: "Grammar", path: "/grammar", icon: ShieldCheck },
+    { label: "Grammar Checker", path: "/grammar", icon: ShieldCheck },
     { label: "Insights", path: "/progress", icon: BarChart3 },
     { label: "Play", path: "/game/menu", icon: Dice5 },
   ];
@@ -53,10 +53,10 @@ const Sidebar = ({ user }: { user: any }) => {
   };
 
   return (
-    <motion.aside 
+    <motion.aside
       initial={{ x: -20, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
-      className="zen-card sidebar-container" 
+      className="zen-card sidebar-container"
     >
       <div className="sidebar-top">
         <div className="sidebar-header flex items-center justify-between">
@@ -68,15 +68,15 @@ const Sidebar = ({ user }: { user: any }) => {
             {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
           </button>
         </div>
-        
+
         <nav className="sidebar-nav">
           {navItems.map((item) => {
             const Icon = item.icon;
             const isActive = pathname === item.path;
-            
+
             return (
-              <Link 
-                key={item.path} 
+              <Link
+                key={item.path}
                 href={item.path}
                 className={`sidebar-link ${isActive ? 'active' : ''}`}
               >

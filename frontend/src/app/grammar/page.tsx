@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import Sidebar from "@/components/Sidebar";
+import SanskritInput from "@/components/SanskritInput";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   ShieldCheck, 
@@ -70,22 +71,24 @@ export default function Grammar() {
                 <FileText size={20} />
                 <h3 style={{ margin: 0 }}>Input Sentence</h3>
               </div>
-              <textarea 
-                className="w-full mb-6 devanagari" 
-                style={{ 
-                  minHeight: '200px', 
-                  fontSize: '2rem',
-                  lineHeight: '1.5',
-                  background: 'var(--bg-main)',
-                  border: 'none',
-                  padding: '30px',
-                  color: 'var(--text-main)',
-                  width: '100%'
-                }}
-                placeholder="रामः वनं गच्छति..."
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-              />
+              <div style={{ position: 'relative', width: '100%', minHeight: '200px', marginBottom: '24px' }}>
+                <SanskritInput
+                  value={inputText}
+                  onChange={(val) => setInputText(val)}
+                  placeholder="रामः वनं गच्छति..."
+                  showLabel={false}
+                  style={{
+                    fontSize: '2rem',
+                    lineHeight: '1.5',
+                    background: 'var(--bg-main)',
+                    border: 'none',
+                    padding: '30px',
+                    color: 'var(--text-main)',
+                    minHeight: '200px'
+                  }}
+                  className="devanagari"
+                />
+              </div>
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-6">
                   <label className="flex items-center gap-2 cursor-pointer group">
@@ -111,8 +114,32 @@ export default function Grammar() {
 
             <div className="zen-card" style={{ padding: '24px' }}>
               <h4 style={{ fontSize: '0.85rem', color: 'var(--text-dim)', marginBottom: '16px', textTransform: 'uppercase', letterSpacing: '1px' }}>Quick Practice</h4>
-              <div className="flex flex-wrap gap-2">
-                {["रामः वनं गच्छति।", "सीता फलं खादति।", "बालकाः पठन्ति।"].map(t => (
+              <div className="flex flex-col gap-3" style={{ maxHeight: '400px', overflowY: 'auto', paddingRight: '10px' }}>
+                {[
+                  "रामः वनं गच्छति।", 
+                  "सीता फलं खादति।", 
+                  "बालकाः पठन्ति।",
+                  "अहं विद्यालयं गच्छामि।",
+                  "सः पुस्तकं पठति।",
+                  "वयं उद्याने क्रीडामः।",
+                  "माता भोजनं पचति।",
+                  "बालकाः कक्षायां उपविशन्ति।",
+                  "यदा अहं विद्यालयं गच्छामि तदा मित्राणि मिलन्ति।",
+                  "यदि त्वं परिश्रमं करोषि तर्हि सफलः भविष्यसि।",
+                  "शिक्षकः विद्यार्थिभ्यः ज्ञानं ददाति।",
+                  "अहं गृहकार्यं समाप्त्वा विश्रामं करोमि।",
+                  "यः सत्यम् वदति सः सर्वेषां विश्वासं लभते।",
+                  "अहं विद्यालयः गच्छामि।",
+                  "सा पुस्तकं पठन्ति।",
+                  "वयं उद्यानं क्रीडामि।",
+                  "बालकः फलानि खादन्ति।",
+                  "शिक्षकाः पाठं पठति।",
+                  "मम मित्रः विद्यालये गच्छन्ति।",
+                  "अहं जलं पिबसि।",
+                  "ते गृहं गच्छामि।",
+                  "छात्राः पुस्तकम् पठति।",
+                  "यदा अहं पठामि तदा सः खेलति अस्ति।"
+                ].map(t => (
                   <button 
                     key={t} 
                     className="btn-secondary" 
@@ -171,9 +198,45 @@ export default function Grammar() {
                               <span style={{ fontSize: '0.95rem' }}>{issue}</span>
                             </div>
                           ))}
+
+                          {analysis.corrected_sentence && analysis.corrected_sentence !== inputText && (
+                            <div className="mt-4 p-5 rounded-xl" style={{ background: 'var(--bg-main)', border: '1px solid var(--border-soft)' }}>
+                               <h5 className="mb-3" style={{ fontSize: '0.8rem', color: 'var(--primary)', fontWeight: '800', textTransform: 'uppercase' }}>Suggested Correction</h5>
+                               
+                               <div className="flex items-center justify-between gap-4 mb-4">
+                                  <div className="devanagari" style={{ fontSize: '1.8rem', color: 'var(--text-main)' }}>
+                                    {analysis.corrected_sentence}
+                                  </div>
+                                  <button 
+                                     onClick={() => setInputText(analysis.corrected_sentence)}
+                                     style={{ 
+                                        padding: '8px 16px', 
+                                        background: 'var(--primary)', 
+                                        color: 'white', 
+                                        border: 'none', 
+                                        borderRadius: '10px', 
+                                        cursor: 'pointer',
+                                        fontWeight: '700',
+                                        fontSize: '0.75rem',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '6px'
+                                     }}
+                                  >
+                                    <Sparkles size={14} /> USE THIS
+                                  </button>
+                               </div>
+
+                               {analysis.correction_summary && (
+                                   <p style={{ fontSize: '0.9rem', color: 'var(--text-dim)', lineHeight: '1.5', fontStyle: 'italic', borderTop: '1px solid var(--border-soft)', paddingTop: '12px' }}>
+                                      {analysis.correction_summary}
+                                   </p>
+                               )}
+                            </div>
+                          )}
                         </div>
                       ) : (
-                        <div style={{ color: 'var(--success)', fontWeight: '700', fontSize: '0.95rem' }}>
+                        <div style={{ color: '#27ae60', fontWeight: '700', fontSize: '0.95rem' }}>
                           ✨ Linguistic structure is impeccable.
                         </div>
                       )}

@@ -1942,6 +1942,246 @@
         "api-added"
       ],
       "created_at": "2026-03-16T21:13:58.713244"
+    },
+    {
+      "id": 122,
+      "sanskrit": "namaste svagatam applicationaya अस्ति।",
+      "devanagari": "namaste svagatam applicationaya अस्ति।",
+      "translation": "Hello Welcome To Application is.",
+      "words": [
+        "namaste svagatam applicationaya"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T18:11:55.864455"
+    },
+    {
+      "id": 123,
+      "sanskrit": "namaste svagatam applicationaya गच्छति।",
+      "devanagari": "namaste svagatam applicationaya गच्छति।",
+      "translation": "Hello Welcome To Application goes.",
+      "words": [
+        "namaste svagatam applicationaya"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T18:11:55.864467"
+    },
+    {
+      "id": 124,
+      "sanskrit": "namaste svagatam applicationaya पठति।",
+      "devanagari": "namaste svagatam applicationaya पठति।",
+      "translation": "Hello Welcome To Application reads.",
+      "words": [
+        "namaste svagatam applicationaya"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T18:11:55.864469"
+    },
+    {
+      "id": 125,
+      "sanskrit": "Namaste Svagatam Aplicationaya अस्ति।",
+      "devanagari": "Namaste Svagatam Aplicationaya अस्ति।",
+      "translation": "Greetings, Welcome To The Application is.",
+      "words": [
+        "Namaste Svagatam Aplicationaya"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T18:12:40.006781"
+    },
+    {
+      "id": 126,
+      "sanskrit": "Namaste Svagatam Aplicationaya गच्छति।",
+      "devanagari": "Namaste Svagatam Aplicationaya गच्छति।",
+      "translation": "Greetings, Welcome To The Application goes.",
+      "words": [
+        "Namaste Svagatam Aplicationaya"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T18:12:40.006790"
+    },
+    {
+      "id": 127,
+      "sanskrit": "Namaste Svagatam Aplicationaya पठति।",
+      "devanagari": "Namaste Svagatam Aplicationaya पठति।",
+      "translation": "Greetings, Welcome To The Application reads.",
+      "words": [
+        "Namaste Svagatam Aplicationaya"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T18:12:40.006792"
+    },
+    {
+      "id": 128,
+      "sanskrit": "raamaH vanam gacchati अस्ति।",
+      "devanagari": "raamaH vanam gacchati अस्ति।",
+      "translation": "Rama Goes To The Forest is.",
+      "words": [
+        "raamaH vanam gacchati"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T19:36:21.596892"
+    },
+    {
+      "id": 129,
+      "sanskrit": "raamaH vanam gacchati गच्छति।",
+      "devanagari": "raamaH vanam gacchati गच्छति।",
+      "translation": "Rama Goes To The Forest goes.",
+      "words": [
+        "raamaH vanam gacchati"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T19:36:21.596905"
+    },
+    {
+      "id": 130,
+      "sanskrit": "raamaH vanam gacchati पठति।",
+      "devanagari": "raamaH vanam gacchati पठति।",
+      "translation": "Rama Goes To The Forest reads.",
+      "words": [
+        "raamaH vanam gacchati"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T19:36:21.596908"
+    },
+    {
+      "id": 131,
+      "sanskrit": "dauvarika अस्ति।",
+      "devanagari": "dauvarika अस्ति।",
+      "translation": "Runner is.",
+      "words": [
+        "dauvarika"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T20:53:26.086780"
+    },
+    {
+      "id": 132,
+      "sanskrit": "dauvarika गच्छति।",
+      "devanagari": "dauvarika गच्छति।",
+      "translation": "Runner goes.",
+      "words": [
+        "dauvarika"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T20:53:26.086790"
+    },
+    {
+      "id": 133,
+      "sanskrit": "dauvarika पठति।",
+      "devanagari": "dauvarika पठति।",
+      "translation": "Runner reads.",
+      "words": [
+        "dauvarika"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T20:53:26.086792"
+    },
+    {
+      "id": 134,
+      "sanskrit": "avikriya अस्ति।",
+      "devanagari": "avikriya अस्ति।",
+      "translation": "Unchange is.",
+      "words": [
+        "avikriya"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T20:54:11.883574"
+    },
+    {
+      "id": 135,
+      "sanskrit": "avikriya गच्छति।",
+      "devanagari": "avikriya गच्छति।",
+      "translation": "Unchange goes.",
+      "words": [
+        "avikriya"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T20:54:11.883589"
+    },
+    {
+      "id": 136,
+      "sanskrit": "avikriya पठति।",
+      "devanagari": "avikriya पठति।",
+      "translation": "Unchange reads.",
+      "words": [
+        "avikriya"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T20:54:11.883593"
     }
   ],
   "patterns": [

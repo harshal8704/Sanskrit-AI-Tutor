@@ -55,6 +55,24 @@ class MockDB:
             }
         ]
     
+    def get_greetings(self) -> List[Dict]:
+        """Get all greetings"""
+        greetings_file = os.path.join(self.data_dir, 'sanskritGreetings.json')
+        
+        if os.path.exists(greetings_file):
+            with open(greetings_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+
+    def get_numbers(self) -> List[Dict]:
+        """Get all numbers limit to JSON file."""
+        numbers_file = os.path.join(self.data_dir, 'sanskritNumbers.json')
+        if os.path.exists(numbers_file):
+            with open(numbers_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+        
+        return []
+
     def get_user_progress(self, username: str) -> Dict:
         """Get user progress"""
         progress_file = os.path.join(self.data_dir, f'{username}_progress.json')

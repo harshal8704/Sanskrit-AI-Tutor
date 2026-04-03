@@ -26,6 +26,8 @@ export const api = {
   lessons: {
     getAll: (level?: string) => apiRequest(`/lessons${level ? `?level=${level}` : ''}`),
     getById: (id: string | number) => apiRequest(`/lessons/${id}`),
+    getGreetings: () => apiRequest('/api/lessons/greetings'),
+    getNumbers: () => apiRequest('/api/lessons/numbers'),
   },
   user: {
     getProgress: (username: string) => apiRequest(`/progress/${username}`),
