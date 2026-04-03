@@ -2806,6 +2806,54 @@
         "api-added"
       ],
       "created_at": "2026-04-03T21:08:58.177901"
+    },
+    {
+      "id": 176,
+      "sanskrit": "asti अस्ति।",
+      "devanagari": "asti अस्ति।",
+      "translation": "Is, Exists, There Is is.",
+      "words": [
+        "asti"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-04T00:09:03.096566"
+    },
+    {
+      "id": 177,
+      "sanskrit": "asti गच्छति।",
+      "devanagari": "asti गच्छति।",
+      "translation": "Is, Exists, There Is goes.",
+      "words": [
+        "asti"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-04T00:09:03.096587"
+    },
+    {
+      "id": 178,
+      "sanskrit": "asti पठति।",
+      "devanagari": "asti पठति।",
+      "translation": "Is, Exists, There Is reads.",
+      "words": [
+        "asti"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-04T00:09:03.096591"
     }
   ],
   "patterns": [
