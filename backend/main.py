@@ -158,6 +158,19 @@ def odd_answer(req: OddAnswerRequest):
     """Check the user's answer for Odd One Out."""
     return check_answer(req.question_data, req.user_choice)
 
+# Add this endpoint to main.py (e.g., after the root endpoint)
+@app.get("/test-api")
+def test_api():
+    """Test if API key is loaded correctly"""
+    api_key = os.getenv("XAI_API_KEY")
+    base_url = os.getenv("BASE_URL")
+    return {
+        "has_api_key": bool(api_key),
+        "key_preview": api_key[:10] + "..." if api_key and len(api_key) > 10 else None,
+        "provider": "Groq" if api_key and api_key.startswith("gsk_") else "Grok" if api_key else "None",
+        "base_url": base_url,
+        "ai_available": bool(api_key)
+    }
 if __name__ == "__main__":
     import uvicorn
     import os

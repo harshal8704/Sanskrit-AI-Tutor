@@ -1942,6 +1942,486 @@
         "api-added"
       ],
       "created_at": "2026-03-16T21:13:58.713244"
+    },
+    {
+      "id": 122,
+      "sanskrit": "Mithilesha अस्ति।",
+      "devanagari": "Mithilesha अस्ति।",
+      "translation": "Lord Of Mithila is.",
+      "words": [
+        "Mithilesha"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T14:38:32.266696"
+    },
+    {
+      "id": 123,
+      "sanskrit": "Mithilesha गच्छति।",
+      "devanagari": "Mithilesha गच्छति।",
+      "translation": "Lord Of Mithila goes.",
+      "words": [
+        "Mithilesha"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T14:38:32.266729"
+    },
+    {
+      "id": 124,
+      "sanskrit": "Mithilesha पठति।",
+      "devanagari": "Mithilesha पठति।",
+      "translation": "Lord Of Mithila reads.",
+      "words": [
+        "Mithilesha"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T14:38:32.266739"
+    },
+    {
+      "id": 125,
+      "sanskrit": "mama naama अस्ति।",
+      "devanagari": "mama naama अस्ति।",
+      "translation": "My Name Is is.",
+      "words": [
+        "mama naama"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T14:38:46.286241"
+    },
+    {
+      "id": 126,
+      "sanskrit": "mama naama गच्छति।",
+      "devanagari": "mama naama गच्छति।",
+      "translation": "My Name Is goes.",
+      "words": [
+        "mama naama"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T14:38:46.286248"
+    },
+    {
+      "id": 127,
+      "sanskrit": "mama naama पठति।",
+      "devanagari": "mama naama पठति।",
+      "translation": "My Name Is reads.",
+      "words": [
+        "mama naama"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T14:38:46.286250"
+    },
+    {
+      "id": 128,
+      "sanskrit": "narakam vraja अस्ति।",
+      "devanagari": "narakam vraja अस्ति।",
+      "translation": "Go To Hell is.",
+      "words": [
+        "narakam vraja"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T14:39:02.609926"
+    },
+    {
+      "id": 129,
+      "sanskrit": "narakam vraja गच्छति।",
+      "devanagari": "narakam vraja गच्छति।",
+      "translation": "Go To Hell goes.",
+      "words": [
+        "narakam vraja"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T14:39:02.609940"
+    },
+    {
+      "id": 130,
+      "sanskrit": "narakam vraja पठति।",
+      "devanagari": "narakam vraja पठति।",
+      "translation": "Go To Hell reads.",
+      "words": [
+        "narakam vraja"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T14:39:02.609943"
+    },
+    {
+      "id": 131,
+      "sanskrit": "myname अस्ति।",
+      "devanagari": "myname अस्ति।",
+      "translation": "My Name is.",
+      "words": [
+        "myname"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T14:40:30.635527"
+    },
+    {
+      "id": 132,
+      "sanskrit": "myname गच्छति।",
+      "devanagari": "myname गच्छति।",
+      "translation": "My Name goes.",
+      "words": [
+        "myname"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T14:40:30.635544"
+    },
+    {
+      "id": 133,
+      "sanskrit": "myname पठति।",
+      "devanagari": "myname पठति।",
+      "translation": "My Name reads.",
+      "words": [
+        "myname"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T14:40:30.635550"
+    },
+    {
+      "id": 134,
+      "sanskrit": "himanshuh muurkhaH अस्ति।",
+      "devanagari": "himanshuh muurkhaH अस्ति।",
+      "translation": "Himanshu Is Fool is.",
+      "words": [
+        "himanshuh muurkhaH"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T14:46:28.159353"
+    },
+    {
+      "id": 135,
+      "sanskrit": "himanshuh muurkhaH गच्छति।",
+      "devanagari": "himanshuh muurkhaH गच्छति।",
+      "translation": "Himanshu Is Fool goes.",
+      "words": [
+        "himanshuh muurkhaH"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T14:46:28.159369"
+    },
+    {
+      "id": 136,
+      "sanskrit": "himanshuh muurkhaH पठति।",
+      "devanagari": "himanshuh muurkhaH पठति।",
+      "translation": "Himanshu Is Fool reads.",
+      "words": [
+        "himanshuh muurkhaH"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T14:46:28.159372"
+    },
+    {
+      "id": 137,
+      "sanskrit": " अस्ति।",
+      "devanagari": " अस्ति।",
+      "translation": "The Input Text 'Ghjksdhk' Does Not Appear To Be A Valid English Word Or Phrase. is.",
+      "words": [
+        ""
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T14:47:04.556366"
+    },
+    {
+      "id": 138,
+      "sanskrit": " गच्छति।",
+      "devanagari": " गच्छति।",
+      "translation": "The Input Text 'Ghjksdhk' Does Not Appear To Be A Valid English Word Or Phrase. goes.",
+      "words": [
+        ""
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T14:47:04.556384"
+    },
+    {
+      "id": 139,
+      "sanskrit": " पठति।",
+      "devanagari": " पठति।",
+      "translation": "The Input Text 'Ghjksdhk' Does Not Appear To Be A Valid English Word Or Phrase. reads.",
+      "words": [
+        ""
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T14:47:04.556388"
+    },
+    {
+      "id": 140,
+      "sanskrit": "namaste अस्ति।",
+      "devanagari": "namaste अस्ति।",
+      "translation": "Greetings, I Bow To You is.",
+      "words": [
+        "namaste"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T15:26:58.701226"
+    },
+    {
+      "id": 141,
+      "sanskrit": "namaste गच्छति।",
+      "devanagari": "namaste गच्छति।",
+      "translation": "Greetings, I Bow To You goes.",
+      "words": [
+        "namaste"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T15:26:58.701238"
+    },
+    {
+      "id": 142,
+      "sanskrit": "namaste पठति।",
+      "devanagari": "namaste पठति।",
+      "translation": "Greetings, I Bow To You reads.",
+      "words": [
+        "namaste"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T15:26:58.701241"
+    },
+    {
+      "id": 143,
+      "sanskrit": "nāmāvalī अस्ति।",
+      "devanagari": "nāmāvalī अस्ति।",
+      "translation": "Registry is.",
+      "words": [
+        "nāmāvalī"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T15:32:32.452469"
+    },
+    {
+      "id": 144,
+      "sanskrit": "nāmāvalī गच्छति।",
+      "devanagari": "nāmāvalī गच्छति।",
+      "translation": "Registry goes.",
+      "words": [
+        "nāmāvalī"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T15:32:32.452493"
+    },
+    {
+      "id": 145,
+      "sanskrit": "nāmāvalī पठति।",
+      "devanagari": "nāmāvalī पठति।",
+      "translation": "Registry reads.",
+      "words": [
+        "nāmāvalī"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T15:32:32.452500"
+    },
+    {
+      "id": 146,
+      "sanskrit": " अस्ति।",
+      "devanagari": " अस्ति।",
+      "translation": "Namaste Or Greetings With Hands Together is.",
+      "words": [
+        ""
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T15:34:00.408479"
+    },
+    {
+      "id": 147,
+      "sanskrit": " गच्छति।",
+      "devanagari": " गच्छति।",
+      "translation": "Namaste Or Greetings With Hands Together goes.",
+      "words": [
+        ""
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T15:34:00.408487"
+    },
+    {
+      "id": 148,
+      "sanskrit": " पठति।",
+      "devanagari": " पठति।",
+      "translation": "Namaste Or Greetings With Hands Together reads.",
+      "words": [
+        ""
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T15:34:00.408489"
+    },
+    {
+      "id": 149,
+      "sanskrit": "raajaa raajyam shasati अस्ति।",
+      "devanagari": "raajaa raajyam shasati अस्ति।",
+      "translation": "The King Rules The Kingdom is.",
+      "words": [
+        "raajaa raajyam shasati"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T15:36:39.028493"
+    },
+    {
+      "id": 150,
+      "sanskrit": "raajaa raajyam shasati गच्छति।",
+      "devanagari": "raajaa raajyam shasati गच्छति।",
+      "translation": "The King Rules The Kingdom goes.",
+      "words": [
+        "raajaa raajyam shasati"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T15:36:39.028507"
+    },
+    {
+      "id": 151,
+      "sanskrit": "raajaa raajyam shasati पठति।",
+      "devanagari": "raajaa raajyam shasati पठति।",
+      "translation": "The King Rules The Kingdom reads.",
+      "words": [
+        "raajaa raajyam shasati"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T15:36:39.028509"
     }
   ],
   "patterns": [

@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@indic-transliteration/sanscript": "^1.3.3",
+    "@sanskrit-coders/sanscript": "^1.2.8",
+    "react-simple-keyboard": "^3.8.183",
+    "simple-keyboard-layouts": "^3.4.188"
+  }
+}

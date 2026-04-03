@@ -1,13 +1,14 @@
+// frontend/src/app/translation/page.tsx
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import Sidebar from "@/components/Sidebar";
+import { useSanskritTransliteration } from "@/hooks/useSanskritTransliteration";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Languages, 
   ArrowRightLeft, 
-  Search, 
   Database, 
   Globe,
   Loader2,
@@ -27,7 +28,12 @@ export default function Translation() {
   const [direction, setDirection] = useState("en_to_sa");
   const [useApi, setUseApi] = useState(true);
   const [loading, setLoading] = useState(false);
+  const sanskritTextareaRef = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
+
+  // Enable transliteration only when direction is sa_to_en (typing Sanskrit)
+  const shouldEnableTransliteration = direction === 'sa_to_en';
+  useSanskritTransliteration(shouldEnableTransliteration ? sanskritTextareaRef : null);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -149,6 +155,7 @@ export default function Translation() {
 
               <div style={{ position: 'relative', background: 'var(--bg-card)' }}>
                 <textarea 
+                  ref={direction === 'sa_to_en' ? sanskritTextareaRef : null}
                   className="w-full" 
                   style={{ 
                     minHeight: '260px', 
@@ -161,11 +168,15 @@ export default function Translation() {
                     resize: 'none',
                     fontWeight: direction === 'sa_to_en' ? '500' : '400'
                   }}
-                  placeholder={direction === 'en_to_sa' ? "Type english words..." : "Enter Sanskrit (Devanagari)..."}
+                  placeholder={direction === 'en_to_sa' ? "Type English words..." : "Type in Roman (e.g., 'namaste') → gets Devanagari automatically"}
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                 />
-                
+                {direction === 'sa_to_en' && (
+                  <div style={{ position: 'absolute', bottom: '10px', left: '40px', fontSize: '0.7rem', color: 'var(--text-light)' }}>
+                    💡 Press Ctrl+G to toggle transliteration
+                  </div>
+                )}
                 <div style={{ position: 'absolute', bottom: '30px', right: '30px' }}>
                   <motion.button 
                     whileHover={{ scale: 1.05 }}
@@ -182,6 +193,7 @@ export default function Translation() {
               </div>
             </motion.div>
 
+            {/* Results Display */}
             <AnimatePresence mode="wait">
               {results && (
                 <motion.div 
@@ -235,7 +247,7 @@ export default function Translation() {
                                   </div>
                                 </>
                               ) : (
-                                // Sanskrit -> English Mode (Swapped Hierarchy)
+                                // Sanskrit -> English Mode
                                 <>
                                   <div className="flex items-center gap-6 mb-2">
                                     <span style={{ background: 'rgba(var(--primary-rgb), 0.1)', padding: '6px 14px', borderRadius: '10px', fontSize: '0.75rem', fontWeight: '900', color: 'var(--primary)', textTransform: 'uppercase' }}>
@@ -296,6 +308,7 @@ export default function Translation() {
             </AnimatePresence>
           </div>
 
+          {/* Right Sidebar */}
           <aside className="flex flex-col gap-10">
             <motion.div 
               initial={{ opacity: 0, x: 30 }}
