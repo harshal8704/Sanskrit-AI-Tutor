@@ -2422,6 +2422,390 @@
         "api-added"
       ],
       "created_at": "2026-04-03T15:36:39.028509"
+    },
+    {
+      "id": 152,
+      "sanskrit": "Chhandra अस्ति।",
+      "devanagari": "Chhandra अस्ति।",
+      "translation": "Having A Beauty Spot Or A Moon-Like Appearance is.",
+      "words": [
+        "Chhandra"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T15:57:57.532005"
+    },
+    {
+      "id": 153,
+      "sanskrit": "Chhandra गच्छति।",
+      "devanagari": "Chhandra गच्छति।",
+      "translation": "Having A Beauty Spot Or A Moon-Like Appearance goes.",
+      "words": [
+        "Chhandra"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T15:57:57.532016"
+    },
+    {
+      "id": 154,
+      "sanskrit": "Chhandra पठति।",
+      "devanagari": "Chhandra पठति।",
+      "translation": "Having A Beauty Spot Or A Moon-Like Appearance reads.",
+      "words": [
+        "Chhandra"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T15:57:57.532018"
+    },
+    {
+      "id": 155,
+      "sanskrit": "purvānubhūti अस्ति।",
+      "devanagari": "purvānubhūti अस्ति।",
+      "translation": "Dejavu is.",
+      "words": [
+        "purvānubhūti"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T16:00:21.546285"
+    },
+    {
+      "id": 156,
+      "sanskrit": "purvānubhūti गच्छति।",
+      "devanagari": "purvānubhūti गच्छति।",
+      "translation": "Dejavu goes.",
+      "words": [
+        "purvānubhūti"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T16:00:21.546304"
+    },
+    {
+      "id": 157,
+      "sanskrit": "purvānubhūti पठति।",
+      "devanagari": "purvānubhūti पठति।",
+      "translation": "Dejavu reads.",
+      "words": [
+        "purvānubhūti"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T16:00:21.546307"
+    },
+    {
+      "id": 158,
+      "sanskrit": "Rameśa अस्ति।",
+      "devanagari": "Rameśa अस्ति।",
+      "translation": "Ramesh is.",
+      "words": [
+        "Rameśa"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T16:00:41.089838"
+    },
+    {
+      "id": 159,
+      "sanskrit": "Rameśa गच्छति।",
+      "devanagari": "Rameśa गच्छति।",
+      "translation": "Ramesh goes.",
+      "words": [
+        "Rameśa"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T16:00:41.089860"
+    },
+    {
+      "id": 160,
+      "sanskrit": "Rameśa पठति।",
+      "devanagari": "Rameśa पठति।",
+      "translation": "Ramesh reads.",
+      "words": [
+        "Rameśa"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T16:00:41.089866"
+    },
+    {
+      "id": 161,
+      "sanskrit": "Ramesh mahashayaH svakarmani shreshThaH अस्ति।",
+      "devanagari": "Ramesh mahashayaH svakarmani shreshThaH अस्ति।",
+      "translation": "Ramesh Sir Is Good At His Work is.",
+      "words": [
+        "Ramesh mahashayaH svakarmani shreshThaH"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T16:01:12.327042"
+    },
+    {
+      "id": 162,
+      "sanskrit": "Ramesh mahashayaH svakarmani shreshThaH गच्छति।",
+      "devanagari": "Ramesh mahashayaH svakarmani shreshThaH गच्छति।",
+      "translation": "Ramesh Sir Is Good At His Work goes.",
+      "words": [
+        "Ramesh mahashayaH svakarmani shreshThaH"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T16:01:12.327055"
+    },
+    {
+      "id": 163,
+      "sanskrit": "Ramesh mahashayaH svakarmani shreshThaH पठति।",
+      "devanagari": "Ramesh mahashayaH svakarmani shreshThaH पठति।",
+      "translation": "Ramesh Sir Is Good At His Work reads.",
+      "words": [
+        "Ramesh mahashayaH svakarmani shreshThaH"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T16:01:12.327062"
+    },
+    {
+      "id": 164,
+      "sanskrit": "chhara अस्ति।",
+      "devanagari": "chhara अस्ति।",
+      "translation": "A Splinter, A Fragment is.",
+      "words": [
+        "chhara"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T16:17:01.996934"
+    },
+    {
+      "id": 165,
+      "sanskrit": "chhara गच्छति।",
+      "devanagari": "chhara गच्छति।",
+      "translation": "A Splinter, A Fragment goes.",
+      "words": [
+        "chhara"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T16:17:01.996995"
+    },
+    {
+      "id": 166,
+      "sanskrit": "chhara पठति।",
+      "devanagari": "chhara पठति।",
+      "translation": "A Splinter, A Fragment reads.",
+      "words": [
+        "chhara"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T16:17:01.997007"
+    },
+    {
+      "id": 167,
+      "sanskrit": "Mitihilesah अस्ति।",
+      "devanagari": "Mitihilesah अस्ति।",
+      "translation": "No Direct Translation, Appears To Be A Distorted Or Incorrect Text is.",
+      "words": [
+        "Mitihilesah"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T16:17:21.891012"
+    },
+    {
+      "id": 168,
+      "sanskrit": "Mitihilesah गच्छति।",
+      "devanagari": "Mitihilesah गच्छति।",
+      "translation": "No Direct Translation, Appears To Be A Distorted Or Incorrect Text goes.",
+      "words": [
+        "Mitihilesah"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T16:17:21.891039"
+    },
+    {
+      "id": 169,
+      "sanskrit": "Mitihilesah पठति।",
+      "devanagari": "Mitihilesah पठति।",
+      "translation": "No Direct Translation, Appears To Be A Distorted Or Incorrect Text reads.",
+      "words": [
+        "Mitihilesah"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T16:17:21.891045"
+    },
+    {
+      "id": 170,
+      "sanskrit": "mAm अस्ति।",
+      "devanagari": "mAm अस्ति।",
+      "translation": "To Me is.",
+      "words": [
+        "mAm"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T21:01:34.807656"
+    },
+    {
+      "id": 171,
+      "sanskrit": "mAm गच्छति।",
+      "devanagari": "mAm गच्छति।",
+      "translation": "To Me goes.",
+      "words": [
+        "mAm"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T21:01:34.807690"
+    },
+    {
+      "id": 172,
+      "sanskrit": "mAm पठति।",
+      "devanagari": "mAm पठति।",
+      "translation": "To Me reads.",
+      "words": [
+        "mAm"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T21:01:34.807698"
+    },
+    {
+      "id": 173,
+      "sanskrit": "prasthAna kriyA kara अस्ति।",
+      "devanagari": "prasthAna kriyA kara अस्ति।",
+      "translation": "Get Set Go is.",
+      "words": [
+        "prasthAna kriyA kara"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T21:08:58.177867"
+    },
+    {
+      "id": 174,
+      "sanskrit": "prasthAna kriyA kara गच्छति।",
+      "devanagari": "prasthAna kriyA kara गच्छति।",
+      "translation": "Get Set Go goes.",
+      "words": [
+        "prasthAna kriyA kara"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T21:08:58.177893"
+    },
+    {
+      "id": 175,
+      "sanskrit": "prasthAna kriyA kara पठति।",
+      "devanagari": "prasthAna kriyA kara पठति।",
+      "translation": "Get Set Go reads.",
+      "words": [
+        "prasthAna kriyA kara"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T21:08:58.177901"
     }
   ],
   "patterns": [

@@ -136,6 +136,88 @@ def get_dashboard_stats(username: str):
         "db_stats": stats
     }
 
+# ─── Suggestions Endpoint (Local DB + Groq Fallback) ──────────────────────────
+@app.get("/suggestions")
+def get_suggestions(prefix: str, limit: int = 6):
+    """
+    Return Devanagari word suggestions using local DB + Groq API.
+    """
+    if not prefix or len(prefix) < 1:
+        return {"suggestions": []}
+    
+    matches = []
+    seen = set()
+    
+    # First, search local database in 'devanagari' column
+    df = translator.df
+    for _, row in df.iterrows():
+        dev = str(row.get('devanagari', ''))
+        if dev.startswith(prefix) and dev not in seen:
+            seen.add(dev)
+            matches.append({
+                "word": dev,
+                "meaning": str(row.get('english', '')),
+                "sanskrit": str(row.get('sanskrit', ''))
+            })
+            if len(matches) >= limit:
+                return {"suggestions": matches}
+    
+    # Also check 'sanskrit' transliterated column (e.g., "agniḥ" -> "अग्निः")
+    if len(matches) < limit:
+        for _, row in df.iterrows():
+            san = str(row.get('sanskrit', ''))
+            # Convert IAST/roman to Devanagari for matching? For now, direct compare
+            if san.startswith(prefix) and san not in seen:
+                seen.add(san)
+                matches.append({
+                    "word": san,
+                    "meaning": str(row.get('english', '')),
+                    "sanskrit": san
+                })
+                if len(matches) >= limit:
+                    return {"suggestions": matches}
+    
+    # If not enough matches and Groq API key exists, call AI for suggestions
+    if len(matches) < limit and translator.api_key:
+        try:
+            import requests
+            import json
+            import re
+            remaining = limit - len(matches)
+            prompt = f"""
+            You are a Sanskrit lexicon. Given the Devanagari prefix "{prefix}", suggest {remaining} common Sanskrit words (in Devanagari script) that start with this prefix.
+            Return only a JSON array of objects with fields: "word" (Devanagari), "meaning" (English), "sanskrit" (transliterated IAST).
+            Example: [{{"word": "नमस्ते", "meaning": "hello", "sanskrit": "namaste"}}]
+            """
+            headers = {"Authorization": f"Bearer {translator.api_key}", "Content-Type": "application/json"}
+            payload = {
+                "model": translator.ai_model,
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": 0.3,
+                "response_format": {"type": "json_object"}
+            }
+            response = requests.post(f"{translator.base_url}/chat/completions", headers=headers, json=payload, timeout=10)
+            if response.status_code == 200:
+                result = response.json()
+                content = result['choices'][0]['message']['content']
+                json_match = re.search(r'\[.*\]', content, re.DOTALL)
+                if json_match:
+                    ai_suggestions = json.loads(json_match.group(0))
+                    for sugg in ai_suggestions[:remaining]:
+                        word = sugg.get("word", "")
+                        if word and word not in seen:
+                            matches.append({
+                                "word": word,
+                                "meaning": sugg.get("meaning", ""),
+                                "sanskrit": sugg.get("sanskrit", "")
+                            })
+                            if len(matches) >= limit:
+                                break
+        except Exception as e:
+            print(f"Groq suggestion error: {e}")
+    
+    return {"suggestions": matches}
+
 # ─── Snake & Ladder Translation Game ──────────────────────────
 @app.get("/game/start")
 def game_start():
@@ -158,7 +240,7 @@ def odd_answer(req: OddAnswerRequest):
     """Check the user's answer for Odd One Out."""
     return check_answer(req.question_data, req.user_choice)
 
-# Add this endpoint to main.py (e.g., after the root endpoint)
+# ─── Test API Key Endpoint ────────────────────────────────────
 @app.get("/test-api")
 def test_api():
     """Test if API key is loaded correctly"""
@@ -171,6 +253,7 @@ def test_api():
         "base_url": base_url,
         "ai_available": bool(api_key)
     }
+
 if __name__ == "__main__":
     import uvicorn
     import os

@@ -1,10 +1,11 @@
 // frontend/src/app/translation/page.tsx
 "use client";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import Sidebar from "@/components/Sidebar";
 import { useSanskritTransliteration } from "@/hooks/useSanskritTransliteration";
+import WordSuggestions from "@/components/WordSuggestions";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Languages, 
@@ -15,7 +16,6 @@ import {
   BookMarked,
   Sparkles,
   Info,
-  Copy,
   ChevronRight,
   Zap,
   Volume2
@@ -23,17 +23,21 @@ import {
 
 export default function Translation() {
   const [user, setUser] = useState<any>(null);
+  const [suggestionsPrefix, setSuggestionsPrefix] = useState("");
   const [inputText, setInputText] = useState("");
   const [results, setResults] = useState<any>(null);
   const [direction, setDirection] = useState("en_to_sa");
   const [useApi, setUseApi] = useState(true);
   const [loading, setLoading] = useState(false);
-  const sanskritTextareaRef = useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
 
-  // Enable transliteration only when direction is sa_to_en (typing Sanskrit)
-  const shouldEnableTransliteration = direction === 'sa_to_en';
-  useSanskritTransliteration(shouldEnableTransliteration ? sanskritTextareaRef : null);
+  // Enable transliteration only when direction is sa_to_en (user typing Sanskrit)
+  const shouldTransliterate = direction === 'sa_to_en';
+  const transliteration = useSanskritTransliteration(
+    inputText,
+    setInputText,
+    shouldTransliterate
+  );
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -62,6 +66,7 @@ export default function Translation() {
     setDirection(prev => prev === 'en_to_sa' ? 'sa_to_en' : 'en_to_sa');
     setInputText("");
     setResults(null);
+    setSuggestionsPrefix("");
   };
 
   if (!user) return null;
@@ -153,9 +158,9 @@ export default function Translation() {
                 </div>
               </div>
 
+              {/* Textarea and Suggestions Container */}
               <div style={{ position: 'relative', background: 'var(--bg-card)' }}>
                 <textarea 
-                  ref={direction === 'sa_to_en' ? sanskritTextareaRef : null}
                   className="w-full" 
                   style={{ 
                     minHeight: '260px', 
@@ -168,15 +173,36 @@ export default function Translation() {
                     resize: 'none',
                     fontWeight: direction === 'sa_to_en' ? '500' : '400'
                   }}
-                  placeholder={direction === 'en_to_sa' ? "Type English words..." : "Type in Roman (e.g., 'namaste') → gets Devanagari automatically"}
-                  value={inputText}
-                  onChange={(e) => setInputText(e.target.value)}
+                  placeholder={direction === 'en_to_sa' ? "Type English words..." : "Type in Roman (e.g., 'namaste') → instantly converts to Devanagari"}
+                  value={shouldTransliterate ? transliteration.value : inputText}
+                  onChange={(e) => {
+                    if (shouldTransliterate) {
+                      transliteration.onChange(e.target.value);
+                      setSuggestionsPrefix(e.target.value);
+                    } else {
+                      setInputText(e.target.value);
+                    }
+                  }}
                 />
+                
+                {/* Suggestions Dropdown */}
+                <WordSuggestions 
+                  prefix={shouldTransliterate ? suggestionsPrefix : ""}
+                  onSelect={(word) => {
+                    if (shouldTransliterate) {
+                      transliteration.onChange(word);
+                      setSuggestionsPrefix(word);
+                    }
+                  }}
+                  enabled={shouldTransliterate && inputText.length > 0}
+                />
+                
                 {direction === 'sa_to_en' && (
                   <div style={{ position: 'absolute', bottom: '10px', left: '40px', fontSize: '0.7rem', color: 'var(--text-light)' }}>
-                    💡 Press Ctrl+G to toggle transliteration
+                    ✨ Real-time Roman → Devanagari conversion active
                   </div>
                 )}
+                
                 <div style={{ position: 'absolute', bottom: '30px', right: '30px' }}>
                   <motion.button 
                     whileHover={{ scale: 1.05 }}

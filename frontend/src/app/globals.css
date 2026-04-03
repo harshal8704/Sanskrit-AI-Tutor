@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
-
+:root {
+  --primary-rgb: 192, 90, 43;  /* adjust to your primary color */
+}
 :root {
   /* Light Theme - Zen Minimal */
   --primary: #c05a2b;
