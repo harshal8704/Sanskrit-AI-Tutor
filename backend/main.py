@@ -108,6 +108,41 @@ def get_numbers_lesson():
     data = db.get_numbers()
     return {"success": True, "data": data}
 
+@app.get("/api/lessons/self-intro")
+def get_self_intro_lesson():
+    data = db.get_self_intro()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/pronouns")
+def get_pronouns():
+    """Get pronouns list"""
+    return db.get_pronouns()
+
+@app.get("/api/lessons/verbs")
+def get_verbs():
+    """Get verbs list"""
+    return db.get_verbs()
+
+@app.get("/api/lessons/nouns")
+def get_nouns():
+    """Get nouns list for genders lesson"""
+    return db.get_nouns()
+
+@app.get("/api/lessons/family")
+def get_family():
+    """Get family relationship words"""
+    return db.get_family()
+
+@app.get("/api/lessons/questions")
+def get_question_words():
+    """Get question words (prashna padas)"""
+    return db.get_question_words()
+
+@app.get("/api/lessons/time")
+def get_time_and_days():
+    """Get time and days vocabulary"""
+    return db.get_time_and_days()
+
 @app.get("/progress/{username}")
 def get_progress(username: str):
     return db.get_user_progress(username)

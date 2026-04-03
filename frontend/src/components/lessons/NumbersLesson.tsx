@@ -109,7 +109,7 @@ export default function NumbersLesson({ onBack }: { onBack: () => void }) {
             </motion.div>
 
             {/* Tap-to-Reveal Grid */}
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '30px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '20px' }}>
                 <AnimatePresence mode="popLayout">
                     {numbers.map((item, index) => {
                         const theme = colorThemes[index % colorThemes.length];
@@ -121,22 +121,22 @@ export default function NumbersLesson({ onBack }: { onBack: () => void }) {
                                 key={item.id}
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                whileHover={isActive ? {} : { scale: 1.03, y: -5 }}
+                                whileHover={isActive ? {} : { scale: 1.05, y: -5 }}
                                 transition={{ type: 'spring', stiffness: 200, damping: 20 }}
                                 onClick={() => handleCardClick(item.id)}
                                 className="zen-card cursor-pointer"
                                 style={{ 
-                                    padding: isActive ? '40px' : '60px', 
+                                    padding: isActive ? '30px' : '40px', 
                                     display: 'flex', 
                                     flexDirection: 'column', 
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     border: `1px solid ${isActive ? 'transparent' : 'var(--border-soft)'}`,
-                                    borderRadius: '30px',
+                                    borderRadius: '24px',
                                     background: isActive ? `linear-gradient(135deg, ${theme.from} 0%, ${theme.to} 100%)` : 'var(--bg-card)',
-                                    boxShadow: isActive ? `0 25px 60px -15px ${theme.glow}` : '0 10px 30px rgba(0,0,0,0.02)',
+                                    boxShadow: isActive ? `0 20px 40px -10px ${theme.glow}` : '0 8px 20px rgba(0,0,0,0.03)',
                                     color: isActive ? '#fff' : 'var(--text-main)',
-                                    minHeight: '280px',
+                                    minHeight: '220px',
                                     position: 'relative',
                                     overflow: 'hidden',
                                     transition: 'background 0.4s ease, box-shadow 0.4s ease'
@@ -148,48 +148,49 @@ export default function NumbersLesson({ onBack }: { onBack: () => void }) {
                                         animate={{ opacity: 1, scale: 1 }}
                                         style={{ textAlign: 'center', width: '100%', zIndex: 2 }}
                                     >
-                                        <div style={{ fontSize: '1.2rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '4px', color: 'rgba(255,255,255,0.9)', marginBottom: '20px' }}>
+                                        <div style={{ fontSize: '1rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '4px', color: 'rgba(255,255,255,0.9)', marginBottom: '16px' }}>
                                             Number {item.number}
                                         </div>
-                                        <div className="devanagari" style={{ fontSize: '4.8rem', fontWeight: 900, marginBottom: '10px', textShadow: '0 8px 16px rgba(0,0,0,0.25)', color: '#fff' }}>
+                                        <div className="devanagari" style={{ fontSize: item.sanskrit.length > 8 ? '2.8rem' : '3.8rem', fontWeight: 900, marginBottom: '8px', textShadow: '0 8px 16px rgba(0,0,0,0.25)', color: '#fff' }}>
                                             {item.sanskrit}
                                         </div>
-                                        <div style={{ fontSize: '1.6rem', fontWeight: 800, letterSpacing: '2px', textTransform: 'uppercase', color: '#fff', textShadow: '0 2px 5px rgba(0,0,0,0.1)' }}>
+                                        <div style={{ fontSize: '1.2rem', fontWeight: 800, letterSpacing: '1px', textTransform: 'uppercase', color: '#fff', textShadow: '0 2px 5px rgba(0,0,0,0.1)' }}>
                                             {item.transliteration}
                                         </div>
                                         
-                                        {/* Visual Dots for Quantity */}
-                                        <div className="flex flex-wrap justify-center gap-3 mt-10" style={{ maxWidth: '400px', margin: '2.5rem auto 0 auto' }}>
-                                            {Array.from({ length: Math.min(item.number, 20) }).map((_, i) => (
+                                        {/* Visual Dots for Quantity - Max 10 dots to save space */}
+                                        <div className="flex flex-wrap justify-center gap-2 mt-6" style={{ maxWidth: '400px', margin: '1.5rem auto 0 auto' }}>
+                                            {Array.from({ length: Math.min(item.number, 10) }).map((_, i) => (
                                                 <motion.div
                                                     key={i}
                                                     initial={{ opacity: 0, scale: 0 }}
                                                     animate={{ opacity: 1, scale: 1 }}
                                                     transition={{ delay: 0.1 + (i * 0.05) }}
                                                     style={{
-                                                        width: '18px',
-                                                        height: '18px',
+                                                        width: '12px',
+                                                        height: '12px',
                                                         borderRadius: '50%',
                                                         background: '#fff',
                                                         boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
                                                     }}
                                                 />
                                             ))}
-                                            {item.number > 20 && (
+                                            {item.number > 10 && (
                                                 <motion.div
                                                     initial={{ opacity: 0 }}
                                                     animate={{ opacity: 1 }}
                                                     style={{ 
                                                         background: 'rgba(255,255,255,0.2)', 
-                                                        padding: '4px 12px', 
-                                                        borderRadius: '10px', 
-                                                        fontSize: '0.9rem', 
+                                                        padding: '4px 10px', 
+                                                        borderRadius: '8px', 
+                                                        fontSize: '0.8rem', 
                                                         fontWeight: 900,
                                                         display: 'flex',
-                                                        alignItems: 'center'
+                                                        alignItems: 'center',
+                                                        marginLeft: '4px'
                                                     }}
                                                 >
-                                                    + { (item.number - 20).toLocaleString() } more
+                                                    + { (item.number - 10).toLocaleString() } more
                                                 </motion.div>
                                             )}
                                         </div>
@@ -201,7 +202,7 @@ export default function NumbersLesson({ onBack }: { onBack: () => void }) {
                                         style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
                                     >
                                         <div style={{ 
-                                            fontSize: item.number >= 1000 ? '4rem' : '7rem', 
+                                            fontSize: item.number >= 1000 ? '3rem' : '5rem', 
                                             fontWeight: 950, 
                                             background: `linear-gradient(135deg, ${theme.from} 0%, ${theme.to} 100%)`, 
                                             WebkitBackgroundClip: 'text', 
@@ -212,9 +213,6 @@ export default function NumbersLesson({ onBack }: { onBack: () => void }) {
                                         }}>
                                             {item.number.toLocaleString()}
                                         </div>
-                                        <span style={{ marginTop: '20px', fontSize: '0.9rem', fontWeight: 800, color: 'var(--text-dim)', letterSpacing: '3px', textTransform: 'uppercase' }}>
-                                            Tap Reveal
-                                        </span>
                                     </motion.div>
                                 )}
                                 
@@ -222,9 +220,9 @@ export default function NumbersLesson({ onBack }: { onBack: () => void }) {
                                 {isActive && (
                                     <div style={{ 
                                         position: 'absolute', 
-                                        right: '-20px', 
-                                        bottom: '-40px', 
-                                        fontSize: item.number >= 1000 ? '8rem' : '12rem', 
+                                        right: '-10px', 
+                                        bottom: '-20px', 
+                                        fontSize: item.number >= 1000 ? '5rem' : '8rem', 
                                         fontWeight: 900, 
                                         color: '#fff', 
                                         opacity: 0.12, 

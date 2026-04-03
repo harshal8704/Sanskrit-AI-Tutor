@@ -17,6 +17,13 @@ import {
 } from "lucide-react";
 import GreetingsLesson from "@/components/lessons/GreetingsLesson";
 import NumbersLesson from "@/components/lessons/NumbersLesson";
+import SelfIntroLesson from "@/components/lessons/SelfIntroLesson";
+import PronounsLesson from "@/components/lessons/PronounsLesson";
+import VerbsLesson from "@/components/lessons/VerbsLesson";
+import NounsLesson from "@/components/lessons/NounsLesson";
+import FamilyLesson from "@/components/lessons/FamilyLesson";
+import QuestionWordsLesson from "@/components/lessons/QuestionWordsLesson";
+import TimeLesson from "@/components/lessons/TimeLesson";
 
 const AlphabetFlashcards = () => {
   const [vowelImages, setVowelImages] = useState<string[]>([]);
@@ -220,7 +227,7 @@ export default function Lessons() {
             </div>
 
             <div style={{ fontSize: '1.2rem', lineHeight: '2', color: 'var(--text-main)', padding: '40px', background: 'var(--bg-main)', borderRadius: '24px', marginBottom: '40px' }}>
-              {selectedLesson.id !== 1 && selectedLesson.id !== 2 && selectedLesson.id !== 3 && selectedLesson.content}
+              {selectedLesson.id !== 1 && selectedLesson.id !== 2 && selectedLesson.id !== 3 && selectedLesson.id !== 4 && selectedLesson.id !== 5 && selectedLesson.id !== 6 && selectedLesson.id !== 7 && selectedLesson.id !== 8 && selectedLesson.id !== 9 && selectedLesson.id !== 10 && selectedLesson.content}
               
               {selectedLesson.id === 1 ? (
                 <AlphabetFlashcards />
@@ -228,6 +235,20 @@ export default function Lessons() {
                 <GreetingsLesson onBack={() => setSelectedLesson(null)} />
               ) : selectedLesson.id === 3 ? (
                 <NumbersLesson onBack={() => setSelectedLesson(null)} />
+              ) : selectedLesson.id === 4 ? (
+                <SelfIntroLesson onBack={() => setSelectedLesson(null)} />
+              ) : selectedLesson.id === 5 ? (
+                <PronounsLesson onBack={() => setSelectedLesson(null)} />
+              ) : selectedLesson.id === 6 ? (
+                <VerbsLesson onBack={() => setSelectedLesson(null)} />
+              ) : selectedLesson.id === 7 ? (
+                <NounsLesson onBack={() => setSelectedLesson(null)} />
+              ) : selectedLesson.id === 8 ? (
+                <FamilyLesson onBack={() => setSelectedLesson(null)} />
+              ) : selectedLesson.id === 9 ? (
+                <QuestionWordsLesson onBack={() => setSelectedLesson(null)} />
+              ) : selectedLesson.id === 10 ? (
+                <TimeLesson onBack={() => setSelectedLesson(null)} />
               ) : (
                 <motion.div 
                   initial={{ opacity: 0 }}

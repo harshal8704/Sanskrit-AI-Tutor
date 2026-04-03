@@ -70,7 +70,61 @@ class MockDB:
             with open(numbers_file, 'r', encoding='utf-8') as f:
                 return json.load(f)
         return []
-        
+
+    def get_self_intro(self) -> List[Dict]:
+        """Get self intro data"""
+        intro_file = os.path.join(self.data_dir, 'sanskritSelfIntro.json')
+        if os.path.exists(intro_file):
+            with open(intro_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
+    def get_pronouns(self) -> List[Dict]:
+        """Get pronouns data"""
+        pronouns_file = os.path.join(self.data_dir, 'sanskritPronouns.json')
+        if os.path.exists(pronouns_file):
+            with open(pronouns_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
+    def get_verbs(self) -> List[Dict]:
+        """Get verbs data"""
+        verbs_file = os.path.join(self.data_dir, 'sanskritVerbs.json')
+        if os.path.exists(verbs_file):
+            with open(verbs_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
+    def get_nouns(self) -> List[Dict]:
+        """Get nouns data for genders lesson"""
+        nouns_file = os.path.join(self.data_dir, 'sanskritNouns.json')
+        if os.path.exists(nouns_file):
+            with open(nouns_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
+    def get_family(self) -> List[Dict]:
+        """Get family relationship words"""
+        family_file = os.path.join(self.data_dir, 'sanskritFamily.json')
+        if os.path.exists(family_file):
+            with open(family_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
+    def get_question_words(self) -> List[Dict]:
+        """Get question words (prashna padas)"""
+        qw_file = os.path.join(self.data_dir, 'sanskritQuestionWords.json')
+        if os.path.exists(qw_file):
+            with open(qw_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
+    def get_time_and_days(self) -> List[Dict]:
+        """Get time and days vocabulary"""
+        td_file = os.path.join(self.data_dir, 'sanskritTimeAndDays.json')
+        if os.path.exists(td_file):
+            with open(td_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
         return []
 
     def get_user_progress(self, username: str) -> Dict:

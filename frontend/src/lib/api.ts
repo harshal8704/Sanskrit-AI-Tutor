@@ -28,6 +28,13 @@ export const api = {
     getById: (id: string | number) => apiRequest(`/lessons/${id}`),
     getGreetings: () => apiRequest('/api/lessons/greetings'),
     getNumbers: () => apiRequest('/api/lessons/numbers'),
+    getSelfIntro: () => apiRequest('/api/lessons/self-intro'),
+    getPronouns: () => apiRequest('/api/lessons/pronouns'),
+    getVerbs: () => apiRequest('/api/lessons/verbs'),
+    getNouns: () => apiRequest('/api/lessons/nouns'),
+    getFamily: () => apiRequest('/api/lessons/family'),
+    getQuestionWords: () => apiRequest('/api/lessons/questions'),
+    getTimeAndDays: () => apiRequest('/api/lessons/time'),
   },
   user: {
     getProgress: (username: string) => apiRequest(`/progress/${username}`),

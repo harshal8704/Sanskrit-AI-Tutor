@@ -128,6 +128,72 @@
         }
       ],
       "prerequisites": [1, 2]
+    },
+    {
+      "id": 5,
+      "title": "Basic Pronouns",
+      "description": "Learn the most common Sanskrit pronouns and their gendered forms",
+      "level": "beginner",
+      "duration": 15,
+      "difficulty": 3,
+      "content": "pronouns_special",
+      "quiz": [],
+      "prerequisites": [1, 2]
+    },
+    {
+      "id": 6,
+      "title": "Basic Action Words (Verbs)",
+      "description": "Learn the 10 most common daily actions and how to use them with pronouns",
+      "level": "beginner",
+      "duration": 20,
+      "difficulty": 4,
+      "content": "verbs_special",
+      "quiz": [],
+      "prerequisites": [5]
+    },
+    {
+      "id": 7,
+      "title": "Nouns & Genders (Sorting)",
+      "description": "Learn the secret 'cheat code' to identify Sanskrit genders and master word classifications.",
+      "level": "beginner",
+      "duration": 15,
+      "difficulty": 4,
+      "content": "nouns_special",
+      "quiz": [],
+      "prerequisites": [6]
+    },
+    {
+      "id": 8,
+      "title": "Family & Relationships (कुटुम्बः)",
+      "description": "Learn Sanskrit words for family members with an interactive family tree map.",
+      "level": "beginner",
+      "duration": 20,
+      "difficulty": 3,
+      "content": "family_special",
+      "quiz": [],
+      "prerequisites": [7]
+    },
+    {
+      "id": 9,
+      "title": "Question Words (प्रश्नपदानि)",
+      "description": "Master the 8 essential Sanskrit question words through an interactive chatbot interrogation game.",
+      "level": "beginner",
+      "duration": 20,
+      "difficulty": 3,
+      "content": "questions_special",
+      "quiz": [],
+      "prerequisites": [8]
+    },
+    {
+      "id": 10,
+      "title": "Time & Days (समयः वासरः च)",
+      "description": "Learn to tell the time in Sanskrit with an interactive draggable clock and master the days of the week through a timeline puzzle.",
+      "level": "beginner",
+      "duration": 25,
+      "difficulty": 3,
+      "content": "time_special",
+      "quiz": [],
+      "prerequisites": [9]
     }
   ]
 }
