@@ -270,13 +270,13 @@ export default function GamePage() {
   const [user, setUser] = useState<any>(null);
   const [position, setPosition] = useState(1);
   const [currentWord, setCurrentWord] = useState<any>(null);
-  const [hint, setHint] = useState("");
-  const [userAnswer, setUserAnswer] = useState("");
+  const [allWords, setAllWords] = useState<any[]>([]);
+  const [currentOptions, setCurrentOptions] = useState<string[]>([]);
+  const [diceValue, setDiceValue] = useState<number | null>(null);
   const [feedback, setFeedback] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
   const [history, setHistory] = useState<any[]>([]);
-  const [showHint, setShowHint] = useState(false);
   const [streak, setStreak] = useState(0);
   const [totalCorrect, setTotalCorrect] = useState(0);
   const [totalWrong, setTotalWrong] = useState(0);
@@ -297,6 +297,7 @@ export default function GamePage() {
   const [oddStarted, setOddStarted] = useState(false);
   const [oddSelected, setOddSelected] = useState<number | null>(null);
   const [oddHistory, setOddHistory] = useState<any[]>([]);
+  const [oddWordsDb, setOddWordsDb] = useState<any[]>([]);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -316,16 +317,53 @@ export default function GamePage() {
   }, [router]);
 
   // ── Odd One Out Functions ──
+  const generateOddTurn = (db: any[]) => {
+    const categories = Array.from(new Set(db.map(w => w.category)));
+    const targetCategory = categories[Math.floor(Math.random() * categories.length)];
+    
+    const categoryWords = db.filter(w => w.category === targetCategory);
+    const otherWords = db.filter(w => w.category !== targetCategory);
+    
+    // Pick 3 from categoryWords
+    const normalWords: any[] = [];
+    const tempCat = [...categoryWords];
+    for (let i = 0; i < 3 && tempCat.length > 0; i++) {
+        const idx = Math.floor(Math.random() * tempCat.length);
+        normalWords.push(tempCat[idx]);
+        tempCat.splice(idx, 1);
+    }
+    
+    // Pick 1 from otherWords
+    const oddWord = otherWords[Math.floor(Math.random() * otherWords.length)];
+    
+    const options = [...normalWords, oddWord];
+    // Shuffle options
+    for (let i = options.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [options[i], options[j]] = [options[j], options[i]];
+    }
+    
+    const correctIndex = options.findIndex(o => o.id === oddWord.id);
+
+    setOddQuestion({
+        category: targetCategory,
+        options: options,          // objects {id, sanskrit, english, category}
+        oddWord: oddWord,          // The correct answer
+        correct_index: correctIndex
+    });
+  };
+
   const startOddGame = async () => {
     try {
-      const res = await api.game.oddQuestion();
-      setOddQuestion(res);
+      const res = await api.game.getOddOneOutWords();
+      setOddWordsDb(res);
       setOddStarted(true);
       setOddFeedback(null);
       setOddScore(0);
       setOddTotal(0);
       setOddSelected(null);
       setOddHistory([]);
+      generateOddTurn(res);
     } catch (err) {
       console.error("Failed to start Odd One Out:", err);
     }
@@ -336,115 +374,184 @@ export default function GamePage() {
     setOddLoading(true);
     setOddSelected(choiceIndex);
 
-    try {
-      const res = await api.game.oddAnswer({
-        question_data: oddQuestion,
-        user_choice: choiceIndex + 1,
-      });
-      setOddFeedback(res);
-      setOddTotal((t) => t + 1);
-      if (res.is_correct) setOddScore((s) => s + 1);
+    const isCorrect = choiceIndex === oddQuestion.correct_index;
+    const selectedOption = oddQuestion.options[choiceIndex];
 
-      setOddHistory((prev) => [
+    const feedbackStr = `You chose ${selectedOption.english} (${selectedOption.sanskrit}). ${selectedOption.english} is a ${selectedOption.category}. The other 3 are ${oddQuestion.category}. The correct odd one out was ${oddQuestion.oddWord.english}!`;
+    
+    const newFeedback = {
+        is_correct: isCorrect,
+        correct_index: oddQuestion.correct_index,
+        message: feedbackStr,
+        correct_word: oddQuestion.oddWord
+    };
+
+    setOddFeedback(newFeedback);
+    setOddTotal((t) => t + 1);
+    if (isCorrect) setOddScore((s) => s + 1);
+
+    setOddHistory((prev) => [
         {
           category: oddQuestion.category,
-          correct: res.is_correct,
-          correctWord: res.correct_word,
+          correct: isCorrect,
+          correctWord: oddQuestion.oddWord.sanskrit,
         },
         ...prev,
-      ]);
+    ]);
 
-      // Auto-load next question after delay
-      setTimeout(async () => {
-        setOddQuestion(res.next_question);
+    setTimeout(async () => {
+        generateOddTurn(oddWordsDb);
         setOddFeedback(null);
         setOddSelected(null);
         setOddLoading(false);
-      }, 2000);
-    } catch (err) {
-      console.error("Odd answer failed:", err);
-      setOddLoading(false);
+    }, 4000);
+  };
+
+  const checkBoard = (pos: number) => {
+    let finalPos = pos;
+    let event = "correct";
+    const ladderData = [
+      { start: 2, end: 11 }, { start: 4, end: 14 },
+      { start: 9, end: 31 }, { start: 16, end: 26 },
+      { start: 20, end: 38 }, { start: 28, end: 47 },
+      { start: 35, end: 45 }
+    ];
+    const snakeData = [
+      { start: 12, end: 2 }, { start: 17, end: 7 },
+      { start: 25, end: 11 }, { start: 32, end: 15 },
+      { start: 38, end: 24 }, { start: 44, end: 31 },
+      { start: 49, end: 38 }
+    ];
+
+    const ladder = ladderData.find(l => l.start === pos);
+    if (ladder) {
+      finalPos = ladder.end;
+      event = "ladder";
+    } else {
+      const snake = snakeData.find(s => s.start === pos);
+      if (snake) {
+        finalPos = snake.end;
+        event = "snake";
+      }
     }
+    return { finalPos, event };
+  };
+
+  const generateTurn = (wordsDb: any[]) => {
+    const target = wordsDb[Math.floor(Math.random() * wordsDb.length)];
+    const distractors = wordsDb.filter(w => w.id !== target.id);
+    
+    // Pick 3 random distractors
+    const chosenDistractors: string[] = [];
+    while (chosenDistractors.length < 3 && distractors.length > 0) {
+      const idx = Math.floor(Math.random() * distractors.length);
+      chosenDistractors.push(distractors[idx].englishMeaning);
+      distractors.splice(idx, 1);
+    }
+    
+    const optionsArray = [target.englishMeaning, ...chosenDistractors];
+    // Shuffle Array
+    for (let i = optionsArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [optionsArray[i], optionsArray[j]] = [optionsArray[j], optionsArray[i]];
+    }
+    
+    setCurrentWord(target);
+    setCurrentOptions(optionsArray);
   };
 
   const startGame = async () => {
     try {
-      const res = await api.game.start();
-      setPosition(res.position);
-      setCurrentWord(res.next_word);
-      setHint(res.next_word.hint);
+      const res = await api.game.getSnakeLadderWords();
+      setAllWords(res);
+      setPosition(1);
       setGameStarted(true);
       setFeedback(null);
       setHistory([]);
       setStreak(0);
       setTotalCorrect(0);
       setTotalWrong(0);
-      setShowHint(false);
-      setTimeout(() => inputRef.current?.focus(), 300);
+      setDiceValue(null);
+      generateTurn(res);
     } catch (err) {
       console.error("Failed to start game:", err);
     }
   };
 
-  const submitAnswer = async () => {
-    if (!userAnswer.trim() || !currentWord || loading) return;
+  const submitAnswer = async (selectedOption: string) => {
+    if (!currentWord || loading) return;
     setLoading(true);
     setFeedback(null);
-    setShowHint(false);
+    setDiceValue(null);
 
-    try {
-      const res = await api.game.turn({
-        current_position: position,
-        asked_word: currentWord.sanskrit,
-        user_answer: userAnswer.trim(),
-      });
+    const isCorrect = selectedOption === currentWord.englishMeaning;
+    
+    let roll = 0;
+    let targetPos = position;
+    let finalPos = position;
+    let currentEvent = isCorrect ? "correct" : "wrong";
 
-      setFeedback(res);
-      setPosition(res.position);
+    if (isCorrect) {
+      roll = Math.floor(Math.random() * 6) + 1;
+      setDiceValue(roll);
+      targetPos = Math.min(50, position + roll);
+      const boardRes = checkBoard(targetPos);
+      finalPos = boardRes.finalPos;
+      currentEvent = boardRes.event;
+    } else {
+      finalPos = Math.max(1, position - 2);
+      currentEvent = "snake"; // visual feedback of sliding down
+    }
 
-      if (res.event === "ladder" || res.event === "win" || res.event === "correct") {
-        setAnimationState("correct");
-        setStreak((s) => s + 1);
-        setTotalCorrect((c) => c + 1);
-        // Add ladder particles
+    const isWin = finalPos === 50;
+    if (isWin) currentEvent = "win";
+
+    const res = {
+      event: currentEvent,
+      position: finalPos,
+      correct_answer: currentWord.englishMeaning,
+      game_over: isWin
+    };
+
+    setFeedback(res);
+    setPosition(res.position);
+
+    if (isCorrect) {
+      setAnimationState("correct");
+      setStreak((s) => s + 1);
+      setTotalCorrect((c) => c + 1);
+      if (res.event === "ladder") {
         const id = Date.now();
         setParticles(prev => [...prev, { id, emoji: "🪜", color: "#27ae60" }]);
         setTimeout(() => setParticles(prev => prev.filter(p => p.id !== id)), 2000);
-      } else {
-        setAnimationState("wrong");
-        setStreak(0);
-        setTotalWrong((w) => w + 1);
-        // Add snake particles
-        const id = Date.now();
-        setParticles(prev => [...prev, { id, emoji: "🐍", color: "#e74c3c" }]);
-        setTimeout(() => setParticles(prev => prev.filter(p => p.id !== id)), 2000);
       }
-
-      const entry = {
-        word: currentWord.sanskrit,
-        answer: userAnswer.trim(),
-        correct: res.event === "ladder" || res.event === "win" || res.event === "correct",
-        correctAnswer: res.correct_answer,
-        event: res.event,
-      };
-      setHistory((prev) => [entry, ...prev]);
-
-      setTimeout(() => setAnimationState("idle"), 600);
-
-      if (res.game_over) {
-        setGameStarted(false);
-      } else {
-        setCurrentWord(res.next_word);
-        setHint(res.next_word.hint);
-      }
-
-      setUserAnswer("");
-      setTimeout(() => inputRef.current?.focus(), 300);
-    } catch (err) {
-      console.error("Turn failed:", err);
-    } finally {
-      setLoading(false);
+    } else {
+      setAnimationState("wrong");
+      setStreak(0);
+      setTotalWrong((w) => w + 1);
+      const id = Date.now();
+      setParticles(prev => [...prev, { id, emoji: "🐍", color: "#e74c3c" }]);
+      setTimeout(() => setParticles(prev => prev.filter(p => p.id !== id)), 2000);
     }
+
+    const entry = {
+      word: currentWord.sanskrit,
+      answer: selectedOption,
+      correct: isCorrect,
+      correctAnswer: res.correct_answer,
+      event: res.event,
+    };
+    setHistory((prev) => [entry, ...prev]);
+
+    setTimeout(() => setAnimationState("idle"), 600);
+
+    if (res.game_over) {
+      setGameStarted(false);
+    } else {
+      generateTurn(allWords);
+    }
+
+    setLoading(false);
   };
 
   const progressPercent = Math.min((position / TOTAL_CELLS) * 100, 100);
@@ -880,28 +987,6 @@ export default function GamePage() {
                       >
                         Translate This Word
                       </span>
-                      <motion.button
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                        onClick={() => setShowHint(!showHint)}
-                        style={{
-                          background: showHint
-                            ? "rgba(243,156,18,0.1)"
-                            : "var(--bg-main)",
-                          border: "1px solid var(--border-soft)",
-                          borderRadius: "12px",
-                          padding: "8px 16px",
-                          cursor: "pointer",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "6px",
-                          fontSize: "0.8rem",
-                          fontWeight: "700",
-                          color: showHint ? "#f39c12" : "var(--text-dim)",
-                        }}
-                      >
-                        <Lightbulb size={14} /> Hint
-                      </motion.button>
                     </div>
 
                     <motion.div
@@ -925,59 +1010,56 @@ export default function GamePage() {
                     </motion.div>
 
                     <AnimatePresence>
-                      {showHint && (
+                      {diceValue && (
                         <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
+                          initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
+                          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                          exit={{ opacity: 0, scale: 0.5 }}
+                          className="flex justify-center items-center gap-3"
                           style={{
-                            textAlign: "center",
-                            color: "#f39c12",
-                            fontSize: "0.95rem",
-                            marginBottom: "10px",
-                            fontStyle: "italic",
+                            background: "rgba(136,84,208,0.1)",
+                            padding: "16px 24px",
+                            borderRadius: "16px",
+                            display: "flex",
+                            margin: "0 auto",
+                            width: "fit-content",
+                            color: "#8854d0",
+                            fontWeight: "800",
+                            fontSize: "1.2rem"
                           }}
                         >
-                          💡 {hint}
+                          <Dice5 size={28} />
+                          Rolled: +{diceValue}
                         </motion.div>
                       )}
                     </AnimatePresence>
                   </div>
 
-                  <div style={{ padding: "20px 40px 40px" }}>
-                    <div
-                      className="flex gap-3"
-                      style={{ alignItems: "stretch" }}
-                    >
-                      <input
-                        ref={inputRef}
-                        type="text"
-                        value={userAnswer}
-                        onChange={(e) => setUserAnswer(e.target.value)}
-                        onKeyDown={(e) => e.key === "Enter" && submitAnswer()}
-                        placeholder="Type the English translation..."
-                        style={{
-                          flex: 1,
-                          fontSize: "1.2rem",
-                          padding: "18px 24px",
-                          borderRadius: "18px",
-                        }}
-                      />
-                      <motion.button
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={submitAnswer}
-                        disabled={loading || !userAnswer.trim()}
-                        className="btn-primary"
-                        style={{
-                          padding: "18px 28px",
-                          borderRadius: "18px",
-                          background: "#8854d0",
-                          boxShadow: "0 10px 25px rgba(136,84,208,0.2)",
-                        }}
-                      >
-                        <Send size={20} />
-                      </motion.button>
+                  <div style={{ padding: "0 40px 40px" }}>
+                    <div className="grid grid-cols-2 gap-4">
+                      {currentOptions.map((opt, i) => (
+                        <motion.button
+                          key={i}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          onClick={() => submitAnswer(opt)}
+                          disabled={loading}
+                          style={{
+                            padding: "18px 20px",
+                            background: "var(--bg-card)",
+                            border: "2px solid var(--border-soft)",
+                            borderRadius: "16px",
+                            fontSize: "1.1rem",
+                            fontWeight: "700",
+                            color: "var(--text-main)",
+                            cursor: loading ? "not-allowed" : "pointer",
+                            transition: "all 0.2s"
+                          }}
+                          className={`${loading ? 'opacity-50' : 'hover:border-[#8854d0] hover:text-[#8854d0]'}`}
+                        >
+                          {opt}
+                        </motion.button>
+                      ))}
                     </div>
                   </div>
                 </motion.div>

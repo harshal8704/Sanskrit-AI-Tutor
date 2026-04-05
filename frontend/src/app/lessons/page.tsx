@@ -283,7 +283,7 @@ export default function Lessons() {
               </div>
 
               <div className="flex gap-4">
-                <button className="btn-secondary">Download PDF</button>
+
                 <button className="btn-primary" onClick={() => alert("Quiz manifest arriving soon!")}>
                   Mark as Complete <CheckCircle2 size={18} />
                 </button>

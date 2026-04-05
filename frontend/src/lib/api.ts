@@ -35,6 +35,7 @@ export const api = {
     getFamily: () => apiRequest('/api/lessons/family'),
     getQuestionWords: () => apiRequest('/api/lessons/questions'),
     getTimeAndDays: () => apiRequest('/api/lessons/time'),
+    getDailyQuestions: () => apiRequest('/api/daily-questions'),
   },
   user: {
     getProgress: (username: string) => apiRequest(`/progress/${username}`),
@@ -54,5 +55,7 @@ export const api = {
     oddQuestion: () => apiRequest('/game/odd/question'),
     oddAnswer: (data: { question_data: any; user_choice: number }) =>
       apiRequest('/game/odd/answer', { method: 'POST', body: JSON.stringify(data) }),
+    getSnakeLadderWords: () => apiRequest('/api/game/snake-ladder-words'),
+    getOddOneOutWords: () => apiRequest('/api/game/odd-one-out-words'),
   }
 };

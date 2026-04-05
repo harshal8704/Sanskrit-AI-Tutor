@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import Sidebar from "@/components/Sidebar";
+import DailyStreak from "@/components/DailyStreak";
 import { motion } from "framer-motion";
 import { 
   Trophy, 
@@ -66,6 +67,11 @@ export default function Dashboard() {
           <h1 style={{ fontSize: '2.5rem', marginBottom: '8px' }}>शुभस्य संवर्धनं, {user.username}</h1>
           <p style={{ color: 'var(--text-dim)' }}>Welcome back. Your quiet space for Sanskrit learning is ready.</p>
         </motion.header>
+
+        {/* Daily Streak Section */}
+        <div style={{ marginBottom: '40px' }}>
+          <DailyStreak />
+        </div>
 
         {/* Stats Grid */}
         <div className="grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', marginBottom: '40px' }}>

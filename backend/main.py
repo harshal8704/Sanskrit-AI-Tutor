@@ -143,6 +143,21 @@ def get_time_and_days():
     """Get time and days vocabulary"""
     return db.get_time_and_days()
 
+@app.get("/api/daily-questions")
+def get_daily_questions():
+    """Get daily questions for streak challenge"""
+    return db.get_daily_questions()
+
+@app.get("/api/game/snake-ladder-words")
+def get_snake_ladder_words():
+    """Get words for Snake & Ladder game"""
+    return db.get_snake_ladder_words()
+
+@app.get("/api/game/odd-one-out-words")
+def get_odd_one_out_words():
+    """Get words for Odd One Out game"""
+    return db.get_odd_one_out_words()
+
 @app.get("/progress/{username}")
 def get_progress(username: str):
     return db.get_user_progress(username)

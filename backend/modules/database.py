@@ -127,6 +127,30 @@ class MockDB:
                 return json.load(f)
         return []
 
+    def get_daily_questions(self) -> List[Dict]:
+        """Get daily streak questions"""
+        questions_file = os.path.join(self.data_dir, 'dailyQuestions.json')
+        if os.path.exists(questions_file):
+            with open(questions_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
+    def get_snake_ladder_words(self) -> List[Dict]:
+        """Get snake & ladder words dataset"""
+        words_file = os.path.join(self.data_dir, 'snakeLadderWords.json')
+        if os.path.exists(words_file):
+            with open(words_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
+    def get_odd_one_out_words(self) -> List[Dict]:
+        """Get odd one out words dataset"""
+        words_file = os.path.join(self.data_dir, 'oddOneOutWords.json')
+        if os.path.exists(words_file):
+            with open(words_file, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
     def get_user_progress(self, username: str) -> Dict:
         """Get user progress"""
         progress_file = os.path.join(self.data_dir, f'{username}_progress.json')
