@@ -707,10 +707,15 @@ export default function GamePage() {
                   lineHeight: "1.7",
                 }}
               >
-                Test your Sanskrit vocabulary in a classic game of Snake & Ladder.
-                Each correct translation advances you <strong>+5</strong> positions.
-                Be careful—mistakes will cause you to slide back <strong>-3</strong> positions.
-                Reach position 50 to win!
+                Test your Sanskrit vocabulary in our enhanced Snake & Ladder trial.
+                <br /><br />
+                🎲 <strong>Correct:</strong> Roll the dice to move <strong>1-6</strong> steps.
+                <br />
+                🐍 <strong>Wrong:</strong> Slide back <strong>-2</strong> positions.
+                <br />
+                🪜 <strong>Ladders:</strong> Divine shortcuts to boost your ascent.
+                <br />
+                🏆 <strong>Win:</strong> Reach position <strong>50</strong> to achieve mastery!
               </p>
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -1266,7 +1271,7 @@ export default function GamePage() {
                   </div>
                   <div className="flex flex-col gap-5">
                     <div className="flex gap-4 items-start">
-                      <span style={{ fontSize: "1.2rem" }}>✅</span>
+                      <span style={{ fontSize: "1.2rem" }}>🎲</span>
                       <p
                         style={{
                           fontSize: "0.85rem",
@@ -1274,7 +1279,7 @@ export default function GamePage() {
                           lineHeight: "1.5",
                         }}
                       >
-                        Correct answer = Move forward <strong>+5</strong> positions
+                        Correct answer = Roll dice and advance <strong>1-6</strong> steps
                       </p>
                     </div>
                     <div className="flex gap-4 items-start">
@@ -1286,7 +1291,7 @@ export default function GamePage() {
                           lineHeight: "1.5",
                         }}
                       >
-                        Wrong answer = Slide <strong>-3</strong> positions
+                        Wrong answer = Slide back <strong>-2</strong> positions
                       </p>
                     </div>
                     <div className="flex gap-4 items-start">
@@ -1298,7 +1303,7 @@ export default function GamePage() {
                           lineHeight: "1.5",
                         }}
                       >
-                        Reach position <strong>50</strong> to win the game
+                        Reach position <strong>50</strong> to achieve victory
                       </p>
                     </div>
                   </div>

@@ -37,9 +37,8 @@ export default function NumbersLesson({ onBack }: { onBack: () => void }) {
         const fetchNumbers = async () => {
             try {
                 const result = await api.lessons.getNumbers();
-                if (result.success) {
-                    setNumbers(result.data);
-                }
+                const data = result?.success ? result.data : (Array.isArray(result) ? result : []);
+                setNumbers(data);
             } catch (error) {
                 console.error("Failed to fetch numbers", error);
             } finally {
@@ -138,7 +137,7 @@ export default function NumbersLesson({ onBack }: { onBack: () => void }) {
                 </div>
                 <div style={{ padding: '30px', background: '#fff' }}>
                     <img 
-                        src="/images/lessons/sanskrit_numbers_chart.png" 
+                        src="/images/lessons/sanskrit_numbers_chart.jpg" 
                         alt="Sanskrit Numbers 1-100 Reference Chart" 
                         style={{ 
                             width: '100%', 

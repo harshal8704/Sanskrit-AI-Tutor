@@ -116,32 +116,38 @@ def get_self_intro_lesson():
 @app.get("/api/lessons/pronouns")
 def get_pronouns():
     """Get pronouns list"""
-    return db.get_pronouns()
+    data = db.get_pronouns()
+    return {"success": True, "data": data}
 
 @app.get("/api/lessons/verbs")
 def get_verbs():
     """Get verbs list"""
-    return db.get_verbs()
+    data = db.get_verbs()
+    return {"success": True, "data": data}
 
 @app.get("/api/lessons/nouns")
 def get_nouns():
     """Get nouns list for genders lesson"""
-    return db.get_nouns()
+    data = db.get_nouns()
+    return {"success": True, "data": data}
 
 @app.get("/api/lessons/family")
 def get_family():
     """Get family relationship words"""
-    return db.get_family()
+    data = db.get_family()
+    return {"success": True, "data": data}
 
 @app.get("/api/lessons/questions")
 def get_question_words():
     """Get question words (prashna padas)"""
-    return db.get_question_words()
+    data = db.get_question_words()
+    return {"success": True, "data": data}
 
 @app.get("/api/lessons/time")
 def get_time_and_days():
     """Get time and days vocabulary"""
-    return db.get_time_and_days()
+    data = db.get_time_and_days()
+    return {"success": True, "data": data}
 
 @app.get("/api/daily-questions")
 def get_daily_questions():

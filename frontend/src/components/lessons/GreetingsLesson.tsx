@@ -36,9 +36,8 @@ export default function GreetingsLesson({ onBack }: { onBack: () => void }) {
         const fetchGreetings = async () => {
             try {
                 const result = await api.lessons.getGreetings();
-                if (result.success) {
-                    setPhrases(result.data);
-                }
+                const data = result?.success ? result.data : (Array.isArray(result) ? result : []);
+                setPhrases(data);
             } catch (error) {
                 console.error("Failed to fetch greetings", error);
             } finally {

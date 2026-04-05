@@ -2182,6 +2182,54 @@
         "api-added"
       ],
       "created_at": "2026-04-03T20:54:11.883593"
+    },
+    {
+      "id": 137,
+      "sanskrit": "pratisthaapay अस्ति।",
+      "devanagari": "pratisthaapay अस्ति।",
+      "translation": "Replace is.",
+      "words": [
+        "pratisthaapay"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-05T19:55:44.013838"
+    },
+    {
+      "id": 138,
+      "sanskrit": "pratisthaapay गच्छति।",
+      "devanagari": "pratisthaapay गच्छति।",
+      "translation": "Replace goes.",
+      "words": [
+        "pratisthaapay"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-05T19:55:44.013860"
+    },
+    {
+      "id": 139,
+      "sanskrit": "pratisthaapay पठति।",
+      "devanagari": "pratisthaapay पठति।",
+      "translation": "Replace reads.",
+      "words": [
+        "pratisthaapay"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-05T19:55:44.013866"
     }
   ],
   "patterns": [
