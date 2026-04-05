@@ -54,6 +54,49 @@ class MockDB:
                 ]
             }
         ]
+
+    def _load_json_list(self, filename: str) -> List[Dict]:
+        file_path = os.path.join(self.data_dir, filename)
+        if os.path.exists(file_path):
+            with open(file_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
+    def get_greetings(self) -> List[Dict]:
+        """Get all greetings"""
+        return self._load_json_list('sanskritGreetings.json')
+
+    def get_numbers(self) -> List[Dict]:
+        """Get number lesson data"""
+        return self._load_json_list('sanskritNumbers.json')
+
+    def get_self_intro(self) -> List[Dict]:
+        """Get self introduction lesson data"""
+        return self._load_json_list('sanskritSelfIntro.json')
+
+    def get_pronouns(self) -> List[Dict]:
+        """Get pronoun lesson data"""
+        return self._load_json_list('sanskritPronouns.json')
+
+    def get_verbs(self) -> List[Dict]:
+        """Get verb lesson data"""
+        return self._load_json_list('sanskritVerbs.json')
+
+    def get_nouns(self) -> List[Dict]:
+        """Get noun lesson data"""
+        return self._load_json_list('sanskritNouns.json')
+
+    def get_family(self) -> List[Dict]:
+        """Get family lesson data"""
+        return self._load_json_list('sanskritFamily.json')
+
+    def get_question_words(self) -> List[Dict]:
+        """Get question words lesson data"""
+        return self._load_json_list('sanskritQuestionWords.json')
+
+    def get_time_and_days(self) -> List[Dict]:
+        """Get time and days lesson data"""
+        return self._load_json_list('sanskritTimeAndDays.json')
     
     def get_user_progress(self, username: str) -> Dict:
         """Get user progress"""

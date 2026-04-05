@@ -51,7 +51,7 @@ class SanskritTranslator:
             
         self.sentences = self.load_sentences()
         self.api_calls_today = 0
-        self.max_api_calls = 100
+        self.max_api_calls = 100  # Free API limits
         
         # AI Configuration
         self.api_key = os.getenv("XAI_API_KEY")
@@ -113,7 +113,7 @@ class SanskritTranslator:
                 for col in df.columns:
                     if col in required_columns:
                         df[col] = df[col].astype(str)
-                print(f"✅ Loaded {len(df)} user words from {self.csv_path}")
+                print(f"✅ Loaded {len(df)} newly learned Sanskrit words from {self.csv_path}")
                 return df
             else:
                 print(f"CSV file not found at {self.csv_path}. Creating new dataset with demo data.")

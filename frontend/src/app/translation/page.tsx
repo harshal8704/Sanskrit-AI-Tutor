@@ -16,7 +16,6 @@ import {
   BookMarked,
   Sparkles,
   Info,
-  ChevronRight,
   Zap,
   Volume2
 } from "lucide-react";
@@ -80,7 +79,8 @@ export default function Translation() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          style={{ marginBottom: '50px' }}
+          className="zen-card"
+          style={{ marginBottom: '40px', padding: '40px', borderRadius: '30px' }}
         >
           <div className="flex items-center gap-3 mb-4">
              <motion.div 
@@ -229,7 +229,7 @@ export default function Translation() {
                   transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                   className="flex flex-col gap-8"
                 >
-                  <div className="flex items-center justify-between px-4">
+                  <div className="flex items-center justify-between" style={{ padding: '0 20px' }}>
                     <div className="flex items-center gap-3" style={{ color: 'var(--text-dim)', fontSize: '0.8rem', fontWeight: '800' }}>
                       {results.source === 'database' ? <Database size={16} /> : <Globe size={16} />}
                       <span style={{ textTransform: 'uppercase', letterSpacing: '2px' }}>
@@ -320,12 +320,12 @@ export default function Translation() {
                       <motion.div 
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        className="zen-card p-20 text-center" 
-                        style={{ background: 'var(--bg-main)', borderStyle: 'dashed', borderWidth: '2px' }}
+                        className="zen-card" 
+                        style={{ padding: '80px', textAlign: 'center', background: 'rgba(var(--primary-rgb), 0.02)', border: '2px dashed var(--border-soft)' }}
                       >
                         <div style={{ fontSize: '4rem', marginBottom: '24px' }}>🕯️</div>
-                        <h3 className="mb-4" style={{ fontSize: '1.5rem' }}>No Result Found</h3>
-                        <p style={{ color: 'var(--text-dim)', maxWidth: '350px', margin: '0 auto', fontSize: '1.1rem' }}>We couldn't find a direct translation in our registry. Try enabling the AI Engine for a deeper search.</p>
+                        <h3 style={{ fontSize: '1.8rem', fontWeight: '800', marginBottom: '16px', color: 'var(--text-main)' }}>Void of Results</h3>
+                        <p style={{ color: 'var(--text-dim)', maxWidth: '400px', margin: '0 auto', fontSize: '1.1rem', lineHeight: '1.6' }}>We couldn't find a direct translation in our local registry. Turn on the AI Engine switch above for a deeper linguistic search.</p>
                       </motion.div>
                     )}
                   </div>
@@ -334,14 +334,13 @@ export default function Translation() {
             </AnimatePresence>
           </div>
 
-          {/* Right Sidebar */}
-          <aside className="flex flex-col gap-10">
+          <aside className="flex flex-col gap-8">
             <motion.div 
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 }}
               className="zen-card overflow-hidden" 
-              style={{ padding: '0', border: 'none', boxShadow: '0 30px 60px rgba(var(--primary-rgb), 0.15)' }}
+              style={{ padding: '0', border: '1px solid var(--border-soft)', boxShadow: '0 30px 60px rgba(var(--primary-rgb), 0.05)', borderRadius: '30px' }}
             >
               <div className="p-8 border-b" style={{ borderColor: 'var(--border-soft)', background: 'rgba(var(--primary-rgb), 0.08)' }}>
                 <div className="flex items-center gap-3" style={{ color: 'var(--primary)' }}>
@@ -362,12 +361,6 @@ export default function Translation() {
                   "That which is eternal, unchanging, and transcends time."
                 </p>
               </div>
-              <motion.button 
-                whileHover={{ background: 'var(--primary)', color: 'white' }}
-                style={{ width: '100%', padding: '20px', border: 'none', background: 'rgba(var(--primary-rgb), 0.1)', fontSize: '0.75rem', fontWeight: '900', color: 'var(--primary)', cursor: 'pointer', transition: 'all 0.3s' }}
-              >
-                LEARN MORE <ChevronRight size={14} style={{ display: 'inline', marginLeft: '8px' }} />
-              </motion.button>
             </motion.div>
 
             <motion.div 

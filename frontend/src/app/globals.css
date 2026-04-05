@@ -1,13 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 :root {
-  --primary-rgb: 192, 90, 43;  /* adjust to your primary color */
-}
-:root {
   /* Light Theme - Zen Minimal */
   --primary: #c05a2b;
   --primary-rgb: 192, 90, 43;
   --bg-main: #fcfbf7;
+  --bg-main-rgb: 252, 251, 247;
   --bg-card: #ffffff;
+  --bg-card-rgb: 255, 255, 255;
   --text-main: #2d3436;
   --text-dim: #636e72;
   --text-light: #b2bec3;
@@ -24,7 +23,9 @@
   --primary: #e67e22;
   --primary-rgb: 230, 126, 34;
   --bg-main: #0f1115;
+  --bg-main-rgb: 15, 17, 21;
   --bg-card: #1a1d23;
+  --bg-card-rgb: 26, 29, 35;
   --text-main: #ecf0f1;
   --text-dim: #bdc3c7;
   --text-light: #7f8c8d;

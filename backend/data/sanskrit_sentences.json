@@ -2329,54 +2329,6 @@
     },
     {
       "id": 146,
-      "sanskrit": " अस्ति।",
-      "devanagari": " अस्ति।",
-      "translation": "Namaste Or Greetings With Hands Together is.",
-      "words": [
-        ""
-      ],
-      "pattern": "Subject Verb",
-      "difficulty": "beginner",
-      "tags": [
-        "auto-generated",
-        "api-added"
-      ],
-      "created_at": "2026-04-03T15:34:00.408479"
-    },
-    {
-      "id": 147,
-      "sanskrit": " गच्छति।",
-      "devanagari": " गच्छति।",
-      "translation": "Namaste Or Greetings With Hands Together goes.",
-      "words": [
-        ""
-      ],
-      "pattern": "Subject Verb",
-      "difficulty": "beginner",
-      "tags": [
-        "auto-generated",
-        "api-added"
-      ],
-      "created_at": "2026-04-03T15:34:00.408487"
-    },
-    {
-      "id": 148,
-      "sanskrit": " पठति।",
-      "devanagari": " पठति।",
-      "translation": "Namaste Or Greetings With Hands Together reads.",
-      "words": [
-        ""
-      ],
-      "pattern": "Subject Verb",
-      "difficulty": "beginner",
-      "tags": [
-        "auto-generated",
-        "api-added"
-      ],
-      "created_at": "2026-04-03T15:34:00.408489"
-    },
-    {
-      "id": 149,
       "sanskrit": "raajaa raajyam shasati अस्ति।",
       "devanagari": "raajaa raajyam shasati अस्ति।",
       "translation": "The King Rules The Kingdom is.",
@@ -2392,7 +2344,7 @@
       "created_at": "2026-04-03T15:36:39.028493"
     },
     {
-      "id": 150,
+      "id": 147,
       "sanskrit": "raajaa raajyam shasati गच्छति।",
       "devanagari": "raajaa raajyam shasati गच्छति।",
       "translation": "The King Rules The Kingdom goes.",
@@ -2408,7 +2360,7 @@
       "created_at": "2026-04-03T15:36:39.028507"
     },
     {
-      "id": 151,
+      "id": 148,
       "sanskrit": "raajaa raajyam shasati पठति।",
       "devanagari": "raajaa raajyam shasati पठति।",
       "translation": "The King Rules The Kingdom reads.",
@@ -2424,7 +2376,7 @@
       "created_at": "2026-04-03T15:36:39.028509"
     },
     {
-      "id": 152,
+      "id": 149,
       "sanskrit": "Chhandra अस्ति।",
       "devanagari": "Chhandra अस्ति।",
       "translation": "Having A Beauty Spot Or A Moon-Like Appearance is.",
@@ -2440,7 +2392,7 @@
       "created_at": "2026-04-03T15:57:57.532005"
     },
     {
-      "id": 153,
+      "id": 150,
       "sanskrit": "Chhandra गच्छति।",
       "devanagari": "Chhandra गच्छति।",
       "translation": "Having A Beauty Spot Or A Moon-Like Appearance goes.",
@@ -2456,7 +2408,7 @@
       "created_at": "2026-04-03T15:57:57.532016"
     },
     {
-      "id": 154,
+      "id": 151,
       "sanskrit": "Chhandra पठति।",
       "devanagari": "Chhandra पठति।",
       "translation": "Having A Beauty Spot Or A Moon-Like Appearance reads.",
@@ -2472,7 +2424,7 @@
       "created_at": "2026-04-03T15:57:57.532018"
     },
     {
-      "id": 155,
+      "id": 152,
       "sanskrit": "purvānubhūti अस्ति।",
       "devanagari": "purvānubhūti अस्ति।",
       "translation": "Dejavu is.",
@@ -2488,7 +2440,7 @@
       "created_at": "2026-04-03T16:00:21.546285"
     },
     {
-      "id": 156,
+      "id": 153,
       "sanskrit": "purvānubhūti गच्छति।",
       "devanagari": "purvānubhūti गच्छति।",
       "translation": "Dejavu goes.",
@@ -2504,7 +2456,7 @@
       "created_at": "2026-04-03T16:00:21.546304"
     },
     {
-      "id": 157,
+      "id": 154,
       "sanskrit": "purvānubhūti पठति।",
       "devanagari": "purvānubhūti पठति।",
       "translation": "Dejavu reads.",
@@ -2520,7 +2472,7 @@
       "created_at": "2026-04-03T16:00:21.546307"
     },
     {
-      "id": 158,
+      "id": 155,
       "sanskrit": "Rameśa अस्ति।",
       "devanagari": "Rameśa अस्ति।",
       "translation": "Ramesh is.",
@@ -2536,7 +2488,7 @@
       "created_at": "2026-04-03T16:00:41.089838"
     },
     {
-      "id": 159,
+      "id": 156,
       "sanskrit": "Rameśa गच्छति।",
       "devanagari": "Rameśa गच्छति।",
       "translation": "Ramesh goes.",
@@ -2552,7 +2504,7 @@
       "created_at": "2026-04-03T16:00:41.089860"
     },
     {
-      "id": 160,
+      "id": 157,
       "sanskrit": "Rameśa पठति।",
       "devanagari": "Rameśa पठति।",
       "translation": "Ramesh reads.",
@@ -2568,7 +2520,7 @@
       "created_at": "2026-04-03T16:00:41.089866"
     },
     {
-      "id": 161,
+      "id": 158,
       "sanskrit": "Ramesh mahashayaH svakarmani shreshThaH अस्ति।",
       "devanagari": "Ramesh mahashayaH svakarmani shreshThaH अस्ति।",
       "translation": "Ramesh Sir Is Good At His Work is.",
@@ -2584,7 +2536,7 @@
       "created_at": "2026-04-03T16:01:12.327042"
     },
     {
-      "id": 162,
+      "id": 159,
       "sanskrit": "Ramesh mahashayaH svakarmani shreshThaH गच्छति।",
       "devanagari": "Ramesh mahashayaH svakarmani shreshThaH गच्छति।",
       "translation": "Ramesh Sir Is Good At His Work goes.",
@@ -2600,7 +2552,7 @@
       "created_at": "2026-04-03T16:01:12.327055"
     },
     {
-      "id": 163,
+      "id": 160,
       "sanskrit": "Ramesh mahashayaH svakarmani shreshThaH पठति।",
       "devanagari": "Ramesh mahashayaH svakarmani shreshThaH पठति।",
       "translation": "Ramesh Sir Is Good At His Work reads.",
@@ -2616,7 +2568,7 @@
       "created_at": "2026-04-03T16:01:12.327062"
     },
     {
-      "id": 164,
+      "id": 161,
       "sanskrit": "chhara अस्ति।",
       "devanagari": "chhara अस्ति।",
       "translation": "A Splinter, A Fragment is.",
@@ -2632,7 +2584,7 @@
       "created_at": "2026-04-03T16:17:01.996934"
     },
     {
-      "id": 165,
+      "id": 162,
       "sanskrit": "chhara गच्छति।",
       "devanagari": "chhara गच्छति।",
       "translation": "A Splinter, A Fragment goes.",
@@ -2648,7 +2600,7 @@
       "created_at": "2026-04-03T16:17:01.996995"
     },
     {
-      "id": 166,
+      "id": 163,
       "sanskrit": "chhara पठति।",
       "devanagari": "chhara पठति।",
       "translation": "A Splinter, A Fragment reads.",
@@ -2664,7 +2616,7 @@
       "created_at": "2026-04-03T16:17:01.997007"
     },
     {
-      "id": 167,
+      "id": 164,
       "sanskrit": "Mitihilesah अस्ति।",
       "devanagari": "Mitihilesah अस्ति।",
       "translation": "No Direct Translation, Appears To Be A Distorted Or Incorrect Text is.",
@@ -2680,7 +2632,7 @@
       "created_at": "2026-04-03T16:17:21.891012"
     },
     {
-      "id": 168,
+      "id": 165,
       "sanskrit": "Mitihilesah गच्छति।",
       "devanagari": "Mitihilesah गच्छति।",
       "translation": "No Direct Translation, Appears To Be A Distorted Or Incorrect Text goes.",
@@ -2696,7 +2648,7 @@
       "created_at": "2026-04-03T16:17:21.891039"
     },
     {
-      "id": 169,
+      "id": 166,
       "sanskrit": "Mitihilesah पठति।",
       "devanagari": "Mitihilesah पठति।",
       "translation": "No Direct Translation, Appears To Be A Distorted Or Incorrect Text reads.",
@@ -2712,7 +2664,7 @@
       "created_at": "2026-04-03T16:17:21.891045"
     },
     {
-      "id": 170,
+      "id": 167,
       "sanskrit": "mAm अस्ति।",
       "devanagari": "mAm अस्ति।",
       "translation": "To Me is.",
@@ -2728,7 +2680,7 @@
       "created_at": "2026-04-03T21:01:34.807656"
     },
     {
-      "id": 171,
+      "id": 168,
       "sanskrit": "mAm गच्छति।",
       "devanagari": "mAm गच्छति।",
       "translation": "To Me goes.",
@@ -2744,7 +2696,7 @@
       "created_at": "2026-04-03T21:01:34.807690"
     },
     {
-      "id": 172,
+      "id": 169,
       "sanskrit": "mAm पठति।",
       "devanagari": "mAm पठति।",
       "translation": "To Me reads.",
@@ -2760,7 +2712,7 @@
       "created_at": "2026-04-03T21:01:34.807698"
     },
     {
-      "id": 173,
+      "id": 170,
       "sanskrit": "prasthAna kriyA kara अस्ति।",
       "devanagari": "prasthAna kriyA kara अस्ति।",
       "translation": "Get Set Go is.",
@@ -2776,7 +2728,7 @@
       "created_at": "2026-04-03T21:08:58.177867"
     },
     {
-      "id": 174,
+      "id": 171,
       "sanskrit": "prasthAna kriyA kara गच्छति।",
       "devanagari": "prasthAna kriyA kara गच्छति।",
       "translation": "Get Set Go goes.",
@@ -2792,7 +2744,7 @@
       "created_at": "2026-04-03T21:08:58.177893"
     },
     {
-      "id": 175,
+      "id": 172,
       "sanskrit": "prasthAna kriyA kara पठति।",
       "devanagari": "prasthAna kriyA kara पठति।",
       "translation": "Get Set Go reads.",
@@ -2808,7 +2760,7 @@
       "created_at": "2026-04-03T21:08:58.177901"
     },
     {
-      "id": 176,
+      "id": 173,
       "sanskrit": "asti अस्ति।",
       "devanagari": "asti अस्ति।",
       "translation": "Is, Exists, There Is is.",
@@ -2824,7 +2776,7 @@
       "created_at": "2026-04-04T00:09:03.096566"
     },
     {
-      "id": 177,
+      "id": 174,
       "sanskrit": "asti गच्छति।",
       "devanagari": "asti गच्छति।",
       "translation": "Is, Exists, There Is goes.",
@@ -2840,7 +2792,7 @@
       "created_at": "2026-04-04T00:09:03.096587"
     },
     {
-      "id": 178,
+      "id": 175,
       "sanskrit": "asti पठति।",
       "devanagari": "asti पठति।",
       "translation": "Is, Exists, There Is reads.",
@@ -2854,6 +2806,342 @@
         "api-added"
       ],
       "created_at": "2026-04-04T00:09:03.096591"
+    },
+    {
+      "id": 176,
+      "sanskrit": "namaste svagatam applicationaya अस्ति।",
+      "devanagari": "namaste svagatam applicationaya अस्ति।",
+      "translation": "Hello Welcome To Application is.",
+      "words": [
+        "namaste svagatam applicationaya"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T18:11:55.864455"
+    },
+    {
+      "id": 177,
+      "sanskrit": "namaste svagatam applicationaya गच्छति।",
+      "devanagari": "namaste svagatam applicationaya गच्छति।",
+      "translation": "Hello Welcome To Application goes.",
+      "words": [
+        "namaste svagatam applicationaya"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T18:11:55.864467"
+    },
+    {
+      "id": 178,
+      "sanskrit": "namaste svagatam applicationaya पठति।",
+      "devanagari": "namaste svagatam applicationaya पठति।",
+      "translation": "Hello Welcome To Application reads.",
+      "words": [
+        "namaste svagatam applicationaya"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T18:11:55.864469"
+    },
+    {
+      "id": 179,
+      "sanskrit": "Namaste Svagatam Aplicationaya अस्ति।",
+      "devanagari": "Namaste Svagatam Aplicationaya अस्ति।",
+      "translation": "Greetings, Welcome To The Application is.",
+      "words": [
+        "Namaste Svagatam Aplicationaya"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T18:12:40.006781"
+    },
+    {
+      "id": 180,
+      "sanskrit": "Namaste Svagatam Aplicationaya गच्छति।",
+      "devanagari": "Namaste Svagatam Aplicationaya गच्छति।",
+      "translation": "Greetings, Welcome To The Application goes.",
+      "words": [
+        "Namaste Svagatam Aplicationaya"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T18:12:40.006790"
+    },
+    {
+      "id": 181,
+      "sanskrit": "Namaste Svagatam Aplicationaya पठति।",
+      "devanagari": "Namaste Svagatam Aplicationaya पठति।",
+      "translation": "Greetings, Welcome To The Application reads.",
+      "words": [
+        "Namaste Svagatam Aplicationaya"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T18:12:40.006792"
+    },
+    {
+      "id": 182,
+      "sanskrit": "raamaH vanam gacchati अस्ति।",
+      "devanagari": "raamaH vanam gacchati अस्ति।",
+      "translation": "Rama Goes To The Forest is.",
+      "words": [
+        "raamaH vanam gacchati"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T19:36:21.596892"
+    },
+    {
+      "id": 183,
+      "sanskrit": "raamaH vanam gacchati गच्छति।",
+      "devanagari": "raamaH vanam gacchati गच्छति।",
+      "translation": "Rama Goes To The Forest goes.",
+      "words": [
+        "raamaH vanam gacchati"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T19:36:21.596905"
+    },
+    {
+      "id": 184,
+      "sanskrit": "raamaH vanam gacchati पठति।",
+      "devanagari": "raamaH vanam gacchati पठति।",
+      "translation": "Rama Goes To The Forest reads.",
+      "words": [
+        "raamaH vanam gacchati"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T19:36:21.596908"
+    },
+    {
+      "id": 185,
+      "sanskrit": "dauvarika अस्ति।",
+      "devanagari": "dauvarika अस्ति।",
+      "translation": "Runner is.",
+      "words": [
+        "dauvarika"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T20:53:26.086780"
+    },
+    {
+      "id": 186,
+      "sanskrit": "dauvarika गच्छति।",
+      "devanagari": "dauvarika गच्छति।",
+      "translation": "Runner goes.",
+      "words": [
+        "dauvarika"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T20:53:26.086790"
+    },
+    {
+      "id": 187,
+      "sanskrit": "dauvarika पठति।",
+      "devanagari": "dauvarika पठति।",
+      "translation": "Runner reads.",
+      "words": [
+        "dauvarika"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T20:53:26.086792"
+    },
+    {
+      "id": 188,
+      "sanskrit": "avikriya अस्ति।",
+      "devanagari": "avikriya अस्ति।",
+      "translation": "Unchange is.",
+      "words": [
+        "avikriya"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T20:54:11.883574"
+    },
+    {
+      "id": 189,
+      "sanskrit": "avikriya गच्छति।",
+      "devanagari": "avikriya गच्छति।",
+      "translation": "Unchange goes.",
+      "words": [
+        "avikriya"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T20:54:11.883589"
+    },
+    {
+      "id": 190,
+      "sanskrit": "avikriya पठति।",
+      "devanagari": "avikriya पठति।",
+      "translation": "Unchange reads.",
+      "words": [
+        "avikriya"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-03T20:54:11.883593"
+    },
+    {
+      "id": 191,
+      "sanskrit": "Gau maata अस्ति।",
+      "devanagari": "Gau maata अस्ति।",
+      "translation": "The Cow Is My Mother is.",
+      "words": [
+        "Gau maata"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-04T10:30:18.203318"
+    },
+    {
+      "id": 192,
+      "sanskrit": "Gau maata गच्छति।",
+      "devanagari": "Gau maata गच्छति।",
+      "translation": "The Cow Is My Mother goes.",
+      "words": [
+        "Gau maata"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-04T10:30:18.203359"
+    },
+    {
+      "id": 193,
+      "sanskrit": "Gau maata पठति।",
+      "devanagari": "Gau maata पठति।",
+      "translation": "The Cow Is My Mother reads.",
+      "words": [
+        "Gau maata"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-04T10:30:18.203429"
+    },
+    {
+      "id": 194,
+      "sanskrit": "raameSh sir mama nirNayamaNDaliyE asti अस्ति।",
+      "devanagari": "raameSh sir mama nirNayamaNDaliyE asti अस्ति।",
+      "translation": "Ramesh Sir Is In Our Judging Panel is.",
+      "words": [
+        "raameSh sir mama nirNayamaNDaliyE asti"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-04T10:40:11.885801"
+    },
+    {
+      "id": 195,
+      "sanskrit": "raameSh sir mama nirNayamaNDaliyE asti गच्छति।",
+      "devanagari": "raameSh sir mama nirNayamaNDaliyE asti गच्छति।",
+      "translation": "Ramesh Sir Is In Our Judging Panel goes.",
+      "words": [
+        "raameSh sir mama nirNayamaNDaliyE asti"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-04T10:40:11.885832"
+    },
+    {
+      "id": 196,
+      "sanskrit": "raameSh sir mama nirNayamaNDaliyE asti पठति।",
+      "devanagari": "raameSh sir mama nirNayamaNDaliyE asti पठति।",
+      "translation": "Ramesh Sir Is In Our Judging Panel reads.",
+      "words": [
+        "raameSh sir mama nirNayamaNDaliyE asti"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-04T10:40:11.885839"
     }
   ],
   "patterns": [

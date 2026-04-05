@@ -38,7 +38,7 @@ const Sidebar = ({ user }: { user: any }) => {
     { label: "Overview", path: "/dashboard", icon: LayoutGrid },
     { label: "Lessons", path: "/lessons", icon: Library },
     { label: "Translator", path: "/translation", icon: Languages },
-    { label: "Grammar", path: "/grammar", icon: ShieldCheck },
+    { label: "Grammar Checker", path: "/grammar", icon: ShieldCheck },
     { label: "Insights", path: "/progress", icon: BarChart3 },
     { label: "Play", path: "/game/menu", icon: Dice5 },
   ];

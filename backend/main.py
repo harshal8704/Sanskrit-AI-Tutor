@@ -98,6 +98,45 @@ def get_lesson(lesson_id: int):
         raise HTTPException(status_code=404, detail="Lesson not found")
     return lesson
 
+@app.get("/api/lessons/greetings")
+def get_greetings_lesson():
+    data = db.get_greetings()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/numbers")
+def get_numbers_lesson():
+    data = db.get_numbers()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/self-intro")
+def get_self_intro_lesson():
+    data = db.get_self_intro()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/pronouns")
+def get_pronouns():
+    return db.get_pronouns()
+
+@app.get("/api/lessons/verbs")
+def get_verbs():
+    return db.get_verbs()
+
+@app.get("/api/lessons/nouns")
+def get_nouns():
+    return db.get_nouns()
+
+@app.get("/api/lessons/family")
+def get_family():
+    return db.get_family()
+
+@app.get("/api/lessons/questions")
+def get_question_words():
+    return db.get_question_words()
+
+@app.get("/api/lessons/time")
+def get_time_and_days():
+    return db.get_time_and_days()
+
 @app.get("/progress/{username}")
 def get_progress(username: str):
     return db.get_user_progress(username)
