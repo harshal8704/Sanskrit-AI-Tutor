@@ -365,41 +365,50 @@ export default function DailyStreak() {
                             .header-streak { display: flex; items-center: center; gap: 8px; color: #ff8c00; font-weight: 900; font-size: 1.2rem; }
                             
                             .quest-body { padding: 48px; }
-                            .quest-question { font-size: 1.8rem; font-weight: 800; margin-bottom: 40px; line-height: 1.35; letter-spacing: -0.5px; }
+                            .quest-question { font-size: 1.8rem; font-weight: 800; color: var(--text-main); margin-bottom: 40px; line-height: 1.35; letter-spacing: -0.5px; }
                             
-                            .options-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+                            .options-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
                             @media (min-width: 768px) { .options-grid { grid-template-columns: repeat(3, 1fr); } }
                             
                             .option-btn {
                                 background: var(--bg-main);
-                                border: 1.5px solid var(--border-soft);
-                                border-radius: 20px;
-                                padding: 24px;
+                                border: 2px solid var(--border-soft);
+                                border-radius: 24px;
+                                padding: 28px 24px;
                                 text-align: left;
                                 cursor: pointer;
-                                transition: all 0.3s;
+                                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                                 display: flex;
                                 flex-direction: column;
-                                gap: 12px;
+                                gap: 16px;
                                 position: relative;
+                                color: var(--text-main);
+                                box-shadow: 0 4px 12px rgba(0,0,0,0.02);
                             }
-                            .option-btn.selected { background: var(--primary); border-color: transparent; }
+                            .option-btn:hover:not(.selected) { border-color: var(--primary); transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.05); }
+                            .option-btn.selected { 
+                                background: var(--primary); 
+                                border-color: var(--primary); 
+                                color: #ffffff !important;
+                                transform: scale(1.02);
+                                box-shadow: 0 15px 30px rgba(var(--primary-rgb), 0.25); 
+                            }
                             .option-index { 
-                                width: 28px; 
-                                height: 28px; 
-                                background: rgba(var(--primary-rgb), 0.1); 
-                                border-radius: 7px; 
+                                width: 32px; 
+                                height: 32px; 
+                                background: rgba(var(--primary-rgb), 0.12); 
+                                border-radius: 10px; 
                                 color: var(--primary); 
                                 font-weight: 800; 
-                                font-size: 0.75rem; 
+                                font-size: 0.8rem; 
                                 display: flex; 
                                 align-items: center; 
                                 justify-content: center;
+                                transition: all 0.3s;
                             }
-                            .option-btn.selected .option-index { background: rgba(255,255,255,0.2); color: #fff; }
-                            .option-text { font-size: 1.1rem; font-weight: 700; color: var(--text-main); }
-                            .option-btn.selected .option-text { color: #fff; }
-                            .option-glow { position: absolute; inset: 0; background: rgba(255,255,255,0.1); border-radius: 20px; box-shadow: 0 10px 20px rgba(var(--primary-rgb), 0.3); }
+                            .option-btn.selected .option-index { background: rgba(255,255,255,0.25); color: #fff; }
+                            .option-text { font-size: 1.15rem; font-weight: 700; color: inherit; transition: color 0.2s; }
+                            .option-glow { position: absolute; inset: 0; background: rgba(255,255,255,0.05); border-radius: 24px; }
 
                             .hint-container { margin-top: 40px; display: flex; gap: 20px; background: var(--bg-main); padding: 24px; border-radius: 24px; border: 1px solid var(--border-soft); }
                             .hint-icon { width: 44px; height: 44px; background: #fff3cd; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #856404; flex-shrink: 0; }
