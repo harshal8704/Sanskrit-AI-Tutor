@@ -54,3 +54,10 @@ raamaH vanam gacchati,रामः वनं गच्छति,Rama goes to the
 dauvarika,दौवरिक,runner,dau-va-ree-kah,noun,one who runs; a messenger,सः दौवरिकः वेगेन धावति (saḥ dauvarikaḥ vegena dhāvati) - The runner runs with speed,api-added,"api,Groq_ai",Groq_ai
 avikriya,अविक्रिय,unchange,a-vee-kree-yah,adjective,unchanging; immutable; invariable,अविक्रियः परिवर्तनं न करोति (Avikriyaḥ parivartanaṁ na karoti) - The unchangeable does not change.,api-added,"api,Groq_ai",Groq_ai
 pratisthaapay,प्रतिस्थापय,replace,prat-ee-sthah-pai,verb,to put in place of; to substitute; to replace,puraaṇaṁ pustakaṁ navena pratisthaapay,api-added,"api,Groq_ai",Groq_ai
+dvishataadasha,२१०,two hundred ten,dvee-sha-ta-dasha,numeral,two hundred and ten,मम द्विशताधिकदश वर्षाणि जीवितम् - I have lived two hundred and ten years,api-added,"api,Groq_ai",Groq_ai
+prayogashala,प्रयोगशाला,laboratory,pryog-shaa-laa,noun,a place for scientific experiments; a room for testing and research,saḥ prayogashālāyām ṛṣayaḥ paśyati,api-added,"api,Groq_ai",Groq_ai
+vijeta,विजेता,winner,vee-jay-tah,noun,one who wins; victor; champion,saḥ vijetaḥ khelasya abhavat,api-added,"api,Groq_ai",Groq_ai
+prarambhin,प्रारम्भिन्,beginner,pra-ram-bhin,noun,one who begins; novice; initiate,सः प्रारम्भिन् अस्ति | (saḥ prārambhin asti) - He is a beginner.,api-added,"api,Groq_ai",Groq_ai
+prakaara,प्रकार,type,prakahra,noun,kind; sort; class; category,asya prakaaro bhinnah - Its type is different,api-added,"api,Groq_ai",Groq_ai
+kathora,कठोर,strict,kuth-ora,adjective,severe; rigid; firm,कठोर नियम कठोर दण्ड का कारण बनता है,api-added,"api,Groq_ai",Groq_ai
+tarabuca,तरबूज,watermelon,tarabuucha,noun,a type of fruit; Citrullus lanatus,मम तरबूजं खादामि (mama tarabuujaM khaadaami) - I am eating watermelon,api-added,"api,Groq_ai",Groq_ai

@@ -2230,6 +2230,342 @@
         "api-added"
       ],
       "created_at": "2026-04-05T19:55:44.013866"
+    },
+    {
+      "id": 140,
+      "sanskrit": "dvishataadasha अस्ति।",
+      "devanagari": "dvishataadasha अस्ति।",
+      "translation": "Two Hundred Ten is.",
+      "words": [
+        "dvishataadasha"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-07T12:07:31.852444"
+    },
+    {
+      "id": 141,
+      "sanskrit": "dvishataadasha गच्छति।",
+      "devanagari": "dvishataadasha गच्छति।",
+      "translation": "Two Hundred Ten goes.",
+      "words": [
+        "dvishataadasha"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-07T12:07:31.852467"
+    },
+    {
+      "id": 142,
+      "sanskrit": "dvishataadasha पठति।",
+      "devanagari": "dvishataadasha पठति।",
+      "translation": "Two Hundred Ten reads.",
+      "words": [
+        "dvishataadasha"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-07T12:07:31.852474"
+    },
+    {
+      "id": 143,
+      "sanskrit": "prayogashala अस्ति।",
+      "devanagari": "prayogashala अस्ति।",
+      "translation": "Laboratory is.",
+      "words": [
+        "prayogashala"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-07T13:55:07.770415"
+    },
+    {
+      "id": 144,
+      "sanskrit": "prayogashala गच्छति।",
+      "devanagari": "prayogashala गच्छति।",
+      "translation": "Laboratory goes.",
+      "words": [
+        "prayogashala"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-07T13:55:07.770447"
+    },
+    {
+      "id": 145,
+      "sanskrit": "prayogashala पठति।",
+      "devanagari": "prayogashala पठति।",
+      "translation": "Laboratory reads.",
+      "words": [
+        "prayogashala"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-04-07T13:55:07.770457"
+    },
+    {
+      "id": 146,
+      "sanskrit": "vijeta अस्ति।",
+      "devanagari": "vijeta अस्ति।",
+      "translation": "Winner is.",
+      "words": [
+        "vijeta"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-05-10T23:03:07.829481"
+    },
+    {
+      "id": 147,
+      "sanskrit": "vijeta गच्छति।",
+      "devanagari": "vijeta गच्छति।",
+      "translation": "Winner goes.",
+      "words": [
+        "vijeta"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-05-10T23:03:07.829506"
+    },
+    {
+      "id": 148,
+      "sanskrit": "vijeta पठति।",
+      "devanagari": "vijeta पठति।",
+      "translation": "Winner reads.",
+      "words": [
+        "vijeta"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-05-10T23:03:07.829514"
+    },
+    {
+      "id": 149,
+      "sanskrit": "prarambhin अस्ति।",
+      "devanagari": "prarambhin अस्ति।",
+      "translation": "Beginner is.",
+      "words": [
+        "prarambhin"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-05-11T06:55:46.454374"
+    },
+    {
+      "id": 150,
+      "sanskrit": "prarambhin गच्छति।",
+      "devanagari": "prarambhin गच्छति।",
+      "translation": "Beginner goes.",
+      "words": [
+        "prarambhin"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-05-11T06:55:46.454401"
+    },
+    {
+      "id": 151,
+      "sanskrit": "prarambhin पठति।",
+      "devanagari": "prarambhin पठति।",
+      "translation": "Beginner reads.",
+      "words": [
+        "prarambhin"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-05-11T06:55:46.454410"
+    },
+    {
+      "id": 152,
+      "sanskrit": "prakaara अस्ति।",
+      "devanagari": "prakaara अस्ति।",
+      "translation": "Type is.",
+      "words": [
+        "prakaara"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-05-11T12:10:29.617754"
+    },
+    {
+      "id": 153,
+      "sanskrit": "prakaara गच्छति।",
+      "devanagari": "prakaara गच्छति।",
+      "translation": "Type goes.",
+      "words": [
+        "prakaara"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-05-11T12:10:29.617775"
+    },
+    {
+      "id": 154,
+      "sanskrit": "prakaara पठति।",
+      "devanagari": "prakaara पठति।",
+      "translation": "Type reads.",
+      "words": [
+        "prakaara"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-05-11T12:10:29.617780"
+    },
+    {
+      "id": 155,
+      "sanskrit": "kathora अस्ति।",
+      "devanagari": "kathora अस्ति।",
+      "translation": "Strict is.",
+      "words": [
+        "kathora"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-05-11T13:39:51.414635"
+    },
+    {
+      "id": 156,
+      "sanskrit": "kathora गच्छति।",
+      "devanagari": "kathora गच्छति।",
+      "translation": "Strict goes.",
+      "words": [
+        "kathora"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-05-11T13:39:51.414657"
+    },
+    {
+      "id": 157,
+      "sanskrit": "kathora पठति।",
+      "devanagari": "kathora पठति।",
+      "translation": "Strict reads.",
+      "words": [
+        "kathora"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-05-11T13:39:51.414664"
+    },
+    {
+      "id": 158,
+      "sanskrit": "tarabuca अस्ति।",
+      "devanagari": "tarabuca अस्ति।",
+      "translation": "Watermelon is.",
+      "words": [
+        "tarabuca"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-06-23T19:14:12.906245"
+    },
+    {
+      "id": 159,
+      "sanskrit": "tarabuca गच्छति।",
+      "devanagari": "tarabuca गच्छति।",
+      "translation": "Watermelon goes.",
+      "words": [
+        "tarabuca"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-06-23T19:14:12.906260"
+    },
+    {
+      "id": 160,
+      "sanskrit": "tarabuca पठति।",
+      "devanagari": "tarabuca पठति।",
+      "translation": "Watermelon reads.",
+      "words": [
+        "tarabuca"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-06-23T19:14:12.906264"
     }
   ],
   "patterns": [
