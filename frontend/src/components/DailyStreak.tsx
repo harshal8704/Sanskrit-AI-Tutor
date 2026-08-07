@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
-import { Flame, Star, CheckCircle, AlertCircle, XCircle, Trophy, Sparkles, Calculator } from 'lucide-react';
+import { Flame, Star, CheckCircle, AlertCircle, XCircle, Trophy, Sparkles, ArrowRight, RotateCcw } from 'lucide-react';
 import { api } from '@/lib/api';
 
 export default function DailyStreak() {
@@ -27,7 +27,7 @@ export default function DailyStreak() {
             } catch (err) {
                 console.error("Failed to load daily questions", err);
             } finally {
-                setTimeout(() => setLoading(false), 800);
+                setTimeout(() => setLoading(false), 600);
             }
         };
         fetchQuestions();
@@ -84,7 +84,7 @@ export default function DailyStreak() {
             const nextDay = Math.min(currentQ.day + 1, questions.length);
             localStorage.setItem('sanskrit_current_day', nextDay.toString());
             
-            setTimeout(() => setStatus('completed'), 800);
+            setTimeout(() => setStatus('completed'), 700);
         } else {
             if (attempts === 0) {
                 setAttempts(1);
@@ -98,7 +98,7 @@ export default function DailyStreak() {
                 setStreak(0);
                 localStorage.setItem('sanskrit_streak', '0');
                 localStorage.setItem('sanskrit_last_played', currentDayStr);
-                setTimeout(() => setStatus('failed'), 800);
+                setTimeout(() => setStatus('failed'), 700);
             }
         }
     };
@@ -107,28 +107,29 @@ export default function DailyStreak() {
         return (
             <div className="daily-loading-card">
                 <motion.div 
-                    animate={{ scale: [1, 1.2, 1], rotate: [0, 10, -10, 0] }} 
-                    transition={{ repeat: Infinity, duration: 2 }} 
+                    animate={{ scale: [1, 1.15, 1], rotate: [0, 8, -8, 0] }} 
+                    transition={{ repeat: Infinity, duration: 1.8 }} 
                     className="loading-icon"
                 >
                     <Flame size={48} fill="var(--primary)" />
                 </motion.div>
-                <div className="loading-text">Preparing Daily Mantra...</div>
+                <div className="loading-text">Preparing Sacred Daily Challenge...</div>
                 <style jsx>{`
                     .daily-loading-card {
                         background: var(--bg-card);
-                        border-radius: 32px;
-                        padding: 80px;
+                        border-radius: var(--radius-xl);
+                        padding: 60px 40px;
                         display: flex;
                         flex-direction: column;
-                        alignItems: center;
-                        justifyContent: center;
-                        gap: 24px;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 20px;
                         border: 1px solid var(--border-soft);
                         text-align: center;
+                        box-shadow: var(--shadow-sm);
                     }
                     .loading-icon { color: var(--primary); margin: 0 auto; }
-                    .loading-text { font-size: 0.9rem; color: var(--text-dim); font-weight: 700; letter-spacing: 3px; text-transform: uppercase; }
+                    .loading-text { font-size: 0.88rem; color: var(--text-dim); font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
                 `}</style>
             </div>
         );
@@ -140,7 +141,7 @@ export default function DailyStreak() {
                 {status === 'played_today' ? (
                     <motion.div 
                         key="played"
-                        initial={{ opacity: 0, y: 30 }}
+                        initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="played-today-card" 
                     >
@@ -148,15 +149,15 @@ export default function DailyStreak() {
                             <div className="info-side">
                                 <div className="badge-row">
                                     <div className="success-badge">
-                                        <CheckCircle size={18} /> Daily Goal Met
+                                        <CheckCircle size={16} /> Daily Mantra Completed
                                     </div>
-                                    <div className="topic-tag">Reflections</div>
+                                    <div className="topic-tag">Day {currentDay} Cleared</div>
                                 </div>
-                                <h3 className="card-title">Wisdom Absorbed</h3>
+                                <h3 className="card-title">Sacred Wisdom Absorbed</h3>
                                 <p className="card-desc">
-                                    Your path remains clear. You have completed today's sacred challenge. The flame of knowledge burns brighter.
+                                    Your learning path remains clear. You have completed today's challenge with focus and discipline.
                                 </p>
-                                <div className="next-time">Next Mantra in ~14 Hours</div>
+                                <div className="next-time">Next Daily Mantra unlocks tomorrow</div>
                             </div>
 
                             <div className="stats-side">
@@ -165,7 +166,7 @@ export default function DailyStreak() {
                                     <div className="orb-content">
                                         <div className="streak-val">{streak}</div>
                                         <div className="streak-sub">Day Streak</div>
-                                        <Flame size={24} fill="var(--primary)" />
+                                        <Flame size={24} fill="var(--primary)" color="var(--primary)" />
                                     </div>
                                 </div>
                             </div>
@@ -173,99 +174,105 @@ export default function DailyStreak() {
                         <style jsx>{`
                             .played-today-card {
                                 background: var(--bg-card);
-                                border-radius: 32px;
+                                border-radius: var(--radius-xl);
                                 border: 1px solid var(--border-soft);
                                 overflow: hidden;
                                 position: relative;
+                                box-shadow: var(--shadow-sm);
                             }
-                            .card-inner { padding: 48px; display: flex; flex-direction: column; md-flex-direction: row; gap: 40px; align-items: center; position: relative; z-index: 2; }
+                            .card-inner { padding: 40px; display: flex; flex-direction: column; md-flex-direction: row; gap: 32px; align-items: center; position: relative; z-index: 2; }
                             @media (min-width: 768px) { .card-inner { flex-direction: row; } }
                             .info-side { flex: 1; }
-                            .badge-row { display: flex; gap: 12px; margin-bottom: 24px; }
-                            .success-badge { background: #d4edda; color: #155724; padding: 6px 16px; border-radius: 12px; font-size: 0.8rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
-                            .topic-tag { background: var(--bg-main); color: var(--text-dim); padding: 6px 16px; border-radius: 12px; font-size: 0.8rem; font-weight: 700; border: 1px solid var(--border-soft); }
-                            .card-title { font-size: 2.2rem; margin-bottom: 16px; letter-spacing: -1px; }
-                            .card-desc { color: var(--text-dim); font-size: 1.1rem; line-height: 1.6; margin-bottom: 24px; }
-                            .next-time { color: var(--primary); font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+                            .badge-row { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+                            .success-badge { background: rgba(110, 139, 94, 0.15); color: var(--accent-green); padding: 6px 14px; border-radius: 12px; font-size: 0.82rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+                            .topic-tag { background: var(--bg-main); color: var(--text-dim); padding: 6px 14px; border-radius: 12px; font-size: 0.82rem; font-weight: 700; border: 1px solid var(--border-soft); }
+                            .card-title { font-size: 2rem; margin-bottom: 12px; letter-spacing: -0.5px; }
+                            .card-desc { color: var(--text-dim); font-size: 1.05rem; line-height: 1.6; margin-bottom: 20px; }
+                            .next-time { color: var(--primary); font-size: 0.82rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
                             .stats-side { flex-shrink: 0; }
-                            .streak-orb { width: 180px; height: 180px; position: relative; display: flex; align-items: center; justify-content: center; }
-                            .orb-bg { position: absolute; inset: 0; background: var(--primary); opacity: 0.08; border-radius: 50%; filter: blur(20px); }
+                            .streak-orb { width: 160px; height: 160px; position: relative; display: flex; align-items: center; justify-content: center; }
+                            .orb-bg { position: absolute; inset: 0; background: var(--primary); opacity: 0.1; border-radius: 50%; filter: blur(16px); }
                             .orb-content { position: relative; z-index: 2; text-align: center; }
-                            .streak-val { font-size: 4rem; font-weight: 950; font-family: 'Marcellus', serif; line-height: 1; margin-bottom: -5px; }
-                            .streak-sub { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 8px; }
+                            .streak-val { font-size: 3.5rem; font-weight: 900; font-family: 'Marcellus', serif; line-height: 1; margin-bottom: -4px; color: var(--text-main); }
+                            .streak-sub { font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); margin-bottom: 6px; }
                         `}</style>
                     </motion.div>
                 ) : status === 'completed' ? (
                     <motion.div 
                         key="completed"
-                        initial={{ opacity: 0, scale: 0.9 }}
+                        initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         className="success-overlay-card"
                     >
                         <motion.div 
-                            initial={{ y: 20 }} animate={{ y: 0 }}
+                            initial={{ y: 15 }} animate={{ y: 0 }}
                             className="success-content"
                         >
                             <div className="trophy-wrap">
-                                <Trophy size={60} />
-                                <motion.div animate={{ scale: [1, 1.5, 1], opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 2 }} className="trophy-glow"></motion.div>
+                                <Trophy size={54} />
                             </div>
-                            <h2 className="success-title">Uttamam! (Excellent)</h2>
-                            <p className="success-msg">Your wisdom is true. Your streak has advanced to <strong>{streak} days</strong>.</p>
+                            <h2 className="success-title">Uttamam! (उत्तमम्)</h2>
+                            <p className="success-msg">Your answer is accurate. Your daily streak has reached <strong>{streak} days</strong>.</p>
                             
                             <div className="reward-badges">
                                 <div className="reward-pill">+25 Karma Points</div>
-                                <div className="reward-pill">Level 2 Progress</div>
+                                <div className="reward-pill">Level Progress Boosted</div>
                             </div>
                             
-                            <button onClick={() => window.location.reload()} className="dismiss-btn">Continue Journey</button>
+                            <button onClick={() => window.location.reload()} className="dismiss-btn">
+                                Continue Learning Journey <ArrowRight size={18} />
+                            </button>
                         </motion.div>
                         <style jsx>{`
                             .success-overlay-card {
-                                background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-                                border-radius: 32px;
-                                padding: 60px 40px;
+                                background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                                border-radius: var(--radius-xl);
+                                padding: 50px 32px;
                                 color: white;
                                 text-align: center;
                                 position: relative;
                                 overflow: hidden;
+                                box-shadow: 0 16px 40px rgba(16, 185, 129, 0.3);
                             }
                             .success-content { position: relative; z-index: 10; }
-                            .trophy-wrap { position: relative; width: 60px; height: 60px; margin: 0 auto 32px auto; }
-                            .trophy-glow { position: absolute; inset: -20px; background: white; border-radius: 50%; filter: blur(30px); z-index: -1; }
-                            .success-title { font-size: 3rem; font-weight: 900; margin-bottom: 12px; color: #fff; }
-                            .success-msg { font-size: 1.25rem; opacity: 0.95; margin-bottom: 32px; }
-                            .reward-badges { display: flex; justify-content: center; gap: 16px; margin-bottom: 40px; }
-                            .reward-pill { background: rgba(255,255,255,0.25); backdrop-filter: blur(8px); padding: 10px 24px; border-radius: 12px; font-weight: 800; font-size: 0.9rem; }
-                            .dismiss-btn { background: white; color: #11998e; padding: 16px 40px; border-radius: 16px; border: none; font-weight: 800; font-size: 1rem; cursor: pointer; transition: all 0.3s; }
-                            .dismiss-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+                            .trophy-wrap { position: relative; width: 54px; height: 54px; margin: 0 auto 24px auto; color: #fff; }
+                            .success-title { font-size: 2.8rem; font-weight: 900; margin-bottom: 10px; color: #fff; font-family: 'Marcellus', serif; }
+                            .success-msg { font-size: 1.15rem; opacity: 0.95; margin-bottom: 28px; }
+                            .reward-badges { display: flex; justify-content: center; gap: 12px; margin-bottom: 32px; flex-wrap: wrap; }
+                            .reward-pill { background: rgba(255,255,255,0.22); backdrop-filter: blur(8px); padding: 8px 20px; border-radius: 12px; font-weight: 800; font-size: 0.85rem; }
+                            .dismiss-btn { background: white; color: #047857; padding: 14px 32px; border-radius: 16px; border: none; font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; gap: 8px; }
+                            .dismiss-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(0,0,0,0.15); }
                         `}</style>
                     </motion.div>
                 ) : status === 'failed' ? (
                     <motion.div 
                         key="failed"
-                        initial={{ opacity: 0, scale: 0.9 }}
+                        initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         className="failure-overlay-card"
                     >
-                        <XCircle size={64} style={{ marginBottom: '24px' }} />
-                        <h2>The Path Recedes</h2>
-                        <p>A momentary lapse in focus. Your streak has been reset to zero, but your progress through the 50 days remains.</p>
-                        <button onClick={() => window.location.reload()} className="btn-primary" style={{ background: '#fff', color: '#eb3349', fontWeight: 800 }}>Return to Practice</button>
+                        <XCircle size={56} style={{ marginBottom: '20px' }} />
+                        <h2>Keep Practicing</h2>
+                        <p>A momentary lapse in focus. Your streak has been reset, but your knowledge remains intact.</p>
+                        <button onClick={() => window.location.reload()} className="dismiss-btn" style={{ background: '#fff', color: '#dc2626' }}>
+                            <RotateCcw size={16} /> Try Again
+                        </button>
                         <style jsx>{`
                             .failure-overlay-card {
-                                background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
-                                border-radius: 32px;
-                                padding: 60px 40px;
+                                background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+                                border-radius: var(--radius-xl);
+                                padding: 50px 32px;
                                 color: white;
                                 text-align: center;
                                 display: flex;
                                 flex-direction: column;
                                 align-items: center;
                                 justify-content: center;
+                                box-shadow: 0 16px 40px rgba(239, 68, 68, 0.3);
                             }
-                            h2 { font-size: 2.5rem; color: #fff; margin-bottom: 16px; }
-                            p { font-size: 1.1rem; opacity: 0.9; max-width: 500px; margin-bottom: 32px; line-height: 1.6; }
+                            h2 { font-size: 2.4rem; color: #fff; margin-bottom: 12px; font-family: 'Marcellus', serif; }
+                            p { font-size: 1.05rem; opacity: 0.92; max-width: 480px; margin-bottom: 28px; line-height: 1.6; }
+                            .dismiss-btn { padding: 14px 32px; border-radius: 16px; border: none; font-weight: 800; font-size: 0.95rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
                         `}</style>
                     </motion.div>
                 ) : (
@@ -274,30 +281,30 @@ export default function DailyStreak() {
                         layout
                         initial={{ opacity: 0, scale: 0.98 }}
                         animate={shake ? { x: [-10, 10, -10, 10, 0], opacity: 1 } : { x: 0, opacity: 1 }}
-                        transition={shake ? { duration: 0.4 } : { duration: 0.6 }}
+                        transition={shake ? { duration: 0.4 } : { duration: 0.5 }}
                         className="quest-card"
                     >
                         <div className="quest-header">
                             <div className="header-meta">
                                 <div className="day-badge">Day <strong>{currentDay}</strong> of 50</div>
-                                <div className="topic-label"><Sparkles size={14} /> {questions[currentQuestionIndex].topic}</div>
+                                <div className="topic-label"><Sparkles size={14} /> {questions[currentQuestionIndex]?.topic}</div>
                             </div>
                             <div className="header-streak">
-                                <Flame size={18} fill="currentColor" />
+                                <Flame size={20} fill="currentColor" />
                                 <span>{streak}</span>
                             </div>
                         </div>
 
                         <div className="quest-body">
-                            <h2 className="quest-question">{questions[currentQuestionIndex].question}</h2>
+                            <h2 className="quest-question">{questions[currentQuestionIndex]?.question}</h2>
 
                             <div className="options-grid">
-                                {questions[currentQuestionIndex].options.map((opt: string, i: number) => {
+                                {questions[currentQuestionIndex]?.options.map((opt: string, i: number) => {
                                     const isSelected = selectedOption === opt;
                                     return (
                                         <motion.button
                                             key={i}
-                                            whileHover={{ y: -5, borderColor: 'var(--primary)' }}
+                                            whileHover={{ y: -3, borderColor: 'var(--primary)' }}
                                             whileTap={{ scale: 0.98 }}
                                             onClick={() => handleAnswer(opt)}
                                             className={`option-btn ${isSelected ? 'selected' : ''}`}
@@ -325,7 +332,7 @@ export default function DailyStreak() {
                                         </div>
                                         <div className="hint-content">
                                             <div className="hint-label">Divine Guidance</div>
-                                            <p className="hint-text">{questions[currentQuestionIndex].hint}</p>
+                                            <p className="hint-text">{questions[currentQuestionIndex]?.hint}</p>
                                         </div>
                                     </motion.div>
                                 )}
@@ -345,57 +352,56 @@ export default function DailyStreak() {
                         <style jsx>{`
                             .quest-card {
                                 background: var(--bg-card);
-                                border-radius: 32px;
+                                border-radius: var(--radius-xl);
                                 border: 1px solid var(--border-soft);
                                 overflow: hidden;
-                                box-shadow: 0 30px 60px rgba(0,0,0,0.04);
+                                box-shadow: var(--shadow-md);
                             }
                             .quest-header {
-                                background: linear-gradient(90deg, #2d3436 0%, #000 100%);
-                                padding: 24px 40px;
+                                background: var(--bg-subtle);
+                                border-bottom: 1px solid var(--border-soft);
+                                padding: 20px 32px;
                                 display: flex;
                                 justify-content: space-between;
                                 align-items: center;
-                                color: #fff;
                             }
-                            [data-theme='dark'] .quest-header { background: linear-gradient(90deg, #161b22 0%, #000 100%); }
-                            .header-meta { display: flex; gap: 16px; align-items: center; }
-                            .day-badge { background: rgba(255,255,255,0.1); padding: 6px 16px; border-radius: 10px; font-size: 0.85rem; letter-spacing: 0.5px; }
-                            .topic-label { font-size: 0.85rem; font-weight: 700; color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: 1.5px; }
-                            .header-streak { display: flex; items-center: center; gap: 8px; color: #ff8c00; font-weight: 900; font-size: 1.2rem; }
+                            .header-meta { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+                            .day-badge { background: var(--primary-light); color: var(--primary); padding: 5px 14px; border-radius: 10px; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.5px; border: 1px solid rgba(var(--primary-rgb),0.2); }
+                            .topic-label { font-size: 0.82rem; font-weight: 700; color: var(--text-dim); display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: 1px; }
+                            .header-streak { display: flex; align-items: center; gap: 6px; color: #f59e0b; font-weight: 900; font-size: 1.25rem; }
                             
-                            .quest-body { padding: 48px; }
-                            .quest-question { font-size: 1.8rem; font-weight: 800; color: var(--text-main); margin-bottom: 40px; line-height: 1.35; letter-spacing: -0.5px; }
+                            .quest-body { padding: 36px 32px; }
+                            .quest-question { font-size: 1.65rem; font-weight: 800; color: var(--text-main); margin-bottom: 32px; line-height: 1.4; letter-spacing: -0.4px; }
                             
-                            .options-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+                            .options-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
                             @media (min-width: 768px) { .options-grid { grid-template-columns: repeat(3, 1fr); } }
                             
                             .option-btn {
                                 background: var(--bg-main);
-                                border: 2px solid var(--border-soft);
-                                border-radius: 24px;
-                                padding: 28px 24px;
+                                border: 1.5px solid var(--border-soft);
+                                border-radius: var(--radius-lg);
+                                padding: 20px 20px;
                                 text-align: left;
                                 cursor: pointer;
-                                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                                transition: all 0.3s var(--transition);
                                 display: flex;
                                 flex-direction: column;
-                                gap: 16px;
+                                gap: 12px;
                                 position: relative;
                                 color: var(--text-main);
-                                box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+                                box-shadow: var(--shadow-sm);
                             }
-                            .option-btn:hover:not(.selected) { border-color: var(--primary); transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.05); }
+                            .option-btn:hover:not(.selected) { border-color: var(--primary); transform: translateY(-3px); box-shadow: var(--shadow-md); }
                             .option-btn.selected { 
                                 background: var(--primary); 
                                 border-color: var(--primary); 
                                 color: #ffffff !important;
-                                transform: scale(1.02);
-                                box-shadow: 0 15px 30px rgba(var(--primary-rgb), 0.25); 
+                                transform: scale(1.01);
+                                boxShadow: var(--shadow-glow); 
                             }
                             .option-index { 
-                                width: 32px; 
-                                height: 32px; 
+                                width: 30px; 
+                                height: 30px; 
                                 background: rgba(var(--primary-rgb), 0.12); 
                                 border-radius: 10px; 
                                 color: var(--primary); 
@@ -407,15 +413,15 @@ export default function DailyStreak() {
                                 transition: all 0.3s;
                             }
                             .option-btn.selected .option-index { background: rgba(255,255,255,0.25); color: #fff; }
-                            .option-text { font-size: 1.15rem; font-weight: 700; color: inherit; transition: color 0.2s; }
-                            .option-glow { position: absolute; inset: 0; background: rgba(255,255,255,0.05); border-radius: 24px; }
+                            .option-text { font-size: 1.08rem; font-weight: 700; color: inherit; }
+                            .option-glow { position: absolute; inset: 0; background: rgba(255,255,255,0.05); border-radius: var(--radius-lg); }
 
-                            .hint-container { margin-top: 40px; display: flex; gap: 20px; background: var(--bg-main); padding: 24px; border-radius: 24px; border: 1px solid var(--border-soft); }
-                            .hint-icon { width: 44px; height: 44px; background: #fff3cd; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #856404; flex-shrink: 0; }
-                            .hint-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #856404; letter-spacing: 1px; margin-bottom: 4px; }
-                            .hint-text { margin: 0; color: var(--text-dim); line-height: 1.5; font-size: 0.95rem; }
+                            .hint-container { margin-top: 28px; display: flex; gap: 16px; background: rgba(245, 158, 11, 0.1); padding: 20px; border-radius: var(--radius-md); border: 1px solid rgba(245, 158, 11, 0.25); }
+                            .hint-icon { width: 38px; height: 38px; background: rgba(245, 158, 11, 0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #d97706; flex-shrink: 0; }
+                            .hint-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #d97706; letter-spacing: 1px; margin-bottom: 3px; }
+                            .hint-text { margin: 0; color: var(--text-main); line-height: 1.5; font-size: 0.92rem; font-weight: 500; }
                             
-                            .quest-footer { background: var(--bg-main); padding: 12px 0; }
+                            .quest-footer { background: var(--bg-main); padding: 0; }
                             .progress-bar-wrap { height: 6px; background: var(--border-soft); width: 100%; position: relative; }
                             .progress-fill { height: 100%; background: var(--primary); position: absolute; left: 0; top: 0; border-radius: 0 3px 3px 0; }
                         `}</style>

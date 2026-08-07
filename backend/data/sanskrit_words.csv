@@ -61,3 +61,6 @@ prarambhin,प्रारम्भिन्,beginner,pra-ram-bhin,noun,one who 
 prakaara,प्रकार,type,prakahra,noun,kind; sort; class; category,asya prakaaro bhinnah - Its type is different,api-added,"api,Groq_ai",Groq_ai
 kathora,कठोर,strict,kuth-ora,adjective,severe; rigid; firm,कठोर नियम कठोर दण्ड का कारण बनता है,api-added,"api,Groq_ai",Groq_ai
 tarabuca,तरबूज,watermelon,tarabuucha,noun,a type of fruit; Citrullus lanatus,मम तरबूजं खादामि (mama tarabuujaM khaadaami) - I am eating watermelon,api-added,"api,Groq_ai",Groq_ai
+Tala,तल,lock,Tal,noun,lock; bolt,द्वारस्य तलं पिधानम्,api-added,"api,Groq_ai",Groq_ai
+ativritti,अतिवृत्ति,across,ati-vrit-tee,preposition,from one side to the other; on the opposite side,नद्यं अतिवृत्ति गच्छामि (nadyaṁ ativritti gacchāmi) - I am going across the river,api-added,"api,Groq_ai",Groq_ai
+vyaavasaayik,व्यावसायिक,professional,vyāvsaayik,adjective,one who has a profession; expert; skilled,saH vyaavasaayikaha,api-added,"api,Groq_ai",Groq_ai

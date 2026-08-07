@@ -2566,6 +2566,150 @@
         "api-added"
       ],
       "created_at": "2026-06-23T19:14:12.906264"
+    },
+    {
+      "id": 161,
+      "sanskrit": "Tala अस्ति।",
+      "devanagari": "Tala अस्ति।",
+      "translation": "Lock is.",
+      "words": [
+        "Tala"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-07-29T22:18:00.649520"
+    },
+    {
+      "id": 162,
+      "sanskrit": "Tala गच्छति।",
+      "devanagari": "Tala गच्छति।",
+      "translation": "Lock goes.",
+      "words": [
+        "Tala"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-07-29T22:18:00.649529"
+    },
+    {
+      "id": 163,
+      "sanskrit": "Tala पठति।",
+      "devanagari": "Tala पठति।",
+      "translation": "Lock reads.",
+      "words": [
+        "Tala"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-07-29T22:18:00.649532"
+    },
+    {
+      "id": 164,
+      "sanskrit": "ativritti अस्ति।",
+      "devanagari": "ativritti अस्ति।",
+      "translation": "Across is.",
+      "words": [
+        "ativritti"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-07-29T22:21:45.834141"
+    },
+    {
+      "id": 165,
+      "sanskrit": "ativritti गच्छति।",
+      "devanagari": "ativritti गच्छति।",
+      "translation": "Across goes.",
+      "words": [
+        "ativritti"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-07-29T22:21:45.834158"
+    },
+    {
+      "id": 166,
+      "sanskrit": "ativritti पठति।",
+      "devanagari": "ativritti पठति।",
+      "translation": "Across reads.",
+      "words": [
+        "ativritti"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-07-29T22:21:45.834162"
+    },
+    {
+      "id": 167,
+      "sanskrit": "vyaavasaayik अस्ति।",
+      "devanagari": "vyaavasaayik अस्ति।",
+      "translation": "Professional is.",
+      "words": [
+        "vyaavasaayik"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-08-07T23:23:08.721986"
+    },
+    {
+      "id": 168,
+      "sanskrit": "vyaavasaayik गच्छति।",
+      "devanagari": "vyaavasaayik गच्छति।",
+      "translation": "Professional goes.",
+      "words": [
+        "vyaavasaayik"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-08-07T23:23:08.721998"
+    },
+    {
+      "id": 169,
+      "sanskrit": "vyaavasaayik पठति।",
+      "devanagari": "vyaavasaayik पठति।",
+      "translation": "Professional reads.",
+      "words": [
+        "vyaavasaayik"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-08-07T23:23:08.722000"
     }
   ],
   "patterns": [
