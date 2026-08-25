@@ -2710,6 +2710,102 @@
         "api-added"
       ],
       "created_at": "2026-08-07T23:23:08.722000"
+    },
+    {
+      "id": 170,
+      "sanskrit": "विश्लेषणम् अस्ति।",
+      "devanagari": "विश्लेषणम् अस्ति।",
+      "translation": "Analysis is.",
+      "words": [
+        "विश्लेषणम्"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-08-25T08:57:55.684236"
+    },
+    {
+      "id": 171,
+      "sanskrit": "विश्लेषणम् गच्छति।",
+      "devanagari": "विश्लेषणम् गच्छति।",
+      "translation": "Analysis goes.",
+      "words": [
+        "विश्लेषणम्"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-08-25T08:57:55.684270"
+    },
+    {
+      "id": 172,
+      "sanskrit": "विश्लेषणम् पठति।",
+      "devanagari": "विश्लेषणम् पठति।",
+      "translation": "Analysis reads.",
+      "words": [
+        "विश्लेषणम्"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-08-25T08:57:55.684278"
+    },
+    {
+      "id": 173,
+      "sanskrit": "मिट्यताम् अस्ति।",
+      "devanagari": "मिट्यताम् अस्ति।",
+      "translation": "Delete is.",
+      "words": [
+        "मिट्यताम्"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-08-25T09:14:57.079009"
+    },
+    {
+      "id": 174,
+      "sanskrit": "मिट्यताम् गच्छति।",
+      "devanagari": "मिट्यताम् गच्छति।",
+      "translation": "Delete goes.",
+      "words": [
+        "मिट्यताम्"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-08-25T09:14:57.079031"
+    },
+    {
+      "id": 175,
+      "sanskrit": "मिट्यताम् पठति।",
+      "devanagari": "मिट्यताम् पठति।",
+      "translation": "Delete reads.",
+      "words": [
+        "मिट्यताम्"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-08-25T09:14:57.079037"
     }
   ],
   "patterns": [

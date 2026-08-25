@@ -35,7 +35,6 @@ except ImportError:
 class SanskritNLP:
     def __init__(self):
         # Mock Sanskrit vocabulary database
-        # Mock Sanskrit vocabulary database
         self.vocabulary = {
             "रामः": {"pos": "noun", "gender": "masculine", "case": "nominative", "number": "singular", "meaning": "Rama"},
             "वनम्": {"pos": "noun", "gender": "neuter", "case": "accusative", "number": "singular", "meaning": "forest"},
@@ -74,7 +73,7 @@ class SanskritNLP:
                 # It's a Groq key
                 self.ai_provider = "Groq"
                 self.base_url = "https://api.groq.com/openai/v1" # Force Groq URL
-                self.ai_model = "llama-3.3-70b-versatile"
+                self.ai_model = "openai/gpt-oss-120b"
                 print(f"SanskritNLP: Detected Groq API Key. Setting provider to {self.ai_provider}...")
             else:
                 # Assume it's an xAI (Grok) key
@@ -176,9 +175,12 @@ class SanskritNLP:
         # Generate translation (mock)
         translation = self.mock_translate(normalized_text)
         
+        # Initialize default variables here to prevent UnboundLocalError
+        corrected_sentence = text
+        correction_summary = "No errors found."
+        
         if score < 100:
             # Smart mock correction for common student mistakes without altering standard structure
-            corrected_sentence = text
             if "विद्यालय" in corrected_sentence and has_aham and has_gachhami and "विद्यालयं" not in corrected_sentence and "विद्यालयम्" not in corrected_sentence:
                 corrected_sentence = corrected_sentence.replace("विद्यालय", "विद्यालयं")
             
@@ -189,11 +191,8 @@ class SanskritNLP:
                         corrected_sentence = re.sub(fr'\b{w}\b', w + "ः", corrected_sentence)
 
                 correction_summary = "Corrected sentence structure and morphological markers."
-            else:
-                corrected_sentence = text
-                correction_summary = "No errors found."
 
-            # Final cleanup for punctuation: Ensure sentence ends with Purna Virama (।)
+        # Final cleanup for punctuation: Ensure sentence ends with Purna Virama (।)
         corrected_sentence = corrected_sentence.strip()
         if corrected_sentence.endswith('.'):
             corrected_sentence = corrected_sentence[:-1] + "।"
@@ -273,8 +272,11 @@ class SanskritNLP:
 
             response = requests.post(f"{self.base_url}/chat/completions", headers=headers, json=payload, timeout=30)
             
+            response = requests.post(f"{self.base_url}/chat/completions", headers=headers, json=payload, timeout=30)
+            
             if response.status_code != 200:
-                print(f"XAI API ERROR: {response.status_code} - {response.text}")
+                # Updated print statement to reflect the actual provider
+                print(f"{self.ai_provider} API ERROR: {response.status_code} - {response.text}")
                 return self.analyze_text(text, mode=f"API Error {response.status_code}", use_ai=False)
             
             result = response.json()
@@ -304,11 +306,11 @@ class SanskritNLP:
             s_words = [w for w in words if re.match(r'[\u0900-\u097F]+', w)]
             analysis_json["word_count"] = len(s_words)
             
-            print(f"SanskritNLP: Successfully analyzed with Grok AI")
+            print(f"SanskritNLP: Successfully analyzed with {self.ai_provider} AI")
             return analysis_json
 
         except Exception as e:
-            print(f"CRITICAL Grok API Error: {str(e)}")
+            print(f"CRITICAL API Error: {str(e)}")
             import traceback
             traceback.print_exc()
             # Fallback to local analysis if AI fails
