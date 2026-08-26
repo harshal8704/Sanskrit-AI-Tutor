@@ -270,13 +270,22 @@ export default function GamePage() {
   const [user, setUser] = useState<any>(null);
   const [position, setPosition] = useState(1);
   const [currentWord, setCurrentWord] = useState<any>(null);
+<<<<<<< HEAD
   const [hint, setHint] = useState("");
   const [userAnswer, setUserAnswer] = useState("");
+=======
+  const [allWords, setAllWords] = useState<any[]>([]);
+  const [currentOptions, setCurrentOptions] = useState<string[]>([]);
+  const [diceValue, setDiceValue] = useState<number | null>(null);
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
   const [feedback, setFeedback] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [gameStarted, setGameStarted] = useState(false);
   const [history, setHistory] = useState<any[]>([]);
+<<<<<<< HEAD
   const [showHint, setShowHint] = useState(false);
+=======
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
   const [streak, setStreak] = useState(0);
   const [totalCorrect, setTotalCorrect] = useState(0);
   const [totalWrong, setTotalWrong] = useState(0);
@@ -297,6 +306,10 @@ export default function GamePage() {
   const [oddStarted, setOddStarted] = useState(false);
   const [oddSelected, setOddSelected] = useState<number | null>(null);
   const [oddHistory, setOddHistory] = useState<any[]>([]);
+<<<<<<< HEAD
+=======
+  const [oddWordsDb, setOddWordsDb] = useState<any[]>([]);
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -316,16 +329,63 @@ export default function GamePage() {
   }, [router]);
 
   // ── Odd One Out Functions ──
+<<<<<<< HEAD
   const startOddGame = async () => {
     try {
       const res = await api.game.oddQuestion();
       setOddQuestion(res);
+=======
+  const generateOddTurn = (db: any[]) => {
+    const categories = Array.from(new Set(db.map(w => w.category)));
+    const targetCategory = categories[Math.floor(Math.random() * categories.length)];
+    
+    const categoryWords = db.filter(w => w.category === targetCategory);
+    const otherWords = db.filter(w => w.category !== targetCategory);
+    
+    // Pick 3 from categoryWords
+    const normalWords: any[] = [];
+    const tempCat = [...categoryWords];
+    for (let i = 0; i < 3 && tempCat.length > 0; i++) {
+        const idx = Math.floor(Math.random() * tempCat.length);
+        normalWords.push(tempCat[idx]);
+        tempCat.splice(idx, 1);
+    }
+    
+    // Pick 1 from otherWords
+    const oddWord = otherWords[Math.floor(Math.random() * otherWords.length)];
+    
+    const options = [...normalWords, oddWord];
+    // Shuffle options
+    for (let i = options.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [options[i], options[j]] = [options[j], options[i]];
+    }
+    
+    const correctIndex = options.findIndex(o => o.id === oddWord.id);
+
+    setOddQuestion({
+        category: targetCategory,
+        options: options,          // objects {id, sanskrit, english, category}
+        oddWord: oddWord,          // The correct answer
+        correct_index: correctIndex
+    });
+  };
+
+  const startOddGame = async () => {
+    try {
+      const res = await api.game.getOddOneOutWords();
+      setOddWordsDb(res);
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
       setOddStarted(true);
       setOddFeedback(null);
       setOddScore(0);
       setOddTotal(0);
       setOddSelected(null);
       setOddHistory([]);
+<<<<<<< HEAD
+=======
+      generateOddTurn(res);
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
     } catch (err) {
       console.error("Failed to start Odd One Out:", err);
     }
@@ -336,6 +396,7 @@ export default function GamePage() {
     setOddLoading(true);
     setOddSelected(choiceIndex);
 
+<<<<<<< HEAD
     try {
       const res = await api.game.oddAnswer({
         question_data: oddQuestion,
@@ -365,27 +426,125 @@ export default function GamePage() {
       console.error("Odd answer failed:", err);
       setOddLoading(false);
     }
+=======
+    const isCorrect = choiceIndex === oddQuestion.correct_index;
+    const selectedOption = oddQuestion.options[choiceIndex];
+
+    const feedbackStr = `You chose ${selectedOption.english} (${selectedOption.sanskrit}). ${selectedOption.english} is a ${selectedOption.category}. The other 3 are ${oddQuestion.category}. The correct odd one out was ${oddQuestion.oddWord.english}!`;
+    
+    const newFeedback = {
+        is_correct: isCorrect,
+        correct_index: oddQuestion.correct_index,
+        message: feedbackStr,
+        correct_word: oddQuestion.oddWord
+    };
+
+    setOddFeedback(newFeedback);
+    setOddTotal((t) => t + 1);
+    if (isCorrect) setOddScore((s) => s + 1);
+
+    setOddHistory((prev) => [
+        {
+          category: oddQuestion.category,
+          correct: isCorrect,
+          correctWord: oddQuestion.oddWord.sanskrit,
+        },
+        ...prev,
+    ]);
+
+    setTimeout(async () => {
+        generateOddTurn(oddWordsDb);
+        setOddFeedback(null);
+        setOddSelected(null);
+        setOddLoading(false);
+    }, 4000);
+  };
+
+  const checkBoard = (pos: number) => {
+    let finalPos = pos;
+    let event = "correct";
+    const ladderData = [
+      { start: 2, end: 11 }, { start: 4, end: 14 },
+      { start: 9, end: 31 }, { start: 16, end: 26 },
+      { start: 20, end: 38 }, { start: 28, end: 47 },
+      { start: 35, end: 45 }
+    ];
+    const snakeData = [
+      { start: 12, end: 2 }, { start: 17, end: 7 },
+      { start: 25, end: 11 }, { start: 32, end: 15 },
+      { start: 38, end: 24 }, { start: 44, end: 31 },
+      { start: 49, end: 38 }
+    ];
+
+    const ladder = ladderData.find(l => l.start === pos);
+    if (ladder) {
+      finalPos = ladder.end;
+      event = "ladder";
+    } else {
+      const snake = snakeData.find(s => s.start === pos);
+      if (snake) {
+        finalPos = snake.end;
+        event = "snake";
+      }
+    }
+    return { finalPos, event };
+  };
+
+  const generateTurn = (wordsDb: any[]) => {
+    const target = wordsDb[Math.floor(Math.random() * wordsDb.length)];
+    const distractors = wordsDb.filter(w => w.id !== target.id);
+    
+    // Pick 3 random distractors
+    const chosenDistractors: string[] = [];
+    while (chosenDistractors.length < 3 && distractors.length > 0) {
+      const idx = Math.floor(Math.random() * distractors.length);
+      chosenDistractors.push(distractors[idx].englishMeaning);
+      distractors.splice(idx, 1);
+    }
+    
+    const optionsArray = [target.englishMeaning, ...chosenDistractors];
+    // Shuffle Array
+    for (let i = optionsArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [optionsArray[i], optionsArray[j]] = [optionsArray[j], optionsArray[i]];
+    }
+    
+    setCurrentWord(target);
+    setCurrentOptions(optionsArray);
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
   };
 
   const startGame = async () => {
     try {
+<<<<<<< HEAD
       const res = await api.game.start();
       setPosition(res.position);
       setCurrentWord(res.next_word);
       setHint(res.next_word.hint);
+=======
+      const res = await api.game.getSnakeLadderWords();
+      setAllWords(res);
+      setPosition(1);
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
       setGameStarted(true);
       setFeedback(null);
       setHistory([]);
       setStreak(0);
       setTotalCorrect(0);
       setTotalWrong(0);
+<<<<<<< HEAD
       setShowHint(false);
       setTimeout(() => inputRef.current?.focus(), 300);
+=======
+      setDiceValue(null);
+      generateTurn(res);
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
     } catch (err) {
       console.error("Failed to start game:", err);
     }
   };
 
+<<<<<<< HEAD
   const submitAnswer = async () => {
     if (!userAnswer.trim() || !currentWord || loading) return;
     setLoading(true);
@@ -445,6 +604,82 @@ export default function GamePage() {
     } finally {
       setLoading(false);
     }
+=======
+  const submitAnswer = async (selectedOption: string) => {
+    if (!currentWord || loading) return;
+    setLoading(true);
+    setFeedback(null);
+    setDiceValue(null);
+
+    const isCorrect = selectedOption === currentWord.englishMeaning;
+    
+    let roll = 0;
+    let targetPos = position;
+    let finalPos = position;
+    let currentEvent = isCorrect ? "correct" : "wrong";
+
+    if (isCorrect) {
+      roll = Math.floor(Math.random() * 6) + 1;
+      setDiceValue(roll);
+      targetPos = Math.min(50, position + roll);
+      const boardRes = checkBoard(targetPos);
+      finalPos = boardRes.finalPos;
+      currentEvent = boardRes.event;
+    } else {
+      finalPos = Math.max(1, position - 2);
+      currentEvent = "snake"; // visual feedback of sliding down
+    }
+
+    const isWin = finalPos === 50;
+    if (isWin) currentEvent = "win";
+
+    const res = {
+      event: currentEvent,
+      position: finalPos,
+      correct_answer: currentWord.englishMeaning,
+      game_over: isWin
+    };
+
+    setFeedback(res);
+    setPosition(res.position);
+
+    if (isCorrect) {
+      setAnimationState("correct");
+      setStreak((s) => s + 1);
+      setTotalCorrect((c) => c + 1);
+      if (res.event === "ladder") {
+        const id = Date.now();
+        setParticles(prev => [...prev, { id, emoji: "🪜", color: "#27ae60" }]);
+        setTimeout(() => setParticles(prev => prev.filter(p => p.id !== id)), 2000);
+      }
+    } else {
+      setAnimationState("wrong");
+      setStreak(0);
+      setTotalWrong((w) => w + 1);
+      const id = Date.now();
+      setParticles(prev => [...prev, { id, emoji: "🐍", color: "#e74c3c" }]);
+      setTimeout(() => setParticles(prev => prev.filter(p => p.id !== id)), 2000);
+    }
+
+    const entry = {
+      word: currentWord.sanskrit,
+      answer: selectedOption,
+      correct: isCorrect,
+      correctAnswer: res.correct_answer,
+      event: res.event,
+    };
+    setHistory((prev) => [entry, ...prev]);
+
+    setTimeout(() => setAnimationState("idle"), 600);
+
+    if (res.game_over) {
+      setGameStarted(false);
+    } else {
+      generateTurn(allWords);
+    }
+
+    setLoading(false);
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
   };
 
   const progressPercent = Math.min((position / TOTAL_CELLS) * 100, 100);
@@ -600,10 +835,22 @@ export default function GamePage() {
                   lineHeight: "1.7",
                 }}
               >
+<<<<<<< HEAD
                 Test your Sanskrit vocabulary in a classic game of Snake & Ladder.
                 Each correct translation advances you <strong>+5</strong> positions.
                 Be careful—mistakes will cause you to slide back <strong>-3</strong> positions.
                 Reach position 50 to win!
+=======
+                Test your Sanskrit vocabulary in our enhanced Snake & Ladder trial.
+                <br /><br />
+                🎲 <strong>Correct:</strong> Roll the dice to move <strong>1-6</strong> steps.
+                <br />
+                🐍 <strong>Wrong:</strong> Slide back <strong>-2</strong> positions.
+                <br />
+                🪜 <strong>Ladders:</strong> Divine shortcuts to boost your ascent.
+                <br />
+                🏆 <strong>Win:</strong> Reach position <strong>50</strong> to achieve mastery!
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
               </p>
               <motion.button
                 whileHover={{ scale: 1.05 }}
@@ -880,6 +1127,7 @@ export default function GamePage() {
                       >
                         Translate This Word
                       </span>
+<<<<<<< HEAD
                       <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
@@ -902,6 +1150,8 @@ export default function GamePage() {
                       >
                         <Lightbulb size={14} /> Hint
                       </motion.button>
+=======
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
                     </div>
 
                     <motion.div
@@ -925,6 +1175,7 @@ export default function GamePage() {
                     </motion.div>
 
                     <AnimatePresence>
+<<<<<<< HEAD
                       {showHint && (
                         <motion.div
                           initial={{ opacity: 0, height: 0 }}
@@ -939,11 +1190,34 @@ export default function GamePage() {
                           }}
                         >
                           💡 {hint}
+=======
+                      {diceValue && (
+                        <motion.div
+                          initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
+                          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                          exit={{ opacity: 0, scale: 0.5 }}
+                          className="flex justify-center items-center gap-3"
+                          style={{
+                            background: "rgba(136,84,208,0.1)",
+                            padding: "16px 24px",
+                            borderRadius: "16px",
+                            display: "flex",
+                            margin: "0 auto",
+                            width: "fit-content",
+                            color: "#8854d0",
+                            fontWeight: "800",
+                            fontSize: "1.2rem"
+                          }}
+                        >
+                          <Dice5 size={28} />
+                          Rolled: +{diceValue}
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
                         </motion.div>
                       )}
                     </AnimatePresence>
                   </div>
 
+<<<<<<< HEAD
                   <div style={{ padding: "20px 40px 40px" }}>
                     <div
                       className="flex gap-3"
@@ -978,6 +1252,33 @@ export default function GamePage() {
                       >
                         <Send size={20} />
                       </motion.button>
+=======
+                  <div style={{ padding: "0 40px 40px" }}>
+                    <div className="grid grid-cols-2 gap-4">
+                      {currentOptions.map((opt, i) => (
+                        <motion.button
+                          key={i}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                          onClick={() => submitAnswer(opt)}
+                          disabled={loading}
+                          style={{
+                            padding: "18px 20px",
+                            background: "var(--bg-card)",
+                            border: "2px solid var(--border-soft)",
+                            borderRadius: "16px",
+                            fontSize: "1.1rem",
+                            fontWeight: "700",
+                            color: "var(--text-main)",
+                            cursor: loading ? "not-allowed" : "pointer",
+                            transition: "all 0.2s"
+                          }}
+                          className={`${loading ? 'opacity-50' : 'hover:border-[#8854d0] hover:text-[#8854d0]'}`}
+                        >
+                          {opt}
+                        </motion.button>
+                      ))}
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
                     </div>
                   </div>
                 </motion.div>
@@ -1184,7 +1485,11 @@ export default function GamePage() {
                   </div>
                   <div className="flex flex-col gap-5">
                     <div className="flex gap-4 items-start">
+<<<<<<< HEAD
                       <span style={{ fontSize: "1.2rem" }}>✅</span>
+=======
+                      <span style={{ fontSize: "1.2rem" }}>🎲</span>
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
                       <p
                         style={{
                           fontSize: "0.85rem",
@@ -1192,7 +1497,11 @@ export default function GamePage() {
                           lineHeight: "1.5",
                         }}
                       >
+<<<<<<< HEAD
                         Correct answer = Move forward <strong>+5</strong> positions
+=======
+                        Correct answer = Roll dice and advance <strong>1-6</strong> steps
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
                       </p>
                     </div>
                     <div className="flex gap-4 items-start">
@@ -1204,7 +1513,11 @@ export default function GamePage() {
                           lineHeight: "1.5",
                         }}
                       >
+<<<<<<< HEAD
                         Wrong answer = Slide <strong>-3</strong> positions
+=======
+                        Wrong answer = Slide back <strong>-2</strong> positions
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
                       </p>
                     </div>
                     <div className="flex gap-4 items-start">
@@ -1216,7 +1529,11 @@ export default function GamePage() {
                           lineHeight: "1.5",
                         }}
                       >
+<<<<<<< HEAD
                         Reach position <strong>50</strong> to win the game
+=======
+                        Reach position <strong>50</strong> to achieve victory
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
                       </p>
                     </div>
                   </div>

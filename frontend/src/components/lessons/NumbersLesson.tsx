@@ -37,9 +37,14 @@ export default function NumbersLesson({ onBack }: { onBack: () => void }) {
         const fetchNumbers = async () => {
             try {
                 const result = await api.lessons.getNumbers();
+<<<<<<< HEAD
                 if (result.success) {
                     setNumbers(result.data);
                 }
+=======
+                const data = result?.success ? result.data : (Array.isArray(result) ? result : []);
+                setNumbers(data);
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
             } catch (error) {
                 console.error("Failed to fetch numbers", error);
             } finally {
@@ -108,6 +113,51 @@ export default function NumbersLesson({ onBack }: { onBack: () => void }) {
                 </p>
             </motion.div>
 
+<<<<<<< HEAD
+=======
+            {/* Reference Chart Section */}
+            <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2, duration: 0.8 }}
+                style={{
+                    marginBottom: '50px',
+                    borderRadius: '32px',
+                    overflow: 'hidden',
+                    border: '1px solid var(--border-soft)',
+                    boxShadow: '0 20px 40px rgba(0,0,0,0.02)',
+                    background: 'var(--bg-card)',
+                    position: 'relative'
+                }}
+            >
+                <div style={{ 
+                    padding: '24px 40px', 
+                    borderBottom: '1px solid var(--border-soft)', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'space-between',
+                    background: 'rgba(var(--primary-rgb), 0.02)'
+                }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <Sparkles size={20} color="var(--primary)" />
+                        <h3 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-main)' }}>Comprehensive Reference Chart</h3>
+                    </div>
+                </div>
+                <div style={{ padding: '30px', background: '#fff' }}>
+                    <img 
+                        src="/images/lessons/sanskrit_numbers_chart.jpg" 
+                        alt="Sanskrit Numbers 1-100 Reference Chart" 
+                        style={{ 
+                            width: '100%', 
+                            height: 'auto', 
+                            borderRadius: '16px',
+                            boxShadow: '0 4px 20px rgba(0,0,0,0.05)'
+                        }}
+                    />
+                </div>
+            </motion.div>
+
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
             {/* Tap-to-Reveal Grid */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))', gap: '20px' }}>
                 <AnimatePresence mode="popLayout">

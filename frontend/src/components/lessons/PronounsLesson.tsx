@@ -31,9 +31,15 @@ export default function PronounsLesson({ onBack }: { onBack: () => void }) {
         const fetchPronouns = async () => {
             try {
                 const res = await api.lessons.getPronouns();
+<<<<<<< HEAD
                 if (res.success) {
                     setPronouns(res.data);
                 }
+=======
+                // Check if res is successful and handle both wrapped (success/data) and unwrapped formats
+                const data = res?.success ? res.data : (Array.isArray(res) ? res : []);
+                setPronouns(data);
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
             } catch (error) {
                 console.error("Failed to fetch pronouns data", error);
             } finally {
@@ -190,6 +196,10 @@ export default function PronounsLesson({ onBack }: { onBack: () => void }) {
                             </motion.div>
                         ) : (
                             <motion.div
+<<<<<<< HEAD
+=======
+                                key="empty-state"
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 style={{

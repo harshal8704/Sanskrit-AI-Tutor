@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿"use client";
+=======
+"use client";
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
@@ -60,7 +64,11 @@ const AlphabetFlashcards = () => {
     <div className="flex flex-col gap-12 mt-12 pb-20 max-w-6xl mx-auto">
       <AnimatePresence>
         <motion.div 
+<<<<<<< HEAD
           key="vowels-panel"
+=======
+          key="vowels-section"
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           className="zen-card overflow-hidden border border-[var(--border-soft)] shadow-2xl relative"
@@ -106,7 +114,11 @@ const AlphabetFlashcards = () => {
         </motion.div>
 
         <motion.div 
+<<<<<<< HEAD
           key="consonants-panel"
+=======
+          key="consonants-section"
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
@@ -285,7 +297,11 @@ export default function Lessons() {
               </div>
 
               <div className="flex gap-4">
+<<<<<<< HEAD
                 <button className="btn-secondary">Download PDF</button>
+=======
+
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
                 <button className="btn-primary" onClick={() => alert("Quiz manifest arriving soon!")}>
                   Mark as Complete <CheckCircle2 size={18} />
                 </button>

@@ -1,5 +1,12 @@
+<<<<<<< HEAD
 ﻿import React, { useState, useRef } from 'react';
 import VirtualKeyboard from './VirtualKeyboard'; // Make sure the path is correct
+=======
+import React, { useState, useRef } from 'react';
+import VirtualKeyboard from './VirtualKeyboard';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Keyboard, X } from 'lucide-react';
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
 
 interface SanskritInputProps {
     value: string;
@@ -13,7 +20,11 @@ interface SanskritInputProps {
 export default function SanskritInput({ 
     value, 
     onChange, 
+<<<<<<< HEAD
     placeholder = "Type in English, or use the virtual keyboard for Hindi/Sanskrit...",
+=======
+    placeholder = "Type in English, or use the virtual keyboard for Devanagari/Sanskrit...",
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
     style,
     className = "",
     showLabel = true
@@ -37,7 +48,10 @@ export default function SanskritInput({
         };
 
         let result = input;
+<<<<<<< HEAD
         // Handle Halant + Vowel -> Matra (e.g., न् + अ -> न, न् + आ -> ना)
+=======
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
         for (const [vowel, matra] of Object.entries(matraMap)) {
             const pattern = new RegExp(`्${vowel}`, 'g');
             result = result.replace(pattern, matra);
@@ -52,13 +66,19 @@ export default function SanskritInput({
         const start = textarea.selectionStart;
         const end = textarea.selectionEnd;
 
+<<<<<<< HEAD
         // Insert char then normalize
+=======
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
         const rawText = value.substring(0, start) + char + value.substring(end);
         const normalized = normalizeSanskrit(rawText);
         
         onChange(normalized);
 
+<<<<<<< HEAD
         // Adjust cursor position
+=======
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
         const lengthDiff = rawText.length - normalized.length;
         setTimeout(() => {
             textarea.selectionStart = textarea.selectionEnd = start + char.length - lengthDiff;
@@ -94,6 +114,7 @@ export default function SanskritInput({
     };
 
     return (
+<<<<<<< HEAD
         <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
 
             {/* Header & Toggle Button */}
@@ -128,10 +149,49 @@ export default function SanskritInput({
             </div>
 
             {/* The Actual Text Box */}
+=======
+        <div style={{ position: 'relative', width: '100%', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+
+            {/* Header Controls */}
+            <div className="flex items-center justify-between">
+                {showLabel ? (
+                    <label style={{ fontWeight: '700', fontSize: '0.9rem', color: 'var(--text-main)', letterSpacing: '-0.2px' }}>
+                        Enter Text (पाठम् लिखतु)
+                    </label>
+                ) : <div />}
+
+                <button
+                    type="button"
+                    onClick={() => setShowKeyboard(!showKeyboard)}
+                    style={{
+                        padding: '7px 14px',
+                        background: showKeyboard ? 'var(--accent-rose)' : 'var(--primary-light)',
+                        color: showKeyboard ? '#ffffff' : 'var(--primary)',
+                        borderRadius: '10px',
+                        border: showKeyboard ? 'none' : '1px solid rgba(var(--primary-rgb), 0.25)',
+                        cursor: 'pointer',
+                        fontWeight: '700',
+                        fontSize: '0.78rem',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.5px',
+                        transition: 'all 0.25s var(--transition)',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px'
+                    }}
+                >
+                    {showKeyboard ? <X size={14} /> : <Keyboard size={14} />}
+                    <span>{showKeyboard ? 'Close Keyboard' : 'Devanagari Keyboard'}</span>
+                </button>
+            </div>
+
+            {/* Textarea Input */}
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
             <textarea
                 ref={textareaRef}
                 value={value}
                 onChange={handleNativeChange}
+<<<<<<< HEAD
                 onClick={() => {
                     if (textareaRef.current) textareaRef.current.focus();
                 }}
@@ -168,3 +228,48 @@ export default function SanskritInput({
         </div>
     );
 }
+=======
+                placeholder={placeholder}
+                style={{
+                    width: '100%',
+                    minHeight: '160px',
+                    padding: '20px 24px',
+                    fontSize: '1.35rem',
+                    lineHeight: '1.5',
+                    borderRadius: '20px',
+                    border: '1.5px solid var(--border-soft)',
+                    background: 'var(--bg-card)',
+                    color: 'var(--text-main)',
+                    fontFamily: '"Noto Sans Devanagari", "Plus Jakarta Sans", sans-serif',
+                    resize: 'vertical',
+                    outline: 'none',
+                    boxShadow: 'var(--shadow-sm)',
+                    transition: 'border-color 0.25s, box-shadow 0.25s',
+                    ...style
+                }}
+                className={`focus:border-primary ${className}`}
+            />
+
+            {/* Virtual Keyboard Accordion */}
+            <AnimatePresence>
+                {showKeyboard && (
+                    <motion.div 
+                        initial={{ opacity: 0, height: 0, y: -10 }}
+                        animate={{ opacity: 1, height: 'auto', y: 0 }}
+                        exit={{ opacity: 0, height: 0, y: -10 }}
+                        transition={{ duration: 0.3 }}
+                        style={{ overflow: 'hidden', marginTop: '4px' }}
+                    >
+                        <VirtualKeyboard
+                            onKeyPress={handleKeyPress}
+                            onBackspace={handleBackspace}
+                            onClose={() => setShowKeyboard(false)}
+                        />
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+        </div>
+    );
+}
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d

@@ -12,12 +12,16 @@
         {
           "id": 1,
           "question": "How many vowels are there in Sanskrit?",
+<<<<<<< HEAD
           "options": [
             "10",
             "13",
             "15",
             "20"
           ],
+=======
+          "options": ["10", "13", "15", "20"],
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
           "answer": "13",
           "explanation": "Sanskrit has 13 vowel sounds"
         }
@@ -36,16 +40,21 @@
         {
           "id": 1,
           "question": "What does 'धन्यवादः' mean?",
+<<<<<<< HEAD
           "options": [
             "Hello",
             "Thank you",
             "Goodbye",
             "Please"
           ],
+=======
+          "options": ["Hello", "Thank you", "Goodbye", "Please"],
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
           "answer": "Thank you",
           "explanation": "धन्यवादः means 'Thank you'"
         }
       ],
+<<<<<<< HEAD
       "prerequisites": [
         1
       ]
@@ -53,6 +62,13 @@
     {
       "id": 3,
       "title": "Numbers 1-10 in Sanskrit",
+=======
+      "prerequisites": [1]
+    },
+    {
+      "id": 3,
+      "title": "Numbers in Sanskrit",
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
       "description": "Learn to count in Sanskrit",
       "level": "beginner",
       "duration": 15,
@@ -62,19 +78,27 @@
         {
           "id": 1,
           "question": "What is the Sanskrit word for 5?",
+<<<<<<< HEAD
           "options": [
             "एकः",
             "द्वौ",
             "त्रयः",
             "पञ्च"
           ],
+=======
+          "options": ["एकः", "द्वौ", "त्रयः", "पञ्च"],
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
           "answer": "पञ्च",
           "explanation": "पञ्च (pañca) means 5"
         }
       ],
+<<<<<<< HEAD
       "prerequisites": [
         1
       ]
+=======
+      "prerequisites": [1]
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
     },
     {
       "id": 4,
@@ -146,10 +170,14 @@
           "explanation": "This phrase literally means 'Meeting with you is pleasant'"
         }
       ],
+<<<<<<< HEAD
       "prerequisites": [
         1,
         2
       ]
+=======
+      "prerequisites": [1, 2]
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
     },
     {
       "id": 5,
@@ -160,10 +188,14 @@
       "difficulty": 3,
       "content": "pronouns_special",
       "quiz": [],
+<<<<<<< HEAD
       "prerequisites": [
         1,
         2
       ]
+=======
+      "prerequisites": [1, 2]
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
     },
     {
       "id": 6,
@@ -174,9 +206,13 @@
       "difficulty": 4,
       "content": "verbs_special",
       "quiz": [],
+<<<<<<< HEAD
       "prerequisites": [
         5
       ]
+=======
+      "prerequisites": [5]
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
     },
     {
       "id": 7,
@@ -187,9 +223,13 @@
       "difficulty": 4,
       "content": "nouns_special",
       "quiz": [],
+<<<<<<< HEAD
       "prerequisites": [
         6
       ]
+=======
+      "prerequisites": [6]
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
     },
     {
       "id": 8,
@@ -200,9 +240,13 @@
       "difficulty": 3,
       "content": "family_special",
       "quiz": [],
+<<<<<<< HEAD
       "prerequisites": [
         7
       ]
+=======
+      "prerequisites": [7]
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
     },
     {
       "id": 9,
@@ -213,9 +257,13 @@
       "difficulty": 3,
       "content": "questions_special",
       "quiz": [],
+<<<<<<< HEAD
       "prerequisites": [
         8
       ]
+=======
+      "prerequisites": [8]
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
     },
     {
       "id": 10,
@@ -226,9 +274,16 @@
       "difficulty": 3,
       "content": "time_special",
       "quiz": [],
+<<<<<<< HEAD
       "prerequisites": [
         9
       ]
     }
   ]
 }
+=======
+      "prerequisites": [9]
+    }
+  ]
+}
+>>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
