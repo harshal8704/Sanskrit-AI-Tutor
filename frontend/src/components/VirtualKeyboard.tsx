@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 ﻿import React, { useState } from 'react';
-=======
-import React, { useState } from 'react';
->>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface VirtualKeyboardProps {
@@ -192,8 +188,4 @@ export default function VirtualKeyboard({ onKeyPress, onBackspace, onClose }: Vi
             </div>
         </motion.div>
     );
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d

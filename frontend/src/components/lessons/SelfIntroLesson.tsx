@@ -41,19 +41,12 @@ export default function SelfIntroLesson({ onBack }: { onBack: () => void }) {
                     api.lessons.getSelfIntro(),
                     api.lessons.getNumbers()
                 ]);
-<<<<<<< HEAD
                 if (introResult.success) {
                     setIntroData(introResult.data);
                 }
                 if (numbersResult.success) {
                     setNumbersData(numbersResult.data);
                 }
-=======
-                const iData = introResult?.success ? introResult.data : (Array.isArray(introResult) ? introResult : []);
-                const nData = numbersResult?.success ? numbersResult.data : (Array.isArray(numbersResult) ? numbersResult : []);
-                setIntroData(iData);
-                setNumbersData(nData);
->>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d
             } catch (error) {
                 console.error("Failed to fetch self intro or numbers data", error);
             } finally {

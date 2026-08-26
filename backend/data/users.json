@@ -35,7 +35,6 @@
     "created_at": "2026-03-15T00:59:58.365945",
     "level": "beginner",
     "completed": 0
-<<<<<<< HEAD
   },
   "mith": {
     "password": "$2b$12$VHaE3YXrD1KnMBcF.sYOYuxKfAR9oJgbrGtIPvSKfSeQqWZG22m1S",
@@ -45,7 +44,3 @@
     "completed": 0
   }
 }
-=======
-  }
-}
->>>>>>> 07c3d9f08eff2b3ab07b9877857805df5f6a218d

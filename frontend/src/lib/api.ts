@@ -35,6 +35,7 @@ export const api = {
     getFamily: () => apiRequest('/api/lessons/family'),
     getQuestionWords: () => apiRequest('/api/lessons/questions'),
     getTimeAndDays: () => apiRequest('/api/lessons/time'),
+    getDailyQuestions: () => apiRequest('/api/daily-questions'),
   },
   user: {
     getProgress: (username: string) => apiRequest(`/progress/${username}`),

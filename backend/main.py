@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException, Depends, Body
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional, List, Dict, Any
 import os
+import json
 from pydantic import BaseModel
 
 # Import existing modules
@@ -136,6 +137,11 @@ def get_question_words():
 @app.get("/api/lessons/time")
 def get_time_and_days():
     return db.get_time_and_days()
+
+@app.get("/api/daily-questions")
+def get_daily_questions():
+    with open(os.path.join(DATA_DIR, 'dailyQuestions.json'), encoding='utf-8') as questions_file:
+        return json.load(questions_file)
 
 @app.get("/progress/{username}")
 def get_progress(username: str):
