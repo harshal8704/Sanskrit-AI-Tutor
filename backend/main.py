@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException, Depends, Body
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional, List, Dict, Any
 import os
+import json
 from pydantic import BaseModel
 
 # Import existing modules
@@ -115,54 +116,32 @@ def get_self_intro_lesson():
 
 @app.get("/api/lessons/pronouns")
 def get_pronouns():
-    """Get pronouns list"""
-    data = db.get_pronouns()
-    return {"success": True, "data": data}
+    return db.get_pronouns()
 
 @app.get("/api/lessons/verbs")
 def get_verbs():
-    """Get verbs list"""
-    data = db.get_verbs()
-    return {"success": True, "data": data}
+    return db.get_verbs()
 
 @app.get("/api/lessons/nouns")
 def get_nouns():
-    """Get nouns list for genders lesson"""
-    data = db.get_nouns()
-    return {"success": True, "data": data}
+    return db.get_nouns()
 
 @app.get("/api/lessons/family")
 def get_family():
-    """Get family relationship words"""
-    data = db.get_family()
-    return {"success": True, "data": data}
+    return db.get_family()
 
 @app.get("/api/lessons/questions")
 def get_question_words():
-    """Get question words (prashna padas)"""
-    data = db.get_question_words()
-    return {"success": True, "data": data}
+    return db.get_question_words()
 
 @app.get("/api/lessons/time")
 def get_time_and_days():
-    """Get time and days vocabulary"""
-    data = db.get_time_and_days()
-    return {"success": True, "data": data}
+    return db.get_time_and_days()
 
 @app.get("/api/daily-questions")
 def get_daily_questions():
-    """Get daily questions for streak challenge"""
-    return db.get_daily_questions()
-
-@app.get("/api/game/snake-ladder-words")
-def get_snake_ladder_words():
-    """Get words for Snake & Ladder game"""
-    return db.get_snake_ladder_words()
-
-@app.get("/api/game/odd-one-out-words")
-def get_odd_one_out_words():
-    """Get words for Odd One Out game"""
-    return db.get_odd_one_out_words()
+    with open(os.path.join(DATA_DIR, 'dailyQuestions.json'), encoding='utf-8') as questions_file:
+        return json.load(questions_file)
 
 @app.get("/progress/{username}")
 def get_progress(username: str):
@@ -202,6 +181,88 @@ def get_dashboard_stats(username: str):
         "db_stats": stats
     }
 
+# ─── Suggestions Endpoint (Local DB + Groq Fallback) ──────────────────────────
+@app.get("/suggestions")
+def get_suggestions(prefix: str, limit: int = 6):
+    """
+    Return Devanagari word suggestions using local DB + Groq API.
+    """
+    if not prefix or len(prefix) < 1:
+        return {"suggestions": []}
+    
+    matches = []
+    seen = set()
+    
+    # First, search local database in 'devanagari' column
+    df = translator.df
+    for _, row in df.iterrows():
+        dev = str(row.get('devanagari', ''))
+        if dev.startswith(prefix) and dev not in seen:
+            seen.add(dev)
+            matches.append({
+                "word": dev,
+                "meaning": str(row.get('english', '')),
+                "sanskrit": str(row.get('sanskrit', ''))
+            })
+            if len(matches) >= limit:
+                return {"suggestions": matches}
+    
+    # Also check 'sanskrit' transliterated column (e.g., "agniḥ" -> "अग्निः")
+    if len(matches) < limit:
+        for _, row in df.iterrows():
+            san = str(row.get('sanskrit', ''))
+            # Convert IAST/roman to Devanagari for matching? For now, direct compare
+            if san.startswith(prefix) and san not in seen:
+                seen.add(san)
+                matches.append({
+                    "word": san,
+                    "meaning": str(row.get('english', '')),
+                    "sanskrit": san
+                })
+                if len(matches) >= limit:
+                    return {"suggestions": matches}
+    
+    # If not enough matches and Groq API key exists, call AI for suggestions
+    if len(matches) < limit and translator.api_key:
+        try:
+            import requests
+            import json
+            import re
+            remaining = limit - len(matches)
+            prompt = f"""
+            You are a Sanskrit lexicon. Given the Devanagari prefix "{prefix}", suggest {remaining} common Sanskrit words (in Devanagari script) that start with this prefix.
+            Return only a JSON array of objects with fields: "word" (Devanagari), "meaning" (English), "sanskrit" (transliterated IAST).
+            Example: [{{"word": "नमस्ते", "meaning": "hello", "sanskrit": "namaste"}}]
+            """
+            headers = {"Authorization": f"Bearer {translator.api_key}", "Content-Type": "application/json"}
+            payload = {
+                "model": translator.ai_model,
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": 0.3,
+                "response_format": {"type": "json_object"}
+            }
+            response = requests.post(f"{translator.base_url}/chat/completions", headers=headers, json=payload, timeout=10)
+            if response.status_code == 200:
+                result = response.json()
+                content = result['choices'][0]['message']['content']
+                json_match = re.search(r'\[.*\]', content, re.DOTALL)
+                if json_match:
+                    ai_suggestions = json.loads(json_match.group(0))
+                    for sugg in ai_suggestions[:remaining]:
+                        word = sugg.get("word", "")
+                        if word and word not in seen:
+                            matches.append({
+                                "word": word,
+                                "meaning": sugg.get("meaning", ""),
+                                "sanskrit": sugg.get("sanskrit", "")
+                            })
+                            if len(matches) >= limit:
+                                break
+        except Exception as e:
+            print(f"Groq suggestion error: {e}")
+    
+    return {"suggestions": matches}
+
 # ─── Snake & Ladder Translation Game ──────────────────────────
 @app.get("/game/start")
 def game_start():
@@ -223,6 +284,20 @@ def odd_question():
 def odd_answer(req: OddAnswerRequest):
     """Check the user's answer for Odd One Out."""
     return check_answer(req.question_data, req.user_choice)
+
+# ─── Test API Key Endpoint ────────────────────────────────────
+@app.get("/test-api")
+def test_api():
+    """Test if API key is loaded correctly"""
+    api_key = os.getenv("XAI_API_KEY")
+    base_url = os.getenv("BASE_URL")
+    return {
+        "has_api_key": bool(api_key),
+        "key_preview": api_key[:10] + "..." if api_key and len(api_key) > 10 else None,
+        "provider": "Groq" if api_key and api_key.startswith("gsk_") else "Grok" if api_key else "None",
+        "base_url": base_url,
+        "ai_available": bool(api_key)
+    }
 
 if __name__ == "__main__":
     import uvicorn

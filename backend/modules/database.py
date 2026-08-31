@@ -54,103 +54,50 @@ class MockDB:
                 ]
             }
         ]
-    
+
+    def _load_json_list(self, filename: str) -> List[Dict]:
+        file_path = os.path.join(self.data_dir, filename)
+        if os.path.exists(file_path):
+            with open(file_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
     def get_greetings(self) -> List[Dict]:
         """Get all greetings"""
-        greetings_file = os.path.join(self.data_dir, 'sanskritGreetings.json')
-        
-        if os.path.exists(greetings_file):
-            with open(greetings_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
+        return self._load_json_list('sanskritGreetings.json')
 
     def get_numbers(self) -> List[Dict]:
-        """Get all numbers limit to JSON file."""
-        numbers_file = os.path.join(self.data_dir, 'sanskritNumbers.json')
-        if os.path.exists(numbers_file):
-            with open(numbers_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
+        """Get number lesson data"""
+        return self._load_json_list('sanskritNumbers.json')
 
     def get_self_intro(self) -> List[Dict]:
-        """Get self intro data"""
-        intro_file = os.path.join(self.data_dir, 'sanskritSelfIntro.json')
-        if os.path.exists(intro_file):
-            with open(intro_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
+        """Get self introduction lesson data"""
+        return self._load_json_list('sanskritSelfIntro.json')
 
     def get_pronouns(self) -> List[Dict]:
-        """Get pronouns data"""
-        pronouns_file = os.path.join(self.data_dir, 'sanskritPronouns.json')
-        if os.path.exists(pronouns_file):
-            with open(pronouns_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
+        """Get pronoun lesson data"""
+        return self._load_json_list('sanskritPronouns.json')
 
     def get_verbs(self) -> List[Dict]:
-        """Get verbs data"""
-        verbs_file = os.path.join(self.data_dir, 'sanskritVerbs.json')
-        if os.path.exists(verbs_file):
-            with open(verbs_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
+        """Get verb lesson data"""
+        return self._load_json_list('sanskritVerbs.json')
 
     def get_nouns(self) -> List[Dict]:
-        """Get nouns data for genders lesson"""
-        nouns_file = os.path.join(self.data_dir, 'sanskritNouns.json')
-        if os.path.exists(nouns_file):
-            with open(nouns_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
+        """Get noun lesson data"""
+        return self._load_json_list('sanskritNouns.json')
 
     def get_family(self) -> List[Dict]:
-        """Get family relationship words"""
-        family_file = os.path.join(self.data_dir, 'sanskritFamily.json')
-        if os.path.exists(family_file):
-            with open(family_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
+        """Get family lesson data"""
+        return self._load_json_list('sanskritFamily.json')
 
     def get_question_words(self) -> List[Dict]:
-        """Get question words (prashna padas)"""
-        qw_file = os.path.join(self.data_dir, 'sanskritQuestionWords.json')
-        if os.path.exists(qw_file):
-            with open(qw_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
+        """Get question words lesson data"""
+        return self._load_json_list('sanskritQuestionWords.json')
 
     def get_time_and_days(self) -> List[Dict]:
-        """Get time and days vocabulary"""
-        td_file = os.path.join(self.data_dir, 'sanskritTimeAndDays.json')
-        if os.path.exists(td_file):
-            with open(td_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
-
-    def get_daily_questions(self) -> List[Dict]:
-        """Get daily streak questions"""
-        questions_file = os.path.join(self.data_dir, 'dailyQuestions.json')
-        if os.path.exists(questions_file):
-            with open(questions_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
-
-    def get_snake_ladder_words(self) -> List[Dict]:
-        """Get snake & ladder words dataset"""
-        words_file = os.path.join(self.data_dir, 'snakeLadderWords.json')
-        if os.path.exists(words_file):
-            with open(words_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
-
-    def get_odd_one_out_words(self) -> List[Dict]:
-        """Get odd one out words dataset"""
-        words_file = os.path.join(self.data_dir, 'oddOneOutWords.json')
-        if os.path.exists(words_file):
-            with open(words_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
-
+        """Get time and days lesson data"""
+        return self._load_json_list('sanskritTimeAndDays.json')
+    
     def get_user_progress(self, username: str) -> Dict:
         """Get user progress"""
         progress_file = os.path.join(self.data_dir, f'{username}_progress.json')

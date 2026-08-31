@@ -22,24 +22,26 @@ except ImportError:
 from dotenv import load_dotenv
 import re
 
-# Load environment variables explicitly
+# Load environment variables explicitly from backend folder
 env_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env')
 load_dotenv(dotenv_path=env_path)
 
 class SanskritTranslator:
     def __init__(self, csv_path='data/sanskrit_words.csv', sentences_path='data/sanskrit_sentences.json'):
-        # Ensure paths are relative to the backend root or absolute
-        self.csv_path = csv_path
-        
-        # Robust path generation relative to where the script is run / located
+        # Ensure paths are absolute relative to backend root
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        self.csv_path = os.path.join(base_dir, csv_path)
+        self.sentences_path = os.path.join(base_dir, sentences_path)
         self.main_db_path = os.path.join(base_dir, 'data', 'sanskrit_translation_db.csv')
-        self.sentences_path = sentences_path
+        
+        # Create data directory if it doesn't exist
+        os.makedirs(os.path.dirname(self.csv_path), exist_ok=True)
+        os.makedirs(os.path.dirname(self.sentences_path), exist_ok=True)
         
         self.main_df = self.load_main_db()
         self.new_words_df = self.load_data()
         
-        # Merge both databases into memory for lightning-fast lookups
+        # Merge both databases into memory
         if not self.main_df.empty and not self.new_words_df.empty:
             self.df = pd.concat([self.main_df, self.new_words_df], ignore_index=True)
         elif not self.main_df.empty:
@@ -51,31 +53,31 @@ class SanskritTranslator:
         self.api_calls_today = 0
         self.max_api_calls = 100  # Free API limits
         
-        self.ai_provider: str = "Local"
-        self.ai_model: str = "None"
-        
-        # AI Configuration - Support both xAI (Grok) and Groq (gsk_...)
+        # AI Configuration
         self.api_key = os.getenv("XAI_API_KEY")
         self.base_url = os.getenv("BASE_URL")
+        self.ai_provider: str = "Local"
+        self.ai_model: str = "None"
         
         if self.api_key and isinstance(self.api_key, str):
             if self.api_key.startswith("gsk_"):
                 self.ai_provider = "Groq"
-                self.base_url = "https://api.groq.com/openai/v1" # Force Groq URL
+                self.base_url = "https://api.groq.com/openai/v1"
                 self.ai_model = "llama-3.3-70b-versatile"
             else:
                 self.ai_provider = "Grok"
                 self.base_url = self.base_url or "https://api.x.ai/v1"
                 self.ai_model = "grok-beta"
-            print(f"SanskritTranslator: AI Engine initialized ({self.ai_provider})")
+            print(f"✅ SanskritTranslator: AI Engine initialized ({self.ai_provider})")
         else:
-            print("SanskritTranslator: AI Engine key NOT found.")
+            print("⚠️ SanskritTranslator: AI Engine key NOT found. Translation will use only local database.")
+    
     def load_main_db(self):
-        """Load the massive core dictionary of Sanskrit"""
+        """Load the core dictionary of Sanskrit"""
         try:
             if os.path.exists(self.main_db_path):
                 df = pd.read_csv(self.main_db_path, encoding='utf-8')
-                df = df.fillna('')  # CRITICAL: Prevent NaN JSON errors
+                df = df.fillna('')
                 mapping = {
                     'sanskrit_word': 'sanskrit',
                     'pos': 'word_type',
@@ -88,11 +90,8 @@ class SanskritTranslator:
                     df['source'] = 'translation_db'
                 if 'tags' not in df.columns:
                     df['tags'] = 'database'
-                
-                # Force all columns to strings to avoid numeric/NaN issues
                 for col in df.columns:
                     df[col] = df[col].astype(str)
-                
                 print(f"✅ Loaded {len(df)} core Sanskrit words from main dictionary")
                 return df
             return pd.DataFrame()
@@ -101,27 +100,23 @@ class SanskritTranslator:
             return pd.DataFrame()
 
     def load_data(self):
-        """Load generated/API-translated Sanskrit words from CSV"""
+        """Load user/API-translated Sanskrit words from CSV"""
         try:
             if os.path.exists(self.csv_path):
                 df = pd.read_csv(self.csv_path, encoding='utf-8')
-                df = df.fillna('')  # CRITICAL: Prevent NaN JSON errors
+                df = df.fillna('')
                 required_columns = ['sanskrit', 'devanagari', 'english', 'pronunciation', 
                                   'word_type', 'meaning', 'example', 'category', 'tags', 'source']
-                
                 for col in required_columns:
                     if col not in df.columns:
                         df[col] = ''
-                
-                # Safeguard against any float/NaN sneaking in
                 for col in df.columns:
                     if col in required_columns:
                         df[col] = df[col].astype(str)
-                
-                print(f"✅ Loaded {len(df)} newly learned Sanskrit words from user dictionary")
+                print(f"✅ Loaded {len(df)} newly learned Sanskrit words from {self.csv_path}")
                 return df
             else:
-                print("CSV file not found. Creating new dataset with demo data.")
+                print(f"CSV file not found at {self.csv_path}. Creating new dataset with demo data.")
                 return self.create_demo_data()
         except Exception as e:
             print(f"Error loading CSV: {e}")
@@ -217,7 +212,6 @@ class SanskritTranslator:
         """Save sentences to JSON"""
         if sentences_data is None:
             sentences_data = self.sentences
-        
         os.makedirs(os.path.dirname(self.sentences_path), exist_ok=True)
         with open(self.sentences_path, 'w', encoding='utf-8') as f:
             json.dump(sentences_data, f, ensure_ascii=False, indent=2)
@@ -226,16 +220,12 @@ class SanskritTranslator:
         """Translate using deep-translator GoogleTranslator"""
         if not DEEP_TRANSLATOR_AVAILABLE:
             return None
-        
         try:
             translator = GoogleTranslator(source=source, target=target)
             translation = translator.translate(text)
-            
             if translation and translation != text:
-                # If it's a sentence, the primary meaning is the translation itself
                 is_sentence = ' ' in text.strip() or len(text) > 20
                 meanings = [translation] if is_sentence else [f"Translation of {text}"]
-                
                 return {
                     'sanskrit': translation if target == 'sa' else text,
                     'devanagari': translation if target == 'sa' else text,
@@ -255,22 +245,15 @@ class SanskritTranslator:
         """Translate using MyMemory Translation API (free)"""
         try:
             url = "https://api.mymemory.translated.net/get"
-            params = {
-                'q': text,
-                'langpair': f'{source}|{target}'
-            }
-            
+            params = {'q': text, 'langpair': f'{source}|{target}'}
             response = requests.get(url, params=params, timeout=10)
             data = response.json()
-            
             if response.status_code == 200 and data['responseStatus'] == 200:
                 translation = data['responseData']['translatedText']
                 translation = translation.replace('&#39;', "'").replace('&quot;', '"')
-                
                 if translation and translation != text:
                     is_sentence = ' ' in text.strip() or len(text) > 20
                     meanings = [translation] if is_sentence else [f"Translation of {text}"]
-                    
                     return {
                         'sanskrit': translation if target == 'sa' else text,
                         'devanagari': translation if target == 'sa' else text,
@@ -290,23 +273,14 @@ class SanskritTranslator:
         """Translate using LibreTranslate API (free, no key needed)"""
         try:
             url = "https://libretranslate.com/translate"
-            payload = {
-                'q': text,
-                'source': source,
-                'target': target,
-                'format': 'text'
-            }
-            
+            payload = {'q': text, 'source': source, 'target': target, 'format': 'text'}
             response = requests.post(url, json=payload, timeout=10)
             data = response.json()
-            
             if response.status_code == 200 and 'translatedText' in data:
                 translation = data['translatedText']
-                
                 if translation and translation != text:
                     is_sentence = ' ' in text.strip() or len(text) > 20
                     meanings = [translation] if is_sentence else [f"Translation of {text}"]
-                    
                     return {
                         'sanskrit': translation if target == 'sa' else text,
                         'devanagari': translation if target == 'sa' else text,
@@ -321,9 +295,11 @@ class SanskritTranslator:
         except Exception as e:
             print(f"LibreTranslate error: {e}")
         return None
+    
     def translate_with_ai(self, text, direction='en_to_sa'):
         """Professional translation using Grok/Groq AI"""
         if not self.api_key:
+            print("⚠️ No API key for AI translation")
             return None
             
         try:
@@ -345,12 +321,7 @@ class SanskritTranslator:
                 "example": "an example usage in Sanskrit"
             }}
             """
-
-            headers = {
-                "Authorization": f"Bearer {self.api_key}",
-                "Content-Type": "application/json"
-            }
-
+            headers = {"Authorization": f"Bearer {self.api_key}", "Content-Type": "application/json"}
             payload = {
                 "model": self.ai_model,
                 "messages": [
@@ -360,20 +331,18 @@ class SanskritTranslator:
                 "response_format": {"type": "json_object"},
                 "temperature": 0.3
             }
-
             response = requests.post(f"{self.base_url}/chat/completions", headers=headers, json=payload, timeout=20)
             
             if response.status_code == 200:
                 result = response.json()
                 content = result['choices'][0]['message']['content']
-                
-                # Robust extraction
                 json_match = re.search(r'\{.*\}', content, re.DOTALL)
                 if json_match:
                     item = json.loads(json_match.group(0))
                     item['source'] = f'{self.ai_provider}_ai'
                     return item
-                    
+            else:
+                print(f"AI API error: {response.status_code} - {response.text}")
         except Exception as e:
             print(f"AI Translation Error: {e}")
         return None
@@ -381,8 +350,11 @@ class SanskritTranslator:
     def save_to_database(self, word_data):
         """Save new word to database and CSV"""
         try:
+            os.makedirs(os.path.dirname(self.csv_path), exist_ok=True)
+            # Check if word already exists (case-insensitive)
             existing = self.df[self.df['english'].str.lower() == word_data['english'].lower()]
             if not existing.empty:
+                print(f"Word '{word_data['english']}' already exists, not saving.")
                 return False
             
             new_row = pd.DataFrame([{
@@ -401,33 +373,23 @@ class SanskritTranslator:
             self.df = pd.concat([self.df, new_row], ignore_index=True)
             self.new_words_df = pd.concat([self.new_words_df, new_row], ignore_index=True)
             self.new_words_df.to_csv(self.csv_path, index=False, encoding='utf-8')
+            print(f"✅ Saved new word '{word_data['english']}' to {self.csv_path}")
             self.generate_sentences_for_word(word_data)
             return True
         except Exception as e:
-            print(f"Error saving to database: {e}")
+            print(f"❌ Error saving to database: {e}")
             return False
     
     def generate_sentences_for_word(self, word_data):
         """Generate example sentences for new word"""
         word = word_data['sanskrit']
         English = word_data['english']
-        
-        templates = [
-            f"{word} अस्ति।",
-            f"{word} गच्छति।",
-            f"{word} पठति।",
-        ]
-        
-        translations = [
-            f"{English.title()} is.",
-            f"{English.title()} goes.",
-            f"{English.title()} reads.",
-        ]
-        
+        templates = [f"{word} अस्ति।", f"{word} गच्छति।", f"{word} पठति।"]
+        translations = [f"{English.title()} is.", f"{English.title()} goes.", f"{English.title()} reads."]
         new_sentences = []
         for i, (sans, trans) in enumerate(zip(templates, translations)):
             new_sentences.append({
-                "id": len(self.sentences['sentences']) + i + 1,
+                "id": len(self.sentences.get('sentences', [])) + i + 1,
                 "sanskrit": sans,
                 "devanagari": sans,
                 "translation": trans,
@@ -437,7 +399,6 @@ class SanskritTranslator:
                 "tags": ["auto-generated", "api-added"],
                 "created_at": datetime.now().isoformat()
             })
-        
         self.sentences['sentences'].extend(new_sentences)
         self.save_sentences()
         return new_sentences
@@ -447,13 +408,12 @@ class SanskritTranslator:
         English_word = English_word.lower().strip()
         results = []
         
+        # Search in merged dataframe
         for _, row in self.df.iterrows():
             row_english = str(row.get('english', '')).strip().lower()
             if English_word == row_english and row_english != 'nan' and row_english != '':
-                # Sanitize meanigns and example to avoid NaN floats in JSON
                 meaning_val = row.get('meaning', '')
                 meanings = str(meaning_val).split('; ') if pd.notna(meaning_val) else [str(row.get('english', ''))]
-                
                 results.append({
                     'sanskrit': str(row.get('sanskrit', '')),
                     'devanagari': str(row.get('devanagari', '')),
@@ -470,12 +430,11 @@ class SanskritTranslator:
             return {'source': 'database', 'results': results, 'count': len(results)}
         
         if use_api:
-            print(f"🌐 Using AI Engine for '{English_word}'...")
-            
-            # Prefer premium AI if available
-            api_result = self.translate_with_ai(English_word, direction='en_to_sa')
-            
-            # Fallback to free APIs if premium AI fails or isn't available
+            print(f"🌐 Word '{English_word}' not in DB. Attempting AI translation...")
+            api_result = None
+            if self.api_key:
+                api_result = self.translate_with_ai(English_word, direction='en_to_sa')
+            # Fallback to free APIs only if AI not available
             if not api_result and self.api_calls_today < self.max_api_calls:
                 if DEEP_TRANSLATOR_AVAILABLE:
                     api_result = self.translate_with_deep_translator(English_word, source='en', target='sa')
@@ -486,13 +445,24 @@ class SanskritTranslator:
             
             if api_result:
                 self.api_calls_today += 1
-                if self.save_to_database(api_result):
-                    # Instead of full recursion, let's just return the result properly tagged
-                    # to avoid duplicate DB calls in the same request
+                # Ensure required fields exist
+                if 'english' not in api_result or not api_result['english']:
+                    api_result['english'] = English_word
+                if 'sanskrit' not in api_result:
+                    api_result['sanskrit'] = English_word
+                if 'devanagari' not in api_result:
+                    api_result['devanagari'] = English_word
+                if 'meanings' not in api_result:
+                    api_result['meanings'] = [English_word]
+                
+                saved = self.save_to_database(api_result)
+                if saved:
                     api_result['source'] = f"{api_result.get('source', 'api')} (saved)"
                     return {'source': 'database', 'results': [api_result], 'count': 1}
                 else:
                     return {'source': 'api', 'results': [api_result], 'count': 1}
+            else:
+                print(f"❌ No translation found for '{English_word}' from any source.")
         
         return {'source': 'none', 'results': [], 'count': 0}
 
@@ -501,21 +471,13 @@ class SanskritTranslator:
         sanskrit_word = sanskrit_word.strip()
         results = []
         
-        # Exact match or broad match in database
         for _, row in self.df.iterrows():
             s_val = str(row.get('sanskrit', '')).strip().lower()
             d_val = str(row.get('devanagari', '')).strip()
-            
-            # Match against transliterated sanskrit or devanagari
-            if s_val != 'nan' and (sanskrit_word.lower() == s_val or 
-                sanskrit_word == d_val or
-                sanskrit_word.lower() in s_val or
-                sanskrit_word in d_val):
-                
-                # Sanitize meanigns and example
+            if s_val != 'nan' and (sanskrit_word.lower() == s_val or sanskrit_word == d_val or
+                                   sanskrit_word.lower() in s_val or sanskrit_word in d_val):
                 meaning_val = row.get('meaning', '')
                 meanings = str(meaning_val).split('; ') if pd.notna(meaning_val) else [str(row.get('english', ''))]
-                
                 results.append({
                     'sanskrit': str(row.get('sanskrit', '')),
                     'devanagari': str(row.get('devanagari', '')),
@@ -532,12 +494,10 @@ class SanskritTranslator:
             return {'source': 'database', 'results': results, 'count': len(results)}
         
         if use_api:
-            print(f"🌐 Using AI Engine for Sanskrit '{sanskrit_word}'...")
-            
-            # Prefer premium AI
-            api_result = self.translate_with_ai(sanskrit_word, direction='sa_to_en')
-            
-            # Fallback to free APIs
+            print(f"🌐 Sanskrit word '{sanskrit_word}' not in DB. Attempting AI translation...")
+            api_result = None
+            if self.api_key:
+                api_result = self.translate_with_ai(sanskrit_word, direction='sa_to_en')
             if not api_result and self.api_calls_today < self.max_api_calls:
                 if DEEP_TRANSLATOR_AVAILABLE:
                     api_result = self.translate_with_deep_translator(sanskrit_word, source='sa', target='en')
@@ -548,16 +508,11 @@ class SanskritTranslator:
                 
             if api_result:
                 self.api_calls_today += 1
-                
                 english_translation = api_result.get('english', '')
                 if not english_translation and api_result.get('meanings'):
                     english_translation = api_result['meanings'][0]
-                
-                # Check if the API just returned the same word (failed to translate)
                 if str(english_translation).strip().lower() == str(sanskrit_word).strip().lower():
                     return {'source': 'none', 'results': [], 'count': 0}
-
-                # Save if it's new
                 self.save_to_database(api_result)
                 return {'source': 'api', 'results': [api_result], 'count': 1}
         
@@ -575,13 +530,11 @@ class SanskritTranslator:
         generated = []
         nouns = self.df[self.df['word_type'] == 'noun']['sanskrit'].tolist()
         verbs = self.df[self.df['word_type'] == 'verb']['sanskrit'].tolist()
-        
         for i in range(count):
             if nouns and verbs:
                 subject = random.choice(nouns)
                 verb = random.choice(verbs)
                 obj = random.choice(nouns) if random.random() > 0.3 else None
-                
                 if obj and obj != subject:
                     sentence = f"{subject} {obj} {verb}।"
                     pattern = "Subject Object Verb"
@@ -590,16 +543,13 @@ class SanskritTranslator:
                     sentence = f"{subject} {verb}।"
                     pattern = "Subject Verb"
                     words = [subject, verb]
-                
                 subject_meaning = self.get_meaning(subject)
                 verb_meaning = self.get_meaning(verb).split()[0]
                 obj_meaning = self.get_meaning(obj).split()[0] if obj else ""
-                
                 if obj:
                     translation = f"{subject_meaning} {obj_meaning} {verb_meaning}s."
                 else:
                     translation = f"{subject_meaning} {verb_meaning}s."
-                
                 new_sentence = {
                     "id": len(self.sentences.get('sentences', [])) + i + 1,
                     "sanskrit": sentence,
@@ -612,7 +562,6 @@ class SanskritTranslator:
                     "created_at": datetime.now().isoformat()
                 }
                 generated.append(new_sentence)
-        
         self.sentences.setdefault('sentences', []).extend(generated)
         self.save_sentences()
         return generated

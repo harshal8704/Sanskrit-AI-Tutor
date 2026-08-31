@@ -12,7 +12,12 @@
         {
           "id": 1,
           "question": "How many vowels are there in Sanskrit?",
-          "options": ["10", "13", "15", "20"],
+          "options": [
+            "10",
+            "13",
+            "15",
+            "20"
+          ],
           "answer": "13",
           "explanation": "Sanskrit has 13 vowel sounds"
         }
@@ -31,16 +36,23 @@
         {
           "id": 1,
           "question": "What does 'धन्यवादः' mean?",
-          "options": ["Hello", "Thank you", "Goodbye", "Please"],
+          "options": [
+            "Hello",
+            "Thank you",
+            "Goodbye",
+            "Please"
+          ],
           "answer": "Thank you",
           "explanation": "धन्यवादः means 'Thank you'"
         }
       ],
-      "prerequisites": [1]
+      "prerequisites": [
+        1
+      ]
     },
     {
       "id": 3,
-      "title": "Numbers in Sanskrit",
+      "title": "Numbers 1-10 in Sanskrit",
       "description": "Learn to count in Sanskrit",
       "level": "beginner",
       "duration": 15,
@@ -50,12 +62,19 @@
         {
           "id": 1,
           "question": "What is the Sanskrit word for 5?",
-          "options": ["एकः", "द्वौ", "त्रयः", "पञ्च"],
+          "options": [
+            "एकः",
+            "द्वौ",
+            "त्रयः",
+            "पञ्च"
+          ],
           "answer": "पञ्च",
           "explanation": "पञ्च (pañca) means 5"
         }
       ],
-      "prerequisites": [1]
+      "prerequisites": [
+        1
+      ]
     },
     {
       "id": 4,
@@ -127,7 +146,10 @@
           "explanation": "This phrase literally means 'Meeting with you is pleasant'"
         }
       ],
-      "prerequisites": [1, 2]
+      "prerequisites": [
+        1,
+        2
+      ]
     },
     {
       "id": 5,
@@ -138,7 +160,10 @@
       "difficulty": 3,
       "content": "pronouns_special",
       "quiz": [],
-      "prerequisites": [1, 2]
+      "prerequisites": [
+        1,
+        2
+      ]
     },
     {
       "id": 6,
@@ -149,7 +174,9 @@
       "difficulty": 4,
       "content": "verbs_special",
       "quiz": [],
-      "prerequisites": [5]
+      "prerequisites": [
+        5
+      ]
     },
     {
       "id": 7,
@@ -160,7 +187,9 @@
       "difficulty": 4,
       "content": "nouns_special",
       "quiz": [],
-      "prerequisites": [6]
+      "prerequisites": [
+        6
+      ]
     },
     {
       "id": 8,
@@ -171,7 +200,9 @@
       "difficulty": 3,
       "content": "family_special",
       "quiz": [],
-      "prerequisites": [7]
+      "prerequisites": [
+        7
+      ]
     },
     {
       "id": 9,
@@ -182,7 +213,9 @@
       "difficulty": 3,
       "content": "questions_special",
       "quiz": [],
-      "prerequisites": [8]
+      "prerequisites": [
+        8
+      ]
     },
     {
       "id": 10,
@@ -193,7 +226,9 @@
       "difficulty": 3,
       "content": "time_special",
       "quiz": [],
-      "prerequisites": [9]
+      "prerequisites": [
+        9
+      ]
     }
   ]
 }

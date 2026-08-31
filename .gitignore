@@ -39,6 +39,14 @@ yarn-error.log*
 .env.local
 .env.*.local
 
+# Local secrets and generated credentials
+passwords.txt
+
+# Python test and tool output
+*.sqlite3
+*.db
+*.coverage
+
 # Logs
 logs/
 *.log

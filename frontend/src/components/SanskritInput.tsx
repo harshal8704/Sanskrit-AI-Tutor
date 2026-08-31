@@ -1,7 +1,5 @@
-import React, { useState, useRef } from 'react';
-import VirtualKeyboard from './VirtualKeyboard';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Keyboard, X } from 'lucide-react';
+﻿import React, { useState, useRef } from 'react';
+import VirtualKeyboard from './VirtualKeyboard'; // Make sure the path is correct
 
 interface SanskritInputProps {
     value: string;
@@ -15,7 +13,7 @@ interface SanskritInputProps {
 export default function SanskritInput({ 
     value, 
     onChange, 
-    placeholder = "Type in English, or use the virtual keyboard for Devanagari/Sanskrit...",
+    placeholder = "Type in English, or use the virtual keyboard for Hindi/Sanskrit...",
     style,
     className = "",
     showLabel = true
@@ -39,6 +37,7 @@ export default function SanskritInput({
         };
 
         let result = input;
+        // Handle Halant + Vowel -> Matra (e.g., न् + अ -> न, न् + आ -> ना)
         for (const [vowel, matra] of Object.entries(matraMap)) {
             const pattern = new RegExp(`्${vowel}`, 'g');
             result = result.replace(pattern, matra);
@@ -53,11 +52,13 @@ export default function SanskritInput({
         const start = textarea.selectionStart;
         const end = textarea.selectionEnd;
 
+        // Insert char then normalize
         const rawText = value.substring(0, start) + char + value.substring(end);
         const normalized = normalizeSanskrit(rawText);
         
         onChange(normalized);
 
+        // Adjust cursor position
         const lengthDiff = rawText.length - normalized.length;
         setTimeout(() => {
             textarea.selectionStart = textarea.selectionEnd = start + char.length - lengthDiff;
@@ -93,85 +94,76 @@ export default function SanskritInput({
     };
 
     return (
-        <div style={{ position: 'relative', width: '100%', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
 
-            {/* Header Controls */}
-            <div className="flex items-center justify-between">
-                {showLabel ? (
-                    <label style={{ fontWeight: '700', fontSize: '0.9rem', color: 'var(--text-main)', letterSpacing: '-0.2px' }}>
+            {/* Header & Toggle Button */}
+            <div style={{ display: 'flex', justifyContent: showLabel ? 'space-between' : 'flex-end', marginBottom: '12px' }}>
+                {showLabel && (
+                    <label style={{ fontWeight: '700', fontSize: '1rem', color: 'var(--text-main)', letterSpacing: '-0.2px' }}>
                         Enter Text (पाठम् लिखतु)
                     </label>
-                ) : <div />}
-
+                )}
                 <button
-                    type="button"
                     onClick={() => setShowKeyboard(!showKeyboard)}
                     style={{
-                        padding: '7px 14px',
-                        background: showKeyboard ? 'var(--accent-rose)' : 'var(--primary-light)',
-                        color: showKeyboard ? '#ffffff' : 'var(--primary)',
-                        borderRadius: '10px',
-                        border: showKeyboard ? 'none' : '1px solid rgba(var(--primary-rgb), 0.25)',
+                        padding: '10px 20px',
+                        background: showKeyboard ? '#e74c3c' : 'var(--primary)',
+                        color: 'white',
+                        borderRadius: '12px',
+                        border: 'none',
                         cursor: 'pointer',
                         fontWeight: '700',
-                        fontSize: '0.78rem',
+                        fontSize: '0.8rem',
                         textTransform: 'uppercase',
-                        letterSpacing: '0.5px',
-                        transition: 'all 0.25s var(--transition)',
-                        display: 'inline-flex',
+                        letterSpacing: '1px',
+                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        boxShadow: '0 8px 20px rgba(var(--primary-rgb), 0.15)',
+                        display: 'flex',
                         alignItems: 'center',
-                        gap: '6px'
+                        gap: '8px'
                     }}
                 >
-                    {showKeyboard ? <X size={14} /> : <Keyboard size={14} />}
-                    <span>{showKeyboard ? 'Close Keyboard' : 'Devanagari Keyboard'}</span>
+                    {showKeyboard ? '✕ Close Keyboard' : '⌨️ Devanagari Keyboard'}
                 </button>
             </div>
 
-            {/* Textarea Input */}
+            {/* The Actual Text Box */}
             <textarea
                 ref={textareaRef}
                 value={value}
                 onChange={handleNativeChange}
+                onClick={() => {
+                    if (textareaRef.current) textareaRef.current.focus();
+                }}
                 placeholder={placeholder}
                 style={{
                     width: '100%',
-                    minHeight: '160px',
-                    padding: '20px 24px',
-                    fontSize: '1.35rem',
-                    lineHeight: '1.5',
-                    borderRadius: '20px',
+                    minHeight: '150px',
+                    padding: '24px',
+                    fontSize: '1.25rem',
+                    borderRadius: '24px',
                     border: '1.5px solid var(--border-soft)',
                     background: 'var(--bg-card)',
                     color: 'var(--text-main)',
-                    fontFamily: '"Noto Sans Devanagari", "Plus Jakarta Sans", sans-serif',
-                    resize: 'vertical',
-                    outline: 'none',
-                    boxShadow: 'var(--shadow-sm)',
-                    transition: 'border-color 0.25s, box-shadow 0.25s',
+                    fontFamily: '"Noto Sans Devanagari", sans-serif',
+                    resize: 'none',
+                    flex: 1,
+                    boxShadow: 'var(--shadow)',
                     ...style
                 }}
-                className={`focus:border-primary ${className}`}
+                className={`focus:outline-none focus:border-primary ${className}`}
             />
 
-            {/* Virtual Keyboard Accordion */}
-            <AnimatePresence>
-                {showKeyboard && (
-                    <motion.div 
-                        initial={{ opacity: 0, height: 0, y: -10 }}
-                        animate={{ opacity: 1, height: 'auto', y: 0 }}
-                        exit={{ opacity: 0, height: 0, y: -10 }}
-                        transition={{ duration: 0.3 }}
-                        style={{ overflow: 'hidden', marginTop: '4px' }}
-                    >
-                        <VirtualKeyboard
-                            onKeyPress={handleKeyPress}
-                            onBackspace={handleBackspace}
-                            onClose={() => setShowKeyboard(false)}
-                        />
-                    </motion.div>
-                )}
-            </AnimatePresence>
+            {/* Render the Keyboard conditionally */}
+            {showKeyboard && (
+                <div style={{ marginTop: '20px' }}>
+                    <VirtualKeyboard
+                        onKeyPress={handleKeyPress}
+                        onBackspace={handleBackspace}
+                        onClose={() => setShowKeyboard(false)}
+                    />
+                </div>
+            )}
 
         </div>
     );
