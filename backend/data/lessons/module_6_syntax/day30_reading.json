@@ -1,0 +1,57 @@
+{
+  "id": "day30_reading",
+  "title": "📖 Reading Comprehension",
+  "description": "Practice reading a simple story in Sanskrit.",
+  "level": "intermediate",
+  "module": "syntax",
+  "difficulty": 4,
+  "prerequisites": ["day29_time_days"],
+  "estimated_time": 30,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 A Simple Story",
+      "content": "Read this story about a boy and his teacher:",
+      "story": {
+        "sanskrit": "एकः बालकः आसीत्। तस्य नाम रामः। रामः गुरुं गच्छति। गुरुः रामं पाठयति। रामः पठति। एकदा रामः पुस्तकं पश्यति। पुस्तकम् रोचते। रामः पुस्तकं पठति। गुरुः प्रसन्नः भवति।",
+        "translation": "There was a boy. His name was Rama. Rama goes to the teacher. The teacher teaches Rama. Rama reads. One day Rama sees a book. He likes the book. Rama reads the book. The teacher becomes happy.",
+        "vocabulary": [
+          {"word": "आसीत्", "meaning": "was"},
+          {"word": "तस्य", "meaning": "his"},
+          {"word": "गुरुम्", "meaning": "to the teacher"},
+          {"word": "पाठयति", "meaning": "teaches"},
+          {"word": "पश्यति", "meaning": "sees"},
+          {"word": "रोचते", "meaning": "likes/is pleasing"},
+          {"word": "प्रसन्नः", "meaning": "happy"}
+        ]
+      }
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Reading Comprehension Quiz",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What was the boy's name?",
+          "options": ["रामः", "गुरुः", "बालकः", "पुस्तकम्"],
+          "correct": 0,
+          "explanation": "The boy's name was 'रामः' (Rama)."
+        },
+        {
+          "id": 2,
+          "question": "What did Rama see one day?",
+          "options": ["A teacher", "A book", "A fruit", "A friend"],
+          "correct": 1,
+          "explanation": "'एकदा रामः पुस्तकं पश्यति।' means 'One day Rama saw a book.'"
+        },
+        {
+          "id": 3,
+          "question": "How did the teacher feel at the end?",
+          "options": ["Sad", "Angry", "Happy", "Tired"],
+          "correct": 2,
+          "explanation": "'गुरुः प्रसन्नः भवति।' means 'The teacher becomes happy.'"
+        }
+      ]
+    }
+  ]
+}

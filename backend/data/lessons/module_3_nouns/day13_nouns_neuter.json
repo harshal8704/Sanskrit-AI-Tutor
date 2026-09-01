@@ -1,0 +1,52 @@
+{
+  "id": "day13_nouns_neuter",
+  "title": "📖 Noun Declensions (Neuter)",
+  "description": "Learn how neuter nouns decline in Sanskrit.",
+  "level": "beginner",
+  "module": "nouns",
+  "difficulty": 2,
+  "prerequisites": ["day12_nouns_feminine"],
+  "estimated_time": 25,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 Neuter Noun Patterns",
+      "content": "Most neuter nouns end in 'म्' (m). Here's how they decline:",
+      "full_declension": {
+        "noun": "फल (Phala)",
+        "meaning": "fruit",
+        "singular": {
+          "nominative": "फलम्",
+          "accusative": "फलम्",
+          "instrumental": "फलेन",
+          "dative": "फलाय",
+          "ablative": "फलात्",
+          "genitive": "फलस्य",
+          "locative": "फले",
+          "vocative": "हे फल"
+        }
+      },
+      "note": "Notice: In neuter nouns, the nominative and accusative are always the same!"
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Neuter Noun Quiz",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What is the nominative form of 'फल' (fruit)?",
+          "options": ["फलम्", "फलेन", "फलाय", "फलात्"],
+          "correct": 0,
+          "explanation": "'फलम्' is the nominative/accusative form."
+        },
+        {
+          "id": 2,
+          "question": "How do you say 'with a fruit'?",
+          "options": ["फलम्", "फलेन", "फलाय", "फलस्य"],
+          "correct": 1,
+          "explanation": "'फलेन' is the instrumental case (with a fruit)."
+        }
+      ]
+    }
+  ]
+}

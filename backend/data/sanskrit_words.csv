@@ -74,3 +74,6 @@ dauvarika,दौवरिक,runner,dau-va-ree-kah,noun,one who runs; a messenge
 avikriya,अविक्रिय,unchange,a-vee-kree-yah,adjective,unchanging; immutable; invariable,अविक्रियः परिवर्तनं न करोति (Avikriyaḥ parivartanaṁ na karoti) - The unchangeable does not change.,api-added,"api,Groq_ai",Groq_ai
 Gau maata,ग्अउ म्अत्अ,The cow is my mother,Gow ma-ta,sentence,reverence for cow; comparison of cow with mother,गौः माता अस्ति (Gauh maata asti) - The cow is my mother,api-added,"api,Groq_ai",Groq_ai
 raameSh sir mama nirNayamaNDaliyE asti,रामेश सर मम निर्णयमण्डलिये अस्ति,Ramesh sir is in our judging panel,raa-mesh sur ma-ma nir-naya-mandali-ye as-ti,sentence,judging; evaluation; assessment,"raameSh sir mama nirNayamaNDaliyE asti, saH nyAyakaruH",api-added,"api,Groq_ai",Groq_ai
+मिथिलेश,मिथिलेश,mithilesh,मिथिलेश,noun,Translation of mithilesh,,api-added,"api,google_api",google_api
+पृच्छतु,पृच्छतु,ask,पृच्छतु,noun,Translation of ask,,api-added,"api,google_api",google_api
+अहं तं एतस्य विषये पृच्छितुम् इच्छामि,अहं तं एतस्य विषये पृच्छितुम् इच्छामि,i want to ask him about this,अहं तं एतस्य विषये पृच्छितुम् इच्छामि,sentence,अहं तं एतस्य विषये पृच्छितुम् इच्छामि,,api-added,"api,google_api",google_api

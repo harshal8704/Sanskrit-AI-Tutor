@@ -15,6 +15,8 @@ interface WordSuggestionsProps {
   enabled: boolean;
 }
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+
 export default function WordSuggestions({ prefix, onSelect, enabled }: WordSuggestionsProps) {
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [loading, setLoading] = useState(false);
@@ -32,7 +34,7 @@ export default function WordSuggestions({ prefix, onSelect, enabled }: WordSugge
     debounceRef.current = setTimeout(async () => {
       setLoading(true);
       try {
-        const res = await fetch(`http://localhost:8005/suggestions?prefix=${encodeURIComponent(prefix)}&limit=6`);
+        const res = await fetch(`${API_BASE_URL}/suggestions?prefix=${encodeURIComponent(prefix)}&limit=6`);
         const data = await res.json();
         setSuggestions(data.suggestions || []);
         setSelectedIndex(-1);

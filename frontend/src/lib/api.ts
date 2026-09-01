@@ -24,8 +24,8 @@ export const api = {
     signup: (data: any) => apiRequest('/auth/signup', { method: 'POST', body: JSON.stringify(data) }),
   },
   lessons: {
-    getAll: (level?: string) => apiRequest(`/lessons${level ? `?level=${level}` : ''}`),
-    getById: (id: string | number) => apiRequest(`/lessons/${id}`),
+    getAll: (level?: string) => apiRequest(`/api/lessons/all${level ? `?level=${level}` : ''}`),
+    getById: (id: string | number) => apiRequest(`/api/lessons/${id}`),
     getGreetings: () => apiRequest('/api/lessons/greetings'),
     getNumbers: () => apiRequest('/api/lessons/numbers'),
     getSelfIntro: () => apiRequest('/api/lessons/self-intro'),
@@ -36,6 +36,8 @@ export const api = {
     getQuestionWords: () => apiRequest('/api/lessons/questions'),
     getTimeAndDays: () => apiRequest('/api/lessons/time'),
     getDailyQuestions: () => apiRequest('/api/daily-questions'),
+    getAllLessons: () => apiRequest('/api/lessons/all'),
+    getLessonById: (id: string) => apiRequest(`/api/lessons/${id}`),
   },
   user: {
     getProgress: (username: string) => apiRequest(`/progress/${username}`),
@@ -47,6 +49,14 @@ export const api = {
       apiRequest('/translate', { method: 'POST', body: JSON.stringify(data) }),
     checkGrammar: (text: string, use_ai: boolean = false) => 
       apiRequest('/grammar/check', { method: 'POST', body: JSON.stringify({ text, use_ai }) }),
+  },
+  bkt: {
+    getProgress: (username: string) => apiRequest(`/progress/${username}`),
+    markLessonComplete: (username: string, lessonId: string | number) =>
+      apiRequest(`/progress/${username}/complete`, {
+        method: 'POST',
+        body: JSON.stringify({ lesson_id: lessonId }),
+      }),
   },
   game: {
     start: () => apiRequest('/game/start'),

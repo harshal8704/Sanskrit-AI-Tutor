@@ -1,0 +1,114 @@
+{
+  "id": "day4_greetings",
+  "title": "👋 Basic Greetings & Phrases",
+  "description": "Learn essential Sanskrit greetings and polite phrases.",
+  "level": "beginner",
+  "module": "foundations",
+  "difficulty": 1,
+  "prerequisites": ["day3_alphabet_consonants"],
+  "estimated_time": 20,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 Essential Sanskrit Greetings",
+      "content": "These are the most important greetings you'll use in daily Sanskrit conversation.",
+      "phrases": [
+        {
+          "sanskrit": "नमस्ते",
+          "transliteration": "Namaste",
+          "meaning": "Hello / I bow to you",
+          "context": "Used at any time of day"
+        },
+        {
+          "sanskrit": "सुप्रभातम्",
+          "transliteration": "Suprabhātam",
+          "meaning": "Good Morning",
+          "context": "Used before noon"
+        },
+        {
+          "sanskrit": "शुभरात्रिः",
+          "transliteration": "Śubharātriḥ",
+          "meaning": "Good Night",
+          "context": "Used when parting at night"
+        },
+        {
+          "sanskrit": "धन्यवादः",
+          "transliteration": "Dhanyavādaḥ",
+          "meaning": "Thank you",
+          "context": "Used to express gratitude"
+        },
+        {
+          "sanskrit": "कृपया",
+          "transliteration": "Kṛpayā",
+          "meaning": "Please",
+          "context": "Used when making a request"
+        },
+        {
+          "sanskrit": "स्वागतम्",
+          "transliteration": "Svāgatam",
+          "meaning": "Welcome",
+          "context": "Used when receiving a guest"
+        },
+        {
+          "sanskrit": "पुनर्मिलामः",
+          "transliteration": "Punarmilāmaḥ",
+          "meaning": "Goodbye / See you again",
+          "context": "Used when parting"
+        },
+        {
+          "sanskrit": "क्षम्यताम्",
+          "transliteration": "Kṣamyatām",
+          "meaning": "Sorry / Excuse me",
+          "context": "Used to apologize"
+        },
+        {
+          "sanskrit": "आम्",
+          "transliteration": "Ām",
+          "meaning": "Yes",
+          "context": "Used for agreement"
+        },
+        {
+          "sanskrit": "न",
+          "transliteration": "Na",
+          "meaning": "No",
+          "context": "Used for disagreement"
+        }
+      ]
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Greetings Quiz",
+      "instructions": "Choose the correct Sanskrit phrase for the given English meaning.",
+      "questions": [
+        {
+          "id": 1,
+          "english": "Hello",
+          "options": ["धन्यवादः", "नमस्ते", "स्वागतम्", "कृपया"],
+          "correct": 1,
+          "explanation": "'नमस्ते' (Namaste) is the most common greeting."
+        },
+        {
+          "id": 2,
+          "english": "Thank you",
+          "options": ["नमस्ते", "धन्यवादः", "स्वागतम्", "क्षम्यताम्"],
+          "correct": 1,
+          "explanation": "'धन्यवादः' (Dhanyavādaḥ) means 'Thank you'."
+        },
+        {
+          "id": 3,
+          "english": "Welcome",
+          "options": ["पुनर्मिलामः", "नमस्ते", "स्वागतम्", "शुभरात्रिः"],
+          "correct": 2,
+          "explanation": "'स्वागतम्' (Svāgatam) means 'Welcome'."
+        },
+        {
+          "id": 4,
+          "english": "Goodbye",
+          "options": ["पुनर्मिलामः", "सुप्रभातम्", "धन्यवादः", "कृपया"],
+          "correct": 0,
+          "explanation": "'पुनर्मिलामः' (Punarmilāmaḥ) means 'See you again'."
+        }
+      ]
+    }
+  ]
+}

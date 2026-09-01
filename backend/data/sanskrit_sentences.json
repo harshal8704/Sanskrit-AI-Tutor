@@ -3142,6 +3142,150 @@
         "api-added"
       ],
       "created_at": "2026-04-04T10:40:11.885839"
+    },
+    {
+      "id": 197,
+      "sanskrit": "मिथिलेश अस्ति।",
+      "devanagari": "मिथिलेश अस्ति।",
+      "translation": "Mithilesh is.",
+      "words": [
+        "मिथिलेश"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-01T21:27:46.879761"
+    },
+    {
+      "id": 198,
+      "sanskrit": "मिथिलेश गच्छति।",
+      "devanagari": "मिथिलेश गच्छति।",
+      "translation": "Mithilesh goes.",
+      "words": [
+        "मिथिलेश"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-01T21:27:46.879814"
+    },
+    {
+      "id": 199,
+      "sanskrit": "मिथिलेश पठति।",
+      "devanagari": "मिथिलेश पठति।",
+      "translation": "Mithilesh reads.",
+      "words": [
+        "मिथिलेश"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-01T21:27:46.879827"
+    },
+    {
+      "id": 200,
+      "sanskrit": "पृच्छतु अस्ति।",
+      "devanagari": "पृच्छतु अस्ति।",
+      "translation": "Ask is.",
+      "words": [
+        "पृच्छतु"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-01T21:28:08.551606"
+    },
+    {
+      "id": 201,
+      "sanskrit": "पृच्छतु गच्छति।",
+      "devanagari": "पृच्छतु गच्छति।",
+      "translation": "Ask goes.",
+      "words": [
+        "पृच्छतु"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-01T21:28:08.551658"
+    },
+    {
+      "id": 202,
+      "sanskrit": "पृच्छतु पठति।",
+      "devanagari": "पृच्छतु पठति।",
+      "translation": "Ask reads.",
+      "words": [
+        "पृच्छतु"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-01T21:28:08.551671"
+    },
+    {
+      "id": 203,
+      "sanskrit": "अहं तं एतस्य विषये पृच्छितुम् इच्छामि अस्ति।",
+      "devanagari": "अहं तं एतस्य विषये पृच्छितुम् इच्छामि अस्ति।",
+      "translation": "I Want To Ask Him About This is.",
+      "words": [
+        "अहं तं एतस्य विषये पृच्छितुम् इच्छामि"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-01T21:28:31.420443"
+    },
+    {
+      "id": 204,
+      "sanskrit": "अहं तं एतस्य विषये पृच्छितुम् इच्छामि गच्छति।",
+      "devanagari": "अहं तं एतस्य विषये पृच्छितुम् इच्छामि गच्छति।",
+      "translation": "I Want To Ask Him About This goes.",
+      "words": [
+        "अहं तं एतस्य विषये पृच्छितुम् इच्छामि"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-01T21:28:31.420480"
+    },
+    {
+      "id": 205,
+      "sanskrit": "अहं तं एतस्य विषये पृच्छितुम् इच्छामि पठति।",
+      "devanagari": "अहं तं एतस्य विषये पृच्छितुम् इच्छामि पठति।",
+      "translation": "I Want To Ask Him About This reads.",
+      "words": [
+        "अहं तं एतस्य विषये पृच्छितुम् इच्छामि"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-01T21:28:31.420490"
     }
   ],
   "patterns": [

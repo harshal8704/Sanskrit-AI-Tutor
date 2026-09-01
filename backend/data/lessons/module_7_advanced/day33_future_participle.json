@@ -1,0 +1,88 @@
+{
+  "id": "day33_future_participle",
+  "title": "📚 Future Participle (तव्य / अनीय)",
+  "description": "Learn to use future participles to express obligation or necessity.",
+  "level": "advanced",
+  "module": "advanced",
+  "difficulty": 5,
+  "prerequisites": ["day32_past_participle"],
+  "estimated_time": 30,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 What is the Future Participle?",
+      "content": "Future participles express obligation, necessity, or possibility. They are often translated as 'to be done' or 'should be done'.",
+      "formation": {
+        "rule": "Add 'तव्य' (tavya) or 'अनीय' (anīya) to the verb root.",
+        "examples": [
+          {
+            "verb": "गम् (gam) - to go",
+            "participle": "गन्तव्यम् (gantavyam) - to be gone / should be gone",
+            "sentence": "गन्तव्यम् अस्ति। (It should be gone / It must be gone.)"
+          },
+          {
+            "verb": "पठ् (paṭh) - to read",
+            "participle": "पठितव्यम् (paṭhitavyam) - to be read",
+            "sentence": "पठितव्यं पुस्तकम्। (The book to be read.)"
+          },
+          {
+            "verb": "कृ (kṛ) - to do",
+            "participle": "कर्तव्यम् (kartavyam) - to be done",
+            "sentence": "कर्तव्यं कार्यम्। (The work to be done.)"
+          },
+          {
+            "verb": "दृश् (dṛś) - to see",
+            "participle": "द्रष्टव्यम् (draṣṭavyam) - to be seen",
+            "sentence": "द्रष्टव्यं चित्रम्। (The picture to be seen.)"
+          }
+        ]
+      },
+      "usage": [
+        {
+          "use": "Expressing obligation",
+          "example": "कार्यं कर्तव्यम्। (The work must be done.)"
+        },
+        {
+          "use": "Expressing possibility",
+          "example": "गन्तव्यं भवति। (It can be gone / It is possible to go.)"
+        },
+        {
+          "use": "In advice",
+          "example": "त्वया पुस्तकं पठितव्यम्। (You should read the book.)"
+        }
+      ]
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Future Participle Quiz",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What does 'कर्तव्यम्' mean?",
+          "options": ["done", "to be done", "doing", "having done"],
+          "correct": 1,
+          "explanation": "'कर्तव्यम्' (kartavyam) means 'to be done / should be done'."
+        },
+        {
+          "id": 2,
+          "question": "How do you say 'to be read' in Sanskrit?",
+          "options": ["पठति", "पठितः", "पठितव्यम्", "पठेत्"],
+          "correct": 2,
+          "explanation": "'पठितव्यम्' (paṭhitavyam) means 'to be read'."
+        },
+        {
+          "id": 3,
+          "question": "Translate: 'कार्यं कर्तव्यम् अस्ति।'",
+          "options": [
+            "The work is done.",
+            "The work is being done.",
+            "The work must be done.",
+            "The work will be done."
+          ],
+          "correct": 2,
+          "explanation": "'कार्यं कर्तव्यम् अस्ति।' means 'The work must be done.'"
+        }
+      ]
+    }
+  ]
+}

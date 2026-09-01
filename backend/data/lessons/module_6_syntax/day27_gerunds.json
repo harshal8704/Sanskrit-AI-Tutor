@@ -1,0 +1,92 @@
+{
+  "id": "day27_gerunds",
+  "title": "📖 Gerunds (कत्वा / ल्यब्)",
+  "description": "Learn to use gerunds to express actions that happen before another action.",
+  "level": "intermediate",
+  "module": "syntax",
+  "difficulty": 4,
+  "prerequisites": ["day26_relative_clauses"],
+  "estimated_time": 25,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 What are Gerunds?",
+      "content": "Gerunds express an action that is completed before another action. In English, they often end in '-ing' or use 'having done'.",
+      "formation": {
+        "rule": "Add 'त्वा' (tvā) to the verb root for non-compound verbs, and 'य' (ya) for compound verbs.",
+        "examples": [
+          {
+            "verb": "पठ् (paṭh) - to read",
+            "gerund": "पठित्वा (paṭhitvā)",
+            "meaning": "having read",
+            "sentence": "पठित्वा गच्छति। (Having read, he goes.)"
+          },
+          {
+            "verb": "गम् (gam) - to go",
+            "gerund": "गत्वा (gatvā)",
+            "meaning": "having gone",
+            "sentence": "गत्वा पश्यति। (Having gone, he sees.)"
+          },
+          {
+            "verb": "दृश् (dṛś) - to see",
+            "gerund": "दृष्ट्वा (dṛṣṭvā)",
+            "meaning": "having seen",
+            "sentence": "दृष्ट्वा वदति। (Having seen, he speaks.)"
+          },
+          {
+            "verb": "सम + गम् (sam + gam) - to go together",
+            "gerund": "संगम्य (saṅgamya)",
+            "meaning": "having gone together",
+            "sentence": "संगम्य चलन्ति। (Having gone together, they walk.)"
+          }
+        ]
+      },
+      "compound_verb_gerunds": [
+        {
+          "verb": "आ + गम् (ā + gam) - to come",
+          "gerund": "आगम्य (āgamya)",
+          "meaning": "having come",
+          "sentence": "आगम्य पश्यति। (Having come, he sees.)"
+        },
+        {
+          "verb": "नि + पत् (ni + pat) - to fall down",
+          "gerund": "निपत्य (nipatya)",
+          "meaning": "having fallen down",
+          "sentence": "निपत्य शेते। (Having fallen down, he sleeps.)"
+        }
+      ]
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Gerunds Quiz",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What is the gerund of 'पठ्' (to read)?",
+          "options": ["पठित्वा", "पठ", "पठति", "पठ्य"],
+          "correct": 0,
+          "explanation": "'पठित्वा' (paṭhitvā) means 'having read'."
+        },
+        {
+          "id": 2,
+          "question": "What does 'गत्वा' mean?",
+          "options": ["going", "having gone", "to go", "goes"],
+          "correct": 1,
+          "explanation": "'गत्वा' (gatvā) means 'having gone'."
+        },
+        {
+          "id": 3,
+          "question": "Translate: 'पठित्वा गच्छति।'",
+          "options": [
+            "He goes to read.",
+            "Having read, he goes.",
+            "He reads and goes.",
+            "He will read and go."
+          ],
+          "correct": 1,
+          "explanation": "'पठित्वा गच्छति।' means 'Having read, he goes.'"
+        }
+      ]
+    }
+  ]
+}

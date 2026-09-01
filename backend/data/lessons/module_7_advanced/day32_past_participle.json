@@ -1,0 +1,89 @@
+{
+  "id": "day32_past_participle",
+  "title": "📚 Past Participle (क्त)",
+  "description": "Learn to use past participles to describe completed actions.",
+  "level": "advanced",
+  "module": "advanced",
+  "difficulty": 5,
+  "prerequisites": ["day31_optative"],
+  "estimated_time": 30,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 What is the Past Participle?",
+      "content": "Past participles describe an action that has been completed. They function like adjectives and are often translated as '-ed' or 'having been'.",
+      "formation": {
+        "rule": "Add 'त' (ta) to the verb root for most verbs, 'न' (na) for some.",
+        "examples": [
+          {
+            "verb": "गम् (gam) - to go",
+            "participle": "गतः (gataḥ) - gone / having gone",
+            "sentence": "गतः बालकः। (The boy who has gone.)"
+          },
+          {
+            "verb": "पठ् (paṭh) - to read",
+            "participle": "पठितः (paṭhitaḥ) - read / having read",
+            "sentence": "पठितं पुस्तकम्। (The book that has been read.)"
+          },
+          {
+            "verb": "खाद् (khād) - to eat",
+            "participle": "खादितः (khāditaḥ) - eaten / having eaten",
+            "sentence": "खादितं फलम्। (The fruit that has been eaten.)"
+          },
+          {
+            "verb": "दृश् (dṛś) - to see",
+            "participle": "दृष्टः (dṛṣṭaḥ) - seen / having seen",
+            "sentence": "दृष्टो नरः। (The man who has been seen.)"
+          }
+        ]
+      },
+      "usage": [
+        {
+          "use": "As an adjective",
+          "example": "पठितं पुस्तकम् अस्ति। (The book is read / has been read.)"
+        },
+        {
+          "use": "With auxiliary verbs",
+          "example": "गतः अस्ति। (He has gone.)",
+          "note": "Combined with 'अस्ति' to form perfect tense"
+        },
+        {
+          "use": "In passive constructions",
+          "example": "तेन पुस्तकं पठितम्। (The book was read by him.)"
+        }
+      ]
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Past Participle Quiz",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What is the past participle of 'गम्' (to go)?",
+          "options": ["गच्छति", "गतः", "गमिष्यति", "गच्छेत्"],
+          "correct": 1,
+          "explanation": "'गतः' (gataḥ) is the past participle of 'to go'."
+        },
+        {
+          "id": 2,
+          "question": "What is the past participle of 'पठ्' (to read)?",
+          "options": ["पठति", "पठितः", "पठिष्यति", "पठेत्"],
+          "correct": 1,
+          "explanation": "'पठितः' (paṭhitaḥ) means 'read / having read'."
+        },
+        {
+          "id": 3,
+          "question": "Translate: 'पठितं पुस्तकम् अस्ति।'",
+          "options": [
+            "The book is read.",
+            "The book is being read.",
+            "The book will be read.",
+            "The book should be read."
+          ],
+          "correct": 0,
+          "explanation": "'पठितं पुस्तकम् अस्ति।' means 'The book is read / has been read.'"
+        }
+      ]
+    }
+  ]
+}

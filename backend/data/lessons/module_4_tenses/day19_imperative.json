@@ -1,0 +1,60 @@
+{
+  "id": "day19_imperative",
+  "title": "📚 Imperative Mood (Commands - लोट् लकार)",
+  "description": "Learn to give commands, requests, and advice in Sanskrit.",
+  "level": "intermediate",
+  "module": "tenses",
+  "difficulty": 3,
+  "prerequisites": ["day18_future_tense"],
+  "estimated_time": 25,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 Imperative Mood (लोट्)",
+      "content": "The imperative mood is used for commands, requests, and advice.",
+      "conjugation": {
+        "verb_root": "गम् (gam) - to go",
+        "forms": {
+          "अहम्": "गच्छानि (gacchāni) - Let me go",
+          "त्वम्": "गच्छ (gaccha) - Go! (informal)",
+          "भवान्/भवती": "गच्छतु (gacchatu) - Let him/her go"
+        },
+        "examples": {
+          "त्वम्": "गच्छ! (Go!)",
+          "भवान्": "पठतु! (Let him read!)",
+          "कृपया": "कृपया उपविशतु। (Please sit down.)"
+        }
+      },
+      "other_verbs": {
+        "पठ् (paṭh) - to read": {
+          "त्वम्": "पठ! (Read!)",
+          "भवान्": "पठतु! (Let him read!)"
+        },
+        "खाद् (khād) - to eat": {
+          "त्वम्": "खाद! (Eat!)",
+          "भवान्": "खादतु! (Let him eat!)"
+        }
+      }
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Imperative Quiz",
+      "questions": [
+        {
+          "id": 1,
+          "question": "How do you say 'Go!' in Sanskrit?",
+          "options": ["गच्छ", "गच्छति", "गमिष्यति", "अगच्छत्"],
+          "correct": 0,
+          "explanation": "'गच्छ' (gaccha) is the imperative form."
+        },
+        {
+          "id": 2,
+          "question": "How do you say 'Please sit down'?",
+          "options": ["गच्छ", "पठ", "उपविशतु", "खाद"],
+          "correct": 2,
+          "explanation": "'उपविशतु' is the polite imperative form."
+        }
+      ]
+    }
+  ]
+}

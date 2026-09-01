@@ -1,0 +1,86 @@
+{
+  "id": "day20_compound_verbs",
+  "title": "📚 Compound Verbs (उपसर्ग)",
+  "description": "Learn how prefixes change the meaning of verbs.",
+  "level": "intermediate",
+  "module": "tenses",
+  "difficulty": 3,
+  "prerequisites": ["day19_imperative"],
+  "estimated_time": 25,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 Compound Verbs (Upasarga)",
+      "content": "Prefixes (upasargas) added to verbs change their meaning. Here are the most common:",
+      "prefixes": [
+        {
+          "prefix": "आ (ā)",
+          "meaning": "towards",
+          "example": "गच्छति (goes) → आगच्छति (comes)"
+        },
+        {
+          "prefix": "नि (ni)",
+          "meaning": "down/into",
+          "example": "पतति (falls) → निपतति (falls down)"
+        },
+        {
+          "prefix": "प्र (pra)",
+          "meaning": "forward",
+          "example": "वदति (speaks) → प्रवदति (proclaims)"
+        },
+        {
+          "prefix": "सम् (sam)",
+          "meaning": "together",
+          "example": "गच्छति (goes) → संगच्छति (goes together)"
+        },
+        {
+          "prefix": "उद् (ud)",
+          "meaning": "up",
+          "example": "गच्छति (goes) → उद्गच्छति (rises up)"
+        },
+        {
+          "prefix": "अति (ati)",
+          "meaning": "beyond/over",
+          "example": "गच्छति (goes) → अतिगच्छति (passes beyond)"
+        },
+        {
+          "prefix": "निर् (nir)",
+          "meaning": "out",
+          "example": "गच्छति (goes) → निर्गच्छति (goes out)"
+        }
+      ],
+      "examples": {
+        "आगच्छति": "गुरुः आगच्छति। (The teacher comes.)",
+        "निर्गच्छति": "बालकः निर्गच्छति। (The boy goes out.)",
+        "संगच्छति": "मित्रं संगच्छति। (The friend goes together.)"
+      }
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Compound Verbs Quiz",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What does 'आगच्छति' mean?",
+          "options": ["goes", "comes", "goes out", "goes beyond"],
+          "correct": 1,
+          "explanation": "'आगच्छति' means 'comes' - the prefix आ means 'towards'."
+        },
+        {
+          "id": 2,
+          "question": "What does 'निर्गच्छति' mean?",
+          "options": ["goes", "comes", "goes out", "goes beyond"],
+          "correct": 2,
+          "explanation": "'निर्गच्छति' means 'goes out' - the prefix निर् means 'out'."
+        },
+        {
+          "id": 3,
+          "question": "What prefix means 'together'?",
+          "options": ["आ", "नि", "प्र", "सम्"],
+          "correct": 3,
+          "explanation": "'सम्' (sam) means 'together'."
+        }
+      ]
+    }
+  ]
+}

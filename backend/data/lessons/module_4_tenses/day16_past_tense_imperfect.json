@@ -1,0 +1,69 @@
+{
+  "id": "day16_past_tense_imperfect",
+  "title": "📚 Past Tense (Imperfect - लङ् लकार)",
+  "description": "Learn to talk about past actions using the imperfect tense.",
+  "level": "intermediate",
+  "module": "tenses",
+  "difficulty": 3,
+  "prerequisites": ["day15_question_words"],
+  "estimated_time": 30,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 Imperfect Tense (Past - लङ्)",
+      "content": "The imperfect tense is used for past actions that happened recently or in the past. In English, it's like 'was doing' or 'did'.",
+      "conjugation": {
+        "verb_root": "गम् (gam) - to go",
+        "forms": {
+          "अहम्": "अगच्छम् (agaccham) - I went",
+          "त्वम्": "अगच्छः (agacchaḥ) - You went",
+          "सः/सा/तत्": "अगच्छत् (agacchat) - He/She/It went"
+        },
+        "examples": {
+          "अहम्": "अहं विद्यालयं अगच्छम्। (I went to school.)",
+          "त्वम्": "त्वं गृहम् अगच्छः। (You went home.)",
+          "सः": "सः वनम् अगच्छत्। (He went to the forest.)"
+        }
+      },
+      "other_verbs": {
+        "पठ् (paṭh) - to read": {
+          "अहम्": "अपठम् (apaṭham) - I read",
+          "त्वम्": "अपठः (apaṭhaḥ) - You read",
+          "सः/सा/तत्": "अपठत् (apaṭhat) - He/She/It read"
+        },
+        "खाद् (khād) - to eat": {
+          "अहम्": "अखादम् (akhādam) - I ate",
+          "त्वम्": "अखादः (akhādaḥ) - You ate",
+          "सः/सा/तत्": "अखादत् (akhādat) - He/She/It ate"
+        }
+      }
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Imperfect Tense Quiz",
+      "questions": [
+        {
+          "id": 1,
+          "question": "How do you say 'I went' in Sanskrit?",
+          "options": ["गच्छामि", "अगच्छम्", "गमिष्यामि", "गच्छ"],
+          "correct": 1,
+          "explanation": "'अगच्छम्' (agaccham) is the imperfect form of 'I went'."
+        },
+        {
+          "id": 2,
+          "question": "How do you say 'He read' in Sanskrit?",
+          "options": ["पठति", "अपठत्", "पठिष्यति", "पठ"],
+          "correct": 1,
+          "explanation": "'अपठत्' (apaṭhat) means 'He read'."
+        },
+        {
+          "id": 3,
+          "question": "Translate: 'अहं फलम् अखादम्।'",
+          "options": ["I eat fruit.", "I ate fruit.", "I will eat fruit.", "I am eating fruit."],
+          "correct": 1,
+          "explanation": "'अखादम्' (akhādam) is the past tense form of 'to eat'."
+        }
+      ]
+    }
+  ]
+}

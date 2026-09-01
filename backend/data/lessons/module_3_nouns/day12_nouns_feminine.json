@@ -1,0 +1,57 @@
+{
+  "id": "day12_nouns_feminine",
+  "title": "📖 Noun Declensions (Feminine)",
+  "description": "Learn how feminine nouns decline in Sanskrit.",
+  "level": "beginner",
+  "module": "nouns",
+  "difficulty": 2,
+  "prerequisites": ["day11_nouns_masculine"],
+  "estimated_time": 25,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 Feminine Noun Patterns",
+      "content": "Most feminine nouns end in 'आ' (ā) or 'ई' (ī). Here's how they decline:",
+      "full_declension": {
+        "noun": "सीता (Sītā)",
+        "meaning": "Sita",
+        "singular": {
+          "nominative": "सीता",
+          "accusative": "सीताम्",
+          "instrumental": "सीतया",
+          "dative": "सीतायै",
+          "ablative": "सीतायाः",
+          "genitive": "सीतायाः",
+          "locative": "सीतायाम्",
+          "vocative": "हे सीते"
+        }
+      },
+      "examples": {
+        "nominative": "सीता पठति। (Sita reads.)",
+        "accusative": "रामः सीताम् पश्यति। (Rama sees Sita.)",
+        "instrumental": "सीतया सह (With Sita)",
+        "genitive": "सीतायाः पुस्तकम् (Sita's book)"
+      }
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Feminine Noun Quiz",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What is the accusative form of 'सीता' (Sita)?",
+          "options": ["सीता", "सीताम्", "सीतया", "सीतायै"],
+          "correct": 1,
+          "explanation": "'सीताम्' is the accusative form."
+        },
+        {
+          "id": 2,
+          "question": "How do you say 'with Sita'?",
+          "options": ["सीता", "सीताम्", "सीतया", "सीतायाः"],
+          "correct": 2,
+          "explanation": "'सीतया' is the instrumental case (with Sita)."
+        }
+      ]
+    }
+  ]
+}

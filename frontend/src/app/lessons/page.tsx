@@ -1,297 +1,189 @@
-﻿"use client";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { api } from "@/lib/api";
-import Sidebar from "@/components/Sidebar";
-import { motion, AnimatePresence } from "framer-motion";
-import { 
-  BookOpen, 
-  Clock, 
-  ArrowLeft,
-  Play,
-  CheckCircle2,
-  Lock,
-  ChevronLeft,
+﻿'use client';
+
+import { useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { api } from '@/lib/api';
+import Sidebar from '@/components/Sidebar';
+import { motion } from 'framer-motion';
+import {
+  BookOpen,
+  CheckCircle,
   ChevronRight,
-  Sparkles
-} from "lucide-react";
-import GreetingsLesson from "@/components/lessons/GreetingsLesson";
-import NumbersLesson from "@/components/lessons/NumbersLesson";
-import SelfIntroLesson from "@/components/lessons/SelfIntroLesson";
-import PronounsLesson from "@/components/lessons/PronounsLesson";
-import VerbsLesson from "@/components/lessons/VerbsLesson";
-import NounsLesson from "@/components/lessons/NounsLesson";
-import FamilyLesson from "@/components/lessons/FamilyLesson";
-import QuestionWordsLesson from "@/components/lessons/QuestionWordsLesson";
-import TimeLesson from "@/components/lessons/TimeLesson";
+  Clock,
+  Lock,
+  Star,
+  TrendingUp,
+  Unlock,
+} from 'lucide-react';
 
-const AlphabetFlashcards = () => {
-  const [vowelImages, setVowelImages] = useState<string[]>([]);
-  const [consonantImages, setConsonantImages] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
+interface Lesson {
+  id: string;
+  title: string;
+  description: string;
+  level: string;
+  module: string;
+  difficulty: number;
+  prerequisites: string[];
+  estimated_time: number;
+}
 
-  useEffect(() => {
-    const fetchAlphabets = async () => {
-      try {
-        const [vResponse, cResponse] = await Promise.all([
-          fetch('/api/alphabets?type=vowels'),
-          fetch('/api/alphabets?type=consonants')
-        ]);
-        const [vData, cData] = await Promise.all([vResponse.json(), cResponse.json()]);
-        if (vData.images) setVowelImages(vData.images);
-        if (cData.images) setConsonantImages(cData.images);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchAlphabets();
-  }, []);
+interface ProgressState {
+  completed_lessons: string[];
+  concept_mastery: Record<string, number>;
+}
 
-  if (loading) return (
-    <div className="flex flex-col items-center justify-center py-40 gap-6">
-        <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 2 }} className="text-[var(--primary)]">
-            <Sparkles size={60} />
-        </motion.div>
-        <p className="text-[var(--text-dim)] font-medium">Preparing visual aids...</p>
-    </div>
-  );
+const MODULE_ORDER = [
+  'module_1_foundations',
+  'module_2_building',
+  'module_3_nouns',
+  'module_4_tenses',
+  'module_5_grammar',
+  'module_6_syntax',
+  'module_7_advanced',
+];
 
-  return (
-    <div className="flex flex-col gap-12 mt-12 pb-20 max-w-6xl mx-auto">
-      <AnimatePresence>
-        <motion.div 
-          key="vowels-panel"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="zen-card overflow-hidden border border-[var(--border-soft)] shadow-2xl relative"
-        >
-          {/* Header Strip */}
-          <div className="bg-gradient-to-r from-[var(--primary)] to-transparent p-10 flex items-center justify-between border-b border-[var(--border-soft)]">
-            <div className="flex items-center gap-6">
-              <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center text-white font-bold text-4xl shadow-xl ring-1 ring-white/30">अ</div>
-              <div>
-                <h3 className="text-3xl font-bold text-white tracking-tight">Sanskrit Vowels</h3>
-                <p className="text-white/70 text-sm font-semibold tracking-[4px] uppercase mt-1">Swaras (Foundations)</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="p-10 bg-[var(--bg-card)]">
-            {vowelImages.length > 0 ? (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                {vowelImages.map((src, idx) => (
-                  <motion.div 
-                    key={idx}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="relative group p-4 bg-[var(--bg-main)] rounded-[32px] border border-[var(--border-soft)] shadow-inner"
-                  >
-                    <img 
-                      src={src} 
-                      alt="Sanskrit Vowels" 
-                      className="w-full h-auto rounded-2xl shadow-lg group-hover:scale-[1.01] transition-transform duration-500" 
-                      style={{ maxHeight: '600px', objectFit: 'contain' }} 
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[rgba(var(--primary-rgb),0.1)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[32px] pointer-events-none"></div>
-                  </motion.div>
-                ))}
-              </div>
-            ) : (
-              <div className="p-32 text-center bg-[var(--bg-main)] rounded-[40px] border-4 border-dashed border-[var(--border-soft)]">
-                <p className="text-[var(--text-light)] text-xl font-bold italic tracking-wide">Manuscripts for vowels arriving soon...</p>
-              </div>
-            )}
-          </div>
-        </motion.div>
-
-        <motion.div 
-          key="consonants-panel"
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="zen-card overflow-hidden border border-[var(--border-soft)] shadow-2xl relative"
-        >
-          {/* Header Strip */}
-          <div className="bg-gradient-to-r from-[var(--primary)] to-transparent p-10 flex items-center justify-between border-b border-[var(--border-soft)]">
-            <div className="flex items-center gap-6">
-              <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center text-white font-bold text-4xl shadow-xl ring-1 ring-white/30">क</div>
-              <div>
-                <h3 className="text-3xl font-bold text-white tracking-tight">Sanskrit Consonants</h3>
-                <p className="text-white/70 text-sm font-semibold tracking-[4px] uppercase mt-1">Vyanjanas (Structures)</p>
-              </div>
-            </div>
-          </div>
-          
-          <div className="p-10 bg-[var(--bg-card)]">
-            {consonantImages.length > 0 ? (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                {consonantImages.map((src, idx) => (
-                  <motion.div 
-                    key={idx}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: idx * 0.1 }}
-                    className="relative group p-4 bg-[var(--bg-main)] rounded-[32px] border border-[var(--border-soft)] shadow-inner"
-                  >
-                    <img 
-                      src={src} 
-                      alt="Sanskrit Consonants" 
-                      className="w-full h-auto rounded-2xl shadow-lg group-hover:scale-[1.01] transition-transform duration-500" 
-                      style={{ maxHeight: '600px', objectFit: 'contain' }} 
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[rgba(var(--primary-rgb),0.1)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[32px] pointer-events-none"></div>
-                  </motion.div>
-                ))}
-              </div>
-            ) : (
-              <div className="p-32 text-center bg-[var(--bg-main)] rounded-[40px] border-4 border-dashed border-[var(--border-soft)]">
-                <p className="text-[var(--text-light)] text-xl font-bold italic tracking-wide">Consonant charts currently being prepared by the acharya...</p>
-              </div>
-            )}
-          </div>
-        </motion.div>
-      </AnimatePresence>
-    </div>
-  );
+const MODULE_LABELS: Record<string, string> = {
+  module_1_foundations: '🌟 Foundations',
+  module_2_building: '🏗️ Building Blocks',
+  module_3_nouns: '📖 Nouns & Grammar',
+  module_4_tenses: '⏰ Tenses',
+  module_5_grammar: '🔍 Grammar Deep Dive',
+  module_6_syntax: '📝 Syntax',
+  module_7_advanced: '🚀 Advanced',
 };
 
-export default function Lessons() {
-  const [user, setUser] = useState<any>(null);
-  const [lessons, setLessons] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedLesson, setSelectedLesson] = useState<any>(null);
+const MODULE_DESCRIPTIONS: Record<string, string> = {
+  module_1_foundations: 'Core essentials and first Sanskrit foundations.',
+  module_2_building: 'Build confidence through everyday language patterns.',
+  module_3_nouns: 'Learn nouns, cases, and their practical usage.',
+  module_4_tenses: 'Master time, actions, and sentence structure.',
+  module_5_grammar: 'Deepen grammar accuracy and comprehension.',
+  module_6_syntax: 'Arrange words correctly in meaningful Sanskrit sentences.',
+  module_7_advanced: 'Reach advanced fluency with nuanced expression.',
+};
+
+const EMPTY_PROGRESS: ProgressState = {
+  completed_lessons: [],
+  concept_mastery: {},
+};
+
+function normalizeProgress(raw: any): ProgressState {
+  if (!raw) return EMPTY_PROGRESS;
+
+  if (Array.isArray(raw.completed_lessons)) {
+    return {
+      completed_lessons: raw.completed_lessons,
+      concept_mastery: raw.concept_mastery || {},
+    };
+  }
+
+  if (raw.status === 'success') {
+    return {
+      completed_lessons: raw.lessons_completed || raw.completed_lessons || [],
+      concept_mastery: raw.progress?.concept_mastery || raw.concept_mastery || {},
+    };
+  }
+
+  return {
+    completed_lessons: raw.lessons_completed || raw.completed_lessons || [],
+    concept_mastery: raw.progress?.concept_mastery || raw.concept_mastery || {},
+  };
+}
+
+function isLessonAvailable(lesson: Lesson, completed: string[]) {
+  if (!lesson.prerequisites || lesson.prerequisites.length === 0) return true;
+  return lesson.prerequisites.every((prereq) => completed.includes(prereq));
+}
+
+function getMissingPrerequisites(lesson: Lesson, completed: string[]) {
+  if (!lesson.prerequisites || lesson.prerequisites.length === 0) return [];
+  return lesson.prerequisites.filter((prereq) => !completed.includes(prereq));
+}
+
+function getLevelColor(level: string) {
+  switch (level) {
+    case 'beginner':
+      return 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300';
+    case 'intermediate':
+      return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300';
+    case 'advanced':
+      return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300';
+    default:
+      return 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
+  }
+}
+
+export default function LessonsPage() {
   const router = useRouter();
+  const [user, setUser] = useState<any>(null);
+  const [lessons, setLessons] = useState<Lesson[]>([]);
+  const [progress, setProgress] = useState<ProgressState>(EMPTY_PROGRESS);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
+    const storedUser = localStorage.getItem('user');
     if (!storedUser) {
-      router.push("/");
+      router.push('/');
       return;
     }
-    const userData = JSON.parse(storedUser);
-    setUser(userData);
 
-    const fetchLessons = async () => {
+    const currentUser = JSON.parse(storedUser);
+    setUser(currentUser);
+
+    const fetchData = async () => {
       try {
-        const data = await api.lessons.getAll();
-        setLessons(data);
-      } catch (err) {
-        console.error(err);
+        const [lessonsResponse, progressResponse] = await Promise.all([
+          api.lessons.getAll(),
+          api.bkt.getProgress(currentUser.username).catch(() => ({ status: 'error' })),
+        ]);
+
+        if (lessonsResponse?.success) {
+          setLessons(lessonsResponse.data || []);
+        }
+
+        setProgress(normalizeProgress(progressResponse));
+      } catch (error) {
+        console.error('Failed to load lessons:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchLessons();
+    fetchData();
   }, [router]);
 
-  const handleNext = () => {
-    const currentIndex = lessons.findIndex(l => l.id === selectedLesson.id);
-    if (currentIndex < lessons.length - 1) {
-      setSelectedLesson(lessons[currentIndex + 1]);
+  const groupedLessons = useMemo(() => {
+    const groups: Record<string, Lesson[]> = {};
+
+    for (const module of MODULE_ORDER) {
+      groups[module] = lessons.filter((lesson) => (lesson.module || 'uncategorized') === module);
     }
-  };
 
-  const handlePrev = () => {
-    const currentIndex = lessons.findIndex(l => l.id === selectedLesson.id);
-    if (currentIndex > 0) {
-      setSelectedLesson(lessons[currentIndex - 1]);
-    }
-  };
+    return groups;
+  }, [lessons]);
 
-  if (!user || loading) return <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center' }}>
-    <motion.div animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 1.5 }} style={{ fontSize: '1.2rem' }}>Preparing Curriculum...</motion.div>
-  </div>;
+  const nextLesson = useMemo(() => {
+    return lessons.find((lesson) => {
+      const completed = progress.completed_lessons.includes(lesson.id);
+      return !completed && isLessonAvailable(lesson, progress.completed_lessons);
+    });
+  }, [lessons, progress]);
 
-  if (selectedLesson) {
+  const completedCount = progress.completed_lessons.length;
+  const totalLessons = lessons.length;
+  const overallProgress = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
+
+  if (loading) {
     return (
       <div className="page-layout">
         <Sidebar user={user} />
         <main className="main-content">
-          <button className="flex items-center gap-2 mb-8" style={{ background: 'none', border: 'none', color: 'var(--text-dim)', cursor: 'pointer', fontWeight: '600' }} onClick={() => setSelectedLesson(null)}>
-            <ArrowLeft size={18} /> Back to Modules
-          </button>
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="zen-card"
-            style={{ padding: '60px', maxWidth: '1000px', margin: '0 auto' }}
-          >
-            <span style={{ background: 'rgba(192, 90, 43, 0.08)', color: 'var(--primary)', padding: '6px 14px', borderRadius: '10px', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                {selectedLesson.level} Path
-            </span>
-            <h1 style={{ fontSize: '3rem', marginTop: '1.5rem', marginBottom: '1rem' }}>{selectedLesson.title}</h1>
-            <div className="flex" style={{ gap: '20px', color: 'var(--text-light)', marginBottom: '40px' }}>
-              <div className="flex items-center gap-1"><Clock size={16} /> {selectedLesson.duration} minutes remaining</div>
-              <div className="flex items-center gap-1"><BookOpen size={16} /> Concept Study</div>
+          <div className="flex items-center justify-center h-64">
+            <div className="text-center">
+              <div className="text-4xl mb-4 animate-pulse">🕉️</div>
+              <p className="text-gray-500 dark:text-gray-400">Loading lessons...</p>
             </div>
-
-            <div style={{ fontSize: '1.2rem', lineHeight: '2', color: 'var(--text-main)', padding: '40px', background: 'var(--bg-main)', borderRadius: '24px', marginBottom: '40px' }}>
-              {selectedLesson.id !== 1 && selectedLesson.id !== 2 && selectedLesson.id !== 3 && selectedLesson.id !== 4 && selectedLesson.id !== 5 && selectedLesson.id !== 6 && selectedLesson.id !== 7 && selectedLesson.id !== 8 && selectedLesson.id !== 9 && selectedLesson.id !== 10 && selectedLesson.content}
-              
-              {selectedLesson.id === 1 ? (
-                <AlphabetFlashcards />
-              ) : selectedLesson.id === 2 ? (
-                <GreetingsLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 3 ? (
-                <NumbersLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 4 ? (
-                <SelfIntroLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 5 ? (
-                <PronounsLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 6 ? (
-                <VerbsLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 7 ? (
-                <NounsLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 8 ? (
-                <FamilyLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 9 ? (
-                <QuestionWordsLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 10 ? (
-                <TimeLesson onBack={() => setSelectedLesson(null)} />
-              ) : (
-                <motion.div 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="devanagari" 
-                  style={{ fontSize: '3rem', textAlign: 'center', marginTop: '60px', color: 'var(--primary)' }}
-                >
-                  {"सत्यं वद। धर्मं चर।"}
-                </motion.div>
-              )}
-            </div>
-
-            <div className="flex justify-between items-center mt-12">
-              <div className="flex gap-3">
-                <button 
-                  className="btn-secondary" 
-                  onClick={handlePrev}
-                  disabled={lessons.findIndex(l => l.id === selectedLesson.id) === 0}
-                  style={{ opacity: lessons.findIndex(l => l.id === selectedLesson.id) === 0 ? 0.5 : 1 }}
-                >
-                  <ChevronLeft size={18} /> Previous
-                </button>
-                <button 
-                  className="btn-secondary" 
-                  onClick={handleNext}
-                  disabled={lessons.findIndex(l => l.id === selectedLesson.id) === lessons.length - 1}
-                  style={{ opacity: lessons.findIndex(l => l.id === selectedLesson.id) === lessons.length - 1 ? 0.5 : 1 }}
-                >
-                  Next <ChevronRight size={18} />
-                </button>
-              </div>
-
-              <div className="flex gap-4">
-                <button className="btn-secondary">Download PDF</button>
-                <button className="btn-primary" onClick={() => alert("Quiz manifest arriving soon!")}>
-                  Mark as Complete <CheckCircle2 size={18} />
-                </button>
-              </div>
-            </div>
-          </motion.div>
+          </div>
         </main>
       </div>
     );
@@ -300,58 +192,199 @@ export default function Lessons() {
   return (
     <div className="page-layout">
       <Sidebar user={user} />
-      
       <main className="main-content">
-        <header style={{ marginBottom: '48px' }}>
-          <h1 style={{ fontSize: '2.5rem', marginBottom: '8px' }}>Learning Modules</h1>
-          <p style={{ color: 'var(--text-dim)' }}>Select a step in your journey. We recommend starting with the foundations.</p>
-        </header>
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8"
+        >
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-6">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-200">
+                📚 Sanskrit Lessons
+              </h1>
+              <p className="text-gray-500 dark:text-gray-400 mt-1">
+                {lessons.length} lessons across 7 modules
+              </p>
+            </div>
 
-        <div className="grid" style={{ gridTemplateColumns: 'repeat(2, 1fr)', gap: '30px' }}>
-          {lessons.map((lesson, i) => (
-            <motion.div 
-              key={lesson.id} 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={{ y: -5 }}
-              className="zen-card"
-              style={{ padding: '34px', cursor: 'pointer' }}
-              onClick={() => setSelectedLesson(lesson)}
-            >
-              <div className="flex justify-between items-start mb-6">
-                <span style={{ 
-                  fontSize: '0.75rem', 
-                  padding: '5px 12px', 
-                  borderRadius: '10px', 
-                  backgroundColor: lesson.level === 'beginner' ? 'rgba(39, 174, 96, 0.08)' : 'rgba(192, 90, 43, 0.08)',
-                  color: lesson.level === 'beginner' ? '#27ae60' : 'var(--primary)',
-                  fontWeight: '700',
-                  textTransform: 'uppercase'
-                }}>
-                  {lesson.level}
-                </span>
-                <span style={{ color: 'var(--text-light)', fontSize: '0.85rem' }}>⏱️ {lesson.duration}m</span>
+            <div className="min-w-[220px] rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-3 shadow-sm">
+              <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-300 mb-2">
+                <span>Overall progress</span>
+                <span className="font-semibold text-terracotta">{overallProgress}%</span>
               </div>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '12px' }}>{lesson.title}</h3>
-              <p style={{ color: 'var(--text-dim)', marginBottom: '30px', fontSize: '0.95rem', height: '4.8em', overflow: 'hidden' }}>{lesson.description}</p>
-              
-              <div className="flex items-center gap-2" style={{ color: 'var(--primary)', fontWeight: '700', fontSize: '0.9rem' }}>
-                <Play size={16} fill="var(--primary)" /> Resume Lesson
+              <div className="h-2.5 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+                <div
+                  className="h-full rounded-full bg-terracotta transition-all duration-500"
+                  style={{ width: `${overallProgress}%` }}
+                />
               </div>
-            </motion.div>
-          ))}
-
-          <div 
-            className="zen-card flex items-center justify-center" 
-            style={{ border: '2px dashed var(--border-soft)', background: 'transparent', opacity: 0.6 }}
-          >
-            <div style={{ textAlign: 'center', padding: '40px' }}>
-              <Lock size={24} style={{ marginBottom: '16px', color: 'var(--text-light)' }} />
-              <p style={{ color: 'var(--text-light)', fontSize: '0.9rem' }}>Advanced modules unlocking as you progress...</p>
             </div>
           </div>
-        </div>
+
+          {nextLesson && (
+            <div className="mb-6 flex items-center gap-2 rounded-xl border border-terracotta/30 bg-orange-50 px-4 py-3 text-sm text-terracotta dark:bg-orange-900/20 dark:text-orange-200">
+              <TrendingUp className="h-4 w-4" />
+              <span>Next up:</span>
+              <span className="font-semibold">{nextLesson.title}</span>
+            </div>
+          )}
+        </motion.div>
+
+        {MODULE_ORDER.map((moduleKey) => {
+          const moduleLessons = groupedLessons[moduleKey] || [];
+          if (!moduleLessons.length) return null;
+
+          const completedInModule = moduleLessons.filter((lesson) =>
+            progress.completed_lessons.includes(lesson.id)
+          ).length;
+
+          return (
+            <motion.section
+              key={moduleKey}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-8"
+            >
+              <div className="mb-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+                <div className="mb-2 flex items-center justify-between gap-3">
+                  <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-300">
+                    {MODULE_LABELS[moduleKey] || moduleKey}
+                  </h2>
+                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                    {completedInModule}/{moduleLessons.length} complete
+                  </span>
+                </div>
+
+                <p className="mb-3 text-sm text-gray-500 dark:text-gray-400">
+                  {MODULE_DESCRIPTIONS[moduleKey] || 'Complete the module journey.'}
+                </p>
+
+                <div className="h-2.5 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
+                  <div
+                    className="h-full rounded-full bg-terracotta transition-all duration-500"
+                    style={{ width: `${moduleLessons.length ? (completedInModule / moduleLessons.length) * 100 : 0}%` }}
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                {moduleLessons.map((lesson) => {
+                  const completed = progress.completed_lessons.includes(lesson.id);
+                  const available = isLessonAvailable(lesson, progress.completed_lessons);
+                  const isNext = nextLesson?.id === lesson.id;
+                  const missingPrereqs = getMissingPrerequisites(lesson, progress.completed_lessons);
+                  const mastery = progress.concept_mastery?.[lesson.id] ?? (completed ? 100 : 0);
+
+                  return (
+                    <motion.div
+                      key={lesson.id}
+                      whileHover={{ scale: 1.01 }}
+                      className={`rounded-2xl border p-5 shadow-sm transition-all duration-200 ${
+                        completed
+                          ? 'border-green-200 bg-green-50 dark:border-green-900 dark:bg-green-900/10'
+                          : available
+                            ? 'border-gray-200 bg-white hover:border-terracotta/40 hover:shadow-md dark:border-gray-700 dark:bg-gray-800'
+                            : 'border-gray-200 bg-gray-100 opacity-80 dark:border-gray-700 dark:bg-gray-800/80'
+                      }`}
+                    >
+                      <div className="mb-3 flex items-start justify-between gap-3">
+                        <div className="flex-1">
+                          <div className="mb-2 flex flex-wrap items-center gap-2">
+                            <span className={`rounded-full px-2 py-1 text-[10px] font-medium uppercase tracking-wide ${getLevelColor(lesson.level)}`}>
+                              {lesson.level}
+                            </span>
+                            {completed && (
+                              <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-1 text-[10px] font-medium text-green-700 dark:bg-green-900/30 dark:text-green-300">
+                                <CheckCircle className="h-3.5 w-3.5" />
+                                Complete
+                              </span>
+                            )}
+                            {!completed && available && (
+                              <span className="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2 py-1 text-[10px] font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+                                <Unlock className="h-3.5 w-3.5" />
+                                Available
+                              </span>
+                            )}
+                            {!completed && !available && (
+                              <span
+                                className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-1 text-[10px] font-medium text-gray-600 dark:bg-gray-700 dark:text-gray-300"
+                                title={missingPrereqs.length ? `Missing prerequisites: ${missingPrereqs.join(', ')}` : 'Locked'}
+                              >
+                                <Lock className="h-3.5 w-3.5" />
+                                Locked
+                              </span>
+                            )}
+                            {isNext && (
+                              <span className="inline-flex items-center gap-1 rounded-full bg-terracotta/10 px-2 py-1 text-[10px] font-medium text-terracotta dark:bg-terracotta/20 dark:text-orange-200">
+                                <BookOpen className="h-3.5 w-3.5" />
+                                Next
+                              </span>
+                            )}
+                          </div>
+
+                          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                            {lesson.title}
+                          </h3>
+                          <p className="mt-2 line-clamp-2 text-sm text-gray-600 dark:text-gray-300">
+                            {lesson.description}
+                          </p>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => router.push(`/lessons/${lesson.id}`)}
+                          className="rounded-full border border-gray-200 bg-white p-2 text-gray-500 transition-colors hover:border-terracotta/50 hover:text-terracotta dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300"
+                          aria-label={`Open ${lesson.title}`}
+                        >
+                          <ChevronRight className="h-4 w-4" />
+                        </button>
+                      </div>
+
+                      <div className="mb-3 flex flex-wrap items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+                        <span className="inline-flex items-center gap-1.5">
+                          <Clock className="h-3.5 w-3.5" />
+                          {lesson.estimated_time || 20} min
+                        </span>
+                        <span className="inline-flex items-center gap-1.5">
+                          <Star className="h-3.5 w-3.5" />
+                          {lesson.difficulty || 1}/5
+                        </span>
+                        {completed && (
+                          <span className="inline-flex items-center gap-1.5 text-green-700 dark:text-green-300">
+                            <CheckCircle className="h-3.5 w-3.5" />
+                            {mastery}% mastery
+                          </span>
+                        )}
+                      </div>
+
+                      {missingPrereqs.length > 0 && !completed && (
+                        <div className="mb-3 rounded-lg border border-amber-200 bg-amber-50 px-2.5 py-2 text-[11px] text-amber-700 dark:border-amber-900 dark:bg-amber-900/20 dark:text-amber-200">
+                          Locked by: {missingPrereqs.join(', ')}
+                        </div>
+                      )}
+
+                      <button
+                        type="button"
+                        onClick={() => router.push(`/lessons/${lesson.id}`)}
+                        className={`w-full rounded-xl px-3 py-2 text-sm font-medium transition-colors ${
+                          completed
+                            ? 'bg-green-600 text-white hover:bg-green-700'
+                            : available
+                              ? 'bg-terracotta text-white hover:bg-terracotta-dark'
+                              : 'cursor-not-allowed bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-300'
+                        }`}
+                        disabled={!available && !completed}
+                      >
+                        {completed ? 'Review Lesson' : available ? 'Start Lesson' : 'Locked'}
+                      </button>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </motion.section>
+          );
+        })}
       </main>
     </div>
   );

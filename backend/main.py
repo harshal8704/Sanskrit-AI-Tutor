@@ -88,9 +88,10 @@ def signup(req: SignupRequest):
 
 @app.get("/lessons")
 def get_lessons(level: Optional[str] = None):
+    lessons = db.load_all_lessons()
     if level:
-        return [l for l in learning_engine.lessons if l.get('level') == level]
-    return learning_engine.lessons
+        return {"success": True, "data": [l for l in lessons if l.get('level') == level], "count": len(lessons)}
+    return {"success": True, "data": lessons, "count": len(lessons)}
 
 @app.get("/lessons/{lesson_id}")
 def get_lesson(lesson_id: int):
@@ -181,6 +182,29 @@ def get_dashboard_stats(username: str):
         "db_stats": stats
     }
 
+@app.post("/progress/{username}/complete")
+def mark_lesson_complete(username: str, payload: Dict[str, Any] = Body(...)):
+    if username not in auth.users:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    lesson_id = payload.get("lesson_id")
+    if lesson_id is None:
+        raise HTTPException(status_code=400, detail="lesson_id is required")
+
+    user = auth.users[username]
+    completed = int(user.get("completed", 0))
+    user["completed"] = completed + 1
+    user["level"] = user.get("level", "beginner")
+    auth.save_users(auth.users)
+
+    return {
+        "success": True,
+        "username": username,
+        "lesson_id": lesson_id,
+        "completed": user["completed"],
+        "message": "Lesson marked as complete"
+    }
+
 # ─── Suggestions Endpoint (Local DB + Groq Fallback) ──────────────────────────
 @app.get("/suggestions")
 def get_suggestions(prefix: str, limit: int = 6):
@@ -269,6 +293,27 @@ def game_start():
     """Initialize a new Snake & Ladder game session."""
     return start_new_game()
 
+@app.get("/api/lessons/all")
+def get_all_lessons():
+    """Get all 35 lessons with their metadata"""
+    try:
+        lessons = db.load_all_lessons()
+        return {"success": True, "data": lessons, "count": len(lessons)}
+    except Exception as e:
+        return {"success": False, "message": str(e)}
+
+@app.get("/api/lessons/{lesson_id}")
+def get_lesson_by_id(lesson_id: str):
+    """Get a specific lesson by its ID"""
+    try:
+        lessons = db.load_all_lessons()
+        for lesson in lessons:
+            if lesson.get('id') == lesson_id:
+                return {"success": True, "data": lesson}
+        return {"success": False, "message": "Lesson not found"}
+    except Exception as e:
+        return {"success": False, "message": str(e)}
+    
 @app.post("/game/turn")
 def game_turn(req: GameTurnRequest):
     """Process one turn: validate the answer, move the player."""
@@ -303,9 +348,9 @@ if __name__ == "__main__":
     import uvicorn
     import os
     
-    # Allow overriding the port via .env file, mapping it gracefully for user execution.
-    port_str = os.getenv("PORT", "8005")
-    port = int(port_str) if port_str.isdigit() else 8005
+    # Standardize on the documented backend port unless an override is explicitly set.
+    port_str = os.getenv("PORT", "8000")
+    port = int(port_str) if port_str.isdigit() else 8000
     
     try:
         uvicorn.run(app, host="0.0.0.0", port=port)

@@ -1,0 +1,125 @@
+{
+  "id": "day2_alphabet_vowels",
+  "title": "🔤 Devanagari Vowels (स्वराः)",
+  "description": "Learn the 13 vowels of Sanskrit and their correct pronunciation.",
+  "level": "beginner",
+  "module": "foundations",
+  "difficulty": 1,
+  "prerequisites": ["day1_welcome"],
+  "estimated_time": 20,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 Sanskrit Vowels",
+      "content": "Sanskrit has 13 vowels. They are divided into short and long sounds. Pronunciation is crucial in Sanskrit!",
+      "vowels": [
+        {
+          "devanagari": "अ",
+          "transliteration": "a",
+          "sound": "short 'u' in 'but'",
+          "duration": "short"
+        },
+        {
+          "devanagari": "आ",
+          "transliteration": "ā",
+          "sound": "long 'a' in 'father'",
+          "duration": "long"
+        },
+        {
+          "devanagari": "इ",
+          "transliteration": "i",
+          "sound": "short 'i' in 'sit'",
+          "duration": "short"
+        },
+        {
+          "devanagari": "ई",
+          "transliteration": "ī",
+          "sound": "long 'ee' in 'see'",
+          "duration": "long"
+        },
+        {
+          "devanagari": "उ",
+          "transliteration": "u",
+          "sound": "short 'u' in 'put'",
+          "duration": "short"
+        },
+        {
+          "devanagari": "ऊ",
+          "transliteration": "ū",
+          "sound": "long 'oo' in 'boot'",
+          "duration": "long"
+        },
+        {
+          "devanagari": "ऋ",
+          "transliteration": "ṛ",
+          "sound": "'ri' in 'rig'",
+          "duration": "short"
+        },
+        {
+          "devanagari": "ए",
+          "transliteration": "e",
+          "sound": "'ay' in 'say'",
+          "duration": "long"
+        },
+        {
+          "devanagari": "ऐ",
+          "transliteration": "ai",
+          "sound": "'ai' in 'aisle'",
+          "duration": "long"
+        },
+        {
+          "devanagari": "ओ",
+          "transliteration": "o",
+          "sound": "'o' in 'go'",
+          "duration": "long"
+        },
+        {
+          "devanagari": "औ",
+          "transliteration": "au",
+          "sound": "'ou' in 'loud'",
+          "duration": "long"
+        },
+        {
+          "devanagari": "अं",
+          "transliteration": "aṃ",
+          "sound": "nasal 'um'",
+          "duration": "short"
+        },
+        {
+          "devanagari": "अः",
+          "transliteration": "aḥ",
+          "sound": "breathy 'ah'",
+          "duration": "short"
+        }
+      ]
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Vowel Recognition Quiz",
+      "instructions": "Match the Devanagari vowel with its correct transliteration.",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Which Devanagari letter represents the sound 'ā' (long a)?",
+          "options": ["अ", "आ", "इ", "ई"],
+          "correct": 1,
+          "explanation": "'आ' (ā) is the long form of 'अ' (a)."
+        },
+        {
+          "id": 2,
+          "question": "How do you write the short 'i' sound?",
+          "options": ["इ", "ई", "उ", "ऊ"],
+          "correct": 0,
+          "explanation": "'इ' (i) is the short form, 'ई' (ī) is the long form."
+        },
+        {
+          "id": 3,
+          "question": "Which vowel has the sound 'oo' as in 'boot'?",
+          "options": ["उ", "ऊ", "ऋ", "ए"],
+          "correct": 1,
+          "explanation": "'ऊ' (ū) has the 'oo' sound."
+        }
+      ]
+    }
+  ]
+}

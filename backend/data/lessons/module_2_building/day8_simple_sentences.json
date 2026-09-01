@@ -1,0 +1,67 @@
+{
+  "id": "day8_simple_sentences",
+  "title": "📝 Simple Sentences (Subject + Verb)",
+  "description": "Learn to form simple sentences using pronouns and verbs.",
+  "level": "beginner",
+  "module": "building",
+  "difficulty": 2,
+  "prerequisites": ["day7_pronouns"],
+  "estimated_time": 25,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 Building Simple Sentences",
+      "content": "Sanskrit follows a Subject-Object-Verb (SOV) word order. Here are the basics:",
+      "patterns": [
+        {
+          "pattern": "Subject + Verb",
+          "example": "अहं पठामि।",
+          "translation": "I read.",
+          "breakdown": "अहम् (I) + पठामि (read)"
+        },
+        {
+          "pattern": "Subject + Object + Verb",
+          "example": "अहं पुस्तकं पठामि।",
+          "translation": "I read a book.",
+          "breakdown": "अहम् (I) + पुस्तकम् (book) + पठामि (read)"
+        }
+      ],
+      "key_verbs": [
+        {"sanskrit": "पठामि", "transliteration": "paṭhāmi", "meaning": "I read"},
+        {"sanskrit": "पठसि", "transliteration": "paṭhasi", "meaning": "You read"},
+        {"sanskrit": "पठति", "transliteration": "paṭhati", "meaning": "He/She/It reads"},
+        {"sanskrit": "गच्छामि", "transliteration": "gacchāmi", "meaning": "I go"},
+        {"sanskrit": "गच्छसि", "transliteration": "gacchasi", "meaning": "You go"},
+        {"sanskrit": "गच्छति", "transliteration": "gacchati", "meaning": "He/She/It goes"}
+      ]
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Simple Sentences Quiz",
+      "instructions": "Choose the correct translation.",
+      "questions": [
+        {
+          "id": 1,
+          "sanskrit": "अहं पठामि।",
+          "options": ["I read.", "You read.", "He reads.", "She reads."],
+          "correct": 0,
+          "explanation": "'अहं पठामि।' means 'I read.'"
+        },
+        {
+          "id": 2,
+          "sanskrit": "सः गच्छति।",
+          "options": ["I go.", "You go.", "He goes.", "She goes."],
+          "correct": 2,
+          "explanation": "'सः गच्छति।' means 'He goes.'"
+        },
+        {
+          "id": 3,
+          "english": "You read.",
+          "options": ["अहं पठामि।", "त्वं पठसि।", "सः पठति।", "सा पठति।"],
+          "correct": 1,
+          "explanation": "'त्वं पठसि।' means 'You read.'"
+        }
+      ]
+    }
+  ]
+}

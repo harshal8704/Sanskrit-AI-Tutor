@@ -1,0 +1,84 @@
+{
+  "id": "day29_time_days",
+  "title": "📖 Time & Days (समयः वासरः च)",
+  "description": "Learn to tell time and talk about days in Sanskrit.",
+  "level": "intermediate",
+  "module": "syntax",
+  "difficulty": 3,
+  "prerequisites": ["day28_infinitives"],
+  "estimated_time": 20,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 Days of the Week",
+      "content": "Here are the Sanskrit names for days of the week:",
+      "days": [
+        {"sanskrit": "सोमवासरः", "transliteration": "Somavāsaraḥ", "english": "Monday"},
+        {"sanskrit": "मङ्गलवासरः", "transliteration": "Maṅgalavāsaraḥ", "english": "Tuesday"},
+        {"sanskrit": "बुधवासरः", "transliteration": "Budhavāsaraḥ", "english": "Wednesday"},
+        {"sanskrit": "गुरुवासरः", "transliteration": "Guruvāsaraḥ", "english": "Thursday"},
+        {"sanskrit": "शुक्रवासरः", "transliteration": "Śukravāsaraḥ", "english": "Friday"},
+        {"sanskrit": "शनिवासरः", "transliteration": "Śanivāsaraḥ", "english": "Saturday"},
+        {"sanskrit": "भानुवासरः", "transliteration": "Bhānuvāsaraḥ", "english": "Sunday"}
+      ],
+      "relative_time": [
+        {"sanskrit": "अद्य", "transliteration": "Adya", "english": "Today"},
+        {"sanskrit": "श्वः", "transliteration": "Śvaḥ", "english": "Tomorrow"},
+        {"sanskrit": "ह्यः", "transliteration": "Hyaḥ", "english": "Yesterday"},
+        {"sanskrit": "अधुना", "transliteration": "Adhunā", "english": "Now"},
+        {"sanskrit": "सदा", "transliteration": "Sadā", "english": "Always"},
+        {"sanskrit": "कदाचित्", "transliteration": "Kadācit", "english": "Sometimes"},
+        {"sanskrit": "नित्यम्", "transliteration": "Nityam", "english": "Daily"}
+      ],
+      "time_expressions": [
+        {
+          "sanskrit": "एकवादनम्",
+          "transliteration": "Ekavādanam",
+          "english": "1:00 O'clock"
+        },
+        {
+          "sanskrit": "सार्ध-द्विवादनम्",
+          "transliteration": "Sārdha-dvivādanam",
+          "english": "2:30 (Half past two)"
+        },
+        {
+          "sanskrit": "सपाद-एकवादनम्",
+          "transliteration": "Sapāda-ekavādanam",
+          "english": "1:15 (Quarter past one)"
+        },
+        {
+          "sanskrit": "पादोन-त्रिवादनम्",
+          "transliteration": "Pādona-trivādanam",
+          "english": "2:45 (Quarter to three)"
+        }
+      ]
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Time & Days Quiz",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What does 'सोमवासरः' mean?",
+          "options": ["Monday", "Tuesday", "Wednesday", "Thursday"],
+          "correct": 0,
+          "explanation": "'सोमवासरः' (Somavāsaraḥ) means 'Monday'."
+        },
+        {
+          "id": 2,
+          "question": "How do you say 'Today' in Sanskrit?",
+          "options": ["अद्य", "श्वः", "ह्यः", "सदा"],
+          "correct": 0,
+          "explanation": "'अद्य' (Adya) means 'Today'."
+        },
+        {
+          "id": 3,
+          "question": "What does 'सार्ध-द्विवादनम्' mean?",
+          "options": ["1:00", "2:30", "1:15", "2:45"],
+          "correct": 1,
+          "explanation": "'सार्ध-द्विवादनम्' means '2:30' (half past two)."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "id": "day15_question_words",
+  "title": "❓ Question Words",
+  "description": "Learn the 8 essential question words in Sanskrit.",
+  "level": "beginner",
+  "module": "nouns",
+  "difficulty": 2,
+  "prerequisites": ["day14_family"],
+  "estimated_time": 20,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 Question Words",
+      "content": "Master these 8 question words to ask questions in Sanskrit:",
+      "question_words": [
+        {
+          "sanskrit": "कः",
+          "transliteration": "Kaḥ",
+          "english": "Who? (masculine)",
+          "example": "सः कः अस्ति? (Who is he?)"
+        },
+        {
+          "sanskrit": "का",
+          "transliteration": "Kā",
+          "english": "Who? (feminine)",
+          "example": "सा का अस्ति? (Who is she?)"
+        },
+        {
+          "sanskrit": "किम्",
+          "transliteration": "Kim",
+          "english": "What?",
+          "example": "तत् किम् अस्ति? (What is that?)"
+        },
+        {
+          "sanskrit": "कुत्र",
+          "transliteration": "Kutra",
+          "english": "Where?",
+          "example": "बालकः कुत्र गच्छति? (Where is the boy going?)"
+        },
+        {
+          "sanskrit": "कदा",
+          "transliteration": "Kadā",
+          "english": "When?",
+          "example": "भवान् कदा आगच्छति? (When are you coming?)"
+        },
+        {
+          "sanskrit": "कथम्",
+          "transliteration": "Katham",
+          "english": "How?",
+          "example": "भवान् कथम् अस्ति? (How are you?)"
+        },
+        {
+          "sanskrit": "किमर्थम्",
+          "transliteration": "Kimartham",
+          "english": "Why?",
+          "example": "त्वं किमर्थं हससि? (Why are you laughing?)"
+        },
+        {
+          "sanskrit": "कति",
+          "transliteration": "Kati",
+          "english": "How many?",
+          "example": "अत्र कति पुस्तकानि सन्ति? (How many books are here?)"
+        }
+      ]
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Question Words Quiz",
+      "questions": [
+        {
+          "id": 1,
+          "english": "What?",
+          "options": ["कः", "किम्", "कुत्र", "कदा"],
+          "correct": 1,
+          "explanation": "'किम्' (Kim) means 'What?'"
+        },
+        {
+          "id": 2,
+          "english": "Where?",
+          "options": ["कः", "किम्", "कुत्र", "कदा"],
+          "correct": 2,
+          "explanation": "'कुत्र' (Kutra) means 'Where?'"
+        },
+        {
+          "id": 3,
+          "english": "When?",
+          "options": ["कः", "कदा", "कुत्र", "कति"],
+          "correct": 1,
+          "explanation": "'कदा' (Kadā) means 'When?'"
+        }
+      ]
+    }
+  ]
+}

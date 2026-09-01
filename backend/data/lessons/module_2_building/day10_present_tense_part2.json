@@ -1,0 +1,97 @@
+{
+  "id": "day10_present_tense_part2",
+  "title": "📚 Present Tense Verbs (Part 2)",
+  "description": "Learn more present tense verbs: write, speak, play, see, laugh.",
+  "level": "beginner",
+  "module": "building",
+  "difficulty": 2,
+  "prerequisites": ["day9_present_tense_part1"],
+  "estimated_time": 25,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 More Present Tense Verbs",
+      "content": "Expand your vocabulary with these common verbs:",
+      "verbs": [
+        {
+          "root": "लिख् (likh)",
+          "meaning": "to write",
+          "conjugations": {
+            "अहम्": "लिखामि (likhāmi)",
+            "त्वम्": "लिखसि (likhasi)",
+            "सः/सा/तत्": "लिखति (likhati)"
+          },
+          "example": "लेखकः पत्रं लिखति। (The writer writes a letter.)"
+        },
+        {
+          "root": "वद् (vad)",
+          "meaning": "to speak / say",
+          "conjugations": {
+            "अहम्": "वदामि (vadāmi)",
+            "त्वम्": "वदसि (vadasi)",
+            "सः/सा/तत्": "वदति (vadati)"
+          },
+          "example": "गुरुः वदति। (The teacher speaks.)"
+        },
+        {
+          "root": "क्रीड् (krīḍ)",
+          "meaning": "to play",
+          "conjugations": {
+            "अहम्": "क्रीडामि (krīḍāmi)",
+            "त्वम्": "क्रीडसि (krīḍasi)",
+            "सः/सा/तत्": "क्रीडति (krīḍati)"
+          },
+          "example": "बालकाः क्रीडन्ति। (The children play.)"
+        },
+        {
+          "root": "दृश् (dṛś)",
+          "meaning": "to see",
+          "conjugations": {
+            "अहम्": "पश्यामि (paśyāmi)",
+            "त्वम्": "पश्यसि (paśyasi)",
+            "सः/सा/तत्": "पश्यति (paśyati)"
+          },
+          "example": "सः चित्रं पश्यति। (He sees a picture.)"
+        },
+        {
+          "root": "हस् (has)",
+          "meaning": "to laugh",
+          "conjugations": {
+            "अहम्": "हसामि (hasāmi)",
+            "त्वम्": "हससि (hasasi)",
+            "सः/सा/तत्": "हसति (hasati)"
+          },
+          "example": "बालिका हसति। (The girl laughs.)"
+        }
+      ]
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Verb Conjugation Quiz",
+      "instructions": "Choose the correct verb form.",
+      "questions": [
+        {
+          "id": 1,
+          "question": "How do you say 'I speak'?",
+          "options": ["वदसि", "वदामि", "वदति", "वदन्ति"],
+          "correct": 1,
+          "explanation": "'वदामि' (vadāmi) means 'I speak'."
+        },
+        {
+          "id": 2,
+          "question": "How do you say 'She writes'?",
+          "options": ["लिखामि", "लिखसि", "लिखति", "लिखन्ति"],
+          "correct": 2,
+          "explanation": "'लिखति' (likhati) means 'She writes'."
+        },
+        {
+          "id": 3,
+          "question": "How do you say 'They play'?",
+          "options": ["क्रीडामि", "क्रीडसि", "क्रीडति", "क्रीडन्ति"],
+          "correct": 3,
+          "explanation": "'क्रीडन्ति' (krīḍanti) means 'They play'."
+        }
+      ]
+    }
+  ]
+}

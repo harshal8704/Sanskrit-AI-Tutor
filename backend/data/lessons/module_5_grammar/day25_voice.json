@@ -1,0 +1,59 @@
+{
+  "id": "day25_voice",
+  "title": "📖 Active & Passive Voice (कर्तृवाच्यम् / कर्मवाच्यम्)",
+  "description": "Learn to transform sentences between active and passive voice.",
+  "level": "intermediate",
+  "module": "grammar",
+  "difficulty": 4,
+  "prerequisites": ["day24_dvandva"],
+  "estimated_time": 30,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 What is Voice?",
+      "content": "Voice tells us whether the subject is doing the action (active) or receiving the action (passive).",
+      "comparison": [
+        {
+          "voice": "Active (कर्तृवाच्यम्)",
+          "example": "रामः फलं खादति।",
+          "translation": "Rama eats the fruit.",
+          "note": "Subject (Rama) does the action"
+        },
+        {
+          "voice": "Passive (कर्मवाच्यम्)",
+          "example": "रामेण फलं खाद्यते।",
+          "translation": "The fruit is eaten by Rama.",
+          "note": "Subject (fruit) receives the action"
+        }
+      ],
+      "how_to_form_passive": {
+        "rule": "Add 'य' to the verb root + appropriate endings",
+        "examples": [
+          {"active": "पठति (reads)", "passive": "पठ्यते (is read)"},
+          {"active": "खादति (eats)", "passive": "खाद्यते (is eaten)"},
+          {"active": "गच्छति (goes)", "passive": "गम्यते (is gone)"}
+        ]
+      }
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Active/Passive Quiz",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What is the passive form of 'पठति'?",
+          "options": ["पठति", "पठ्यते", "पठिष्यति", "अपठत्"],
+          "correct": 1,
+          "explanation": "'पठ्यते' is the passive form of 'पठति' (is read)."
+        },
+        {
+          "id": 2,
+          "question": "Translate: 'रामेण फलं खाद्यते।'",
+          "options": ["Rama eats the fruit.", "The fruit eats Rama.", "The fruit is eaten by Rama.", "Rama is eaten by the fruit."],
+          "correct": 2,
+          "explanation": "'रामेण फलं खाद्यते।' means 'The fruit is eaten by Rama.'"
+        }
+      ]
+    }
+  ]
+}

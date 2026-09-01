@@ -1,0 +1,58 @@
+{
+  "id": "day14_family",
+  "title": "👨‍👩‍👧‍👦 Family & Relationships",
+  "description": "Learn Sanskrit words for family members.",
+  "level": "beginner",
+  "module": "nouns",
+  "difficulty": 2,
+  "prerequisites": ["day13_nouns_neuter"],
+  "estimated_time": 20,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 Family Words",
+      "content": "These are the most important family words in Sanskrit:",
+      "family_members": [
+        {"sanskrit": "माता", "transliteration": "Mātā", "english": "Mother", "gender": "feminine"},
+        {"sanskrit": "पिता", "transliteration": "Pitā", "english": "Father", "gender": "masculine"},
+        {"sanskrit": "भ्राता", "transliteration": "Bhrātā", "english": "Brother", "gender": "masculine"},
+        {"sanskrit": "भगिनी", "transliteration": "Bhaginī", "english": "Sister", "gender": "feminine"},
+        {"sanskrit": "पुत्रः", "transliteration": "Putraḥ", "english": "Son", "gender": "masculine"},
+        {"sanskrit": "पुत्री", "transliteration": "Putrī", "english": "Daughter", "gender": "feminine"},
+        {"sanskrit": "पितामहः", "transliteration": "Pitāmahaḥ", "english": "Grandfather (paternal)", "gender": "masculine"},
+        {"sanskrit": "पितामही", "transliteration": "Pitāmahī", "english": "Grandmother (paternal)", "gender": "feminine"},
+        {"sanskrit": "मातुलः", "transliteration": "Mātulaḥ", "english": "Uncle (maternal)", "gender": "masculine"},
+        {"sanskrit": "पतिः", "transliteration": "Patiḥ", "english": "Husband", "gender": "masculine"},
+        {"sanskrit": "पत्नी", "transliteration": "Patnī", "english": "Wife", "gender": "feminine"},
+        {"sanskrit": "मित्रम्", "transliteration": "Mitram", "english": "Friend", "gender": "neuter"}
+      ]
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Family Words Quiz",
+      "questions": [
+        {
+          "id": 1,
+          "english": "Mother",
+          "options": ["माता", "पिता", "भ्राता", "भगिनी"],
+          "correct": 0,
+          "explanation": "'माता' (Mātā) means 'Mother'."
+        },
+        {
+          "id": 2,
+          "english": "Brother",
+          "options": ["भगिनी", "भ्राता", "पुत्रः", "पुत्री"],
+          "correct": 1,
+          "explanation": "'भ्राता' (Bhrātā) means 'Brother'."
+        },
+        {
+          "id": 3,
+          "english": "Friend",
+          "options": ["मित्रम्", "पतिः", "पत्नी", "मातुलः"],
+          "correct": 0,
+          "explanation": "'मित्रम्' (Mitram) means 'Friend'."
+        }
+      ]
+    }
+  ]
+}

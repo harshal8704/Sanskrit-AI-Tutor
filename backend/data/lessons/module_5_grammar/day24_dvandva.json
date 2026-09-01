@@ -1,0 +1,54 @@
+{
+  "id": "day24_dvandva",
+  "title": "📖 Compound Words - Dvandva (द्वन्द्व समासः)",
+  "description": "Learn to form and understand Dvandva compounds (coordinate compounds).",
+  "level": "intermediate",
+  "module": "grammar",
+  "difficulty": 4,
+  "prerequisites": ["day23_tatpurusha"],
+  "estimated_time": 25,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 What is Dvandva?",
+      "content": "Dvandva means 'pair'. It's a compound where all elements are equally important (like 'and' in English).",
+      "rules": [
+        {
+          "name": "Two Items",
+          "example": "राम + कृष्ण → रामकृष्णौ (Rama and Krishna)",
+          "meaning": "Two nouns joined together"
+        },
+        {
+          "name": "Multiple Items",
+          "example": "राम + लक्ष्मण + सीता → रामलक्ष्मणसीताः (Rama, Lakshmana, and Sita)",
+          "meaning": "More than two nouns joined"
+        }
+      ],
+      "examples": [
+        {"compound": "सीतारामौ", "breakdown": "सीता च रामः च (Sita and Rama)"},
+        {"compound": "देवर्षिपितृभूतानि", "breakdown": "देवाः ऋषयः पितरः भूतानि च (gods, sages, ancestors, and beings)"},
+        {"compound": "गुणदोषौ", "breakdown": "गुणः च दोषः च (merits and demerits)"}
+      ]
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Dvandva Quiz",
+      "questions": [
+        {
+          "id": 1,
+          "question": "What does 'सीतारामौ' mean?",
+          "options": ["Sita and Rama", "Sita's Rama", "Rama's Sita", "Sita or Rama"],
+          "correct": 0,
+          "explanation": "'सीतारामौ' means 'Sita and Rama'."
+        },
+        {
+          "id": 2,
+          "question": "What is the compound for 'merits and demerits'?",
+          "options": ["गुणदोषौ", "सीतारामौ", "राजपुत्रः", "गृहस्वामी"],
+          "correct": 0,
+          "explanation": "'गुणदोषौ' = गुणः च दोषः च (merits and demerits)."
+        }
+      ]
+    }
+  ]
+}

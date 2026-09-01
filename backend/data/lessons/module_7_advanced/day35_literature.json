@@ -1,0 +1,69 @@
+{
+  "id": "day35_literature",
+  "title": "📚 Classical Sanskrit Literature",
+  "description": "Introduction to reading classical Sanskrit texts.",
+  "level": "advanced",
+  "module": "advanced",
+  "difficulty": 5,
+  "prerequisites": ["day34_prosody"],
+  "estimated_time": 30,
+  "sections": [
+    {
+      "type": "info",
+      "title": "📖 Bhagavad Gita - Chapter 1, Verse 1",
+      "content": "Let's read the opening verse of the Bhagavad Gita, one of the most famous Sanskrit texts.",
+      "verse": {
+        "sanskrit": "धृतराष्ट्र उवाच — धर्मक्षेत्रे कुरुक्षेत्रे समवेता युयुत्सवः। मामकाः पाण्डवाश्चैव किमकुर्वत सञ्जय।।",
+        "transliteration": "Dhṛtarāṣṭra uvāca — dharmakṣetre kurukṣetre samavetā yuyutsavaḥ। māmakāḥ pāṇḍavāścaiva kimakurvata sañjaya।।",
+        "translation": "Dhritarashtra said: O Sanjaya, what did my sons and the Pandavas do when they assembled together on the sacred field of Kurukshetra, eager for battle?",
+        "vocabulary": [
+          {"word": "धृतराष्ट्र", "meaning": "Dhritarashtra (the blind king)"},
+          {"word": "उवाच", "meaning": "said"},
+          {"word": "धर्मक्षेत्रे", "meaning": "on the sacred field"},
+          {"word": "समवेता", "meaning": "assembled"},
+          {"word": "युयुत्सवः", "meaning": "eager for battle"},
+          {"word": "मामकाः", "meaning": "my sons/people"},
+          {"word": "पाण्डवाः", "meaning": "Pandavas (sons of Pandu)"},
+          {"word": "सञ्जय", "meaning": "Sanjaya (the narrator)"}
+        ]
+      }
+    },
+    {
+      "type": "info",
+      "title": "📖 Ramayana - Valmiki's Opening",
+      "content": "Here is the opening verse of the Ramayana, the epic of Rama.",
+      "verse": {
+        "sanskrit": "तपःस्वाध्यायनिरतं तपस्वी वाग्विदां वरम्। नारदं परिपप्रच्छ वाल्मीकिर्मुनिपुङ्गवम्।।",
+        "transliteration": "Tapaḥsvādhyāyanirataṃ tapasvī vāgvidāṃ varam। Nāradaṃ paripapraccha Vālmīkir munipuṅgavam।।",
+        "translation": "The great sage Valmiki, who was devoted to penance and study, asked the great sage Narada, who was the best among those who know the truth and words."
+      }
+    },
+    {
+      "type": "quiz",
+      "title": "🎯 Literature Quiz",
+      "questions": [
+        {
+          "id": 1,
+          "question": "Who is speaking in the first verse of the Bhagavad Gita?",
+          "options": ["Krishna", "Arjuna", "Dhritarashtra", "Sanjaya"],
+          "correct": 2,
+          "explanation": "Dhritarashtra speaks the first verse, asking Sanjaya what happened on the battlefield."
+        },
+        {
+          "id": 2,
+          "question": "What is the field called in the Bhagavad Gita's first verse?",
+          "options": ["Kurukshetra", "Dharma", "Kuru", "Sanjaya"],
+          "correct": 0,
+          "explanation": "The field is called 'Kurukshetra'."
+        },
+        {
+          "id": 3,
+          "question": "Who asked the question in the Ramayana opening?",
+          "options": ["Rama", "Sita", "Valmiki", "Narada"],
+          "correct": 2,
+          "explanation": "Valmiki asked Narada the question."
+        }
+      ]
+    }
+  ]
+}
