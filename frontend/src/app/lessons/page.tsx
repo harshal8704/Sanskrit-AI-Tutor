@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import Sidebar from "@/components/Sidebar";
@@ -13,7 +13,12 @@ import {
   Lock,
   ChevronLeft,
   ChevronRight,
-  Sparkles
+  Sparkles,
+  GraduationCap,
+  Award,
+  Target,
+  Menu,
+  X
 } from "lucide-react";
 import GreetingsLesson from "@/components/lessons/GreetingsLesson";
 import NumbersLesson from "@/components/lessons/NumbersLesson";
@@ -34,7 +39,71 @@ import VoiceLesson from "@/components/lessons/VoiceLesson";
 import IndeclinablesLesson from "@/components/lessons/IndeclinablesLesson";
 import ParticiplesLesson from "@/components/lessons/ParticiplesLesson";
 import ReadingCompositionLesson from "@/components/lessons/ReadingCompositionLesson";
+import Samasa1Lesson from "@/components/lessons/Samasa1Lesson";
+import Samasa2Lesson from "@/components/lessons/Samasa2Lesson";
+import Participles2Lesson from "@/components/lessons/Participles2Lesson";
+import StriPratyayaLesson from "@/components/lessons/StriPratyayaLesson";
+import ChandasLesson from "@/components/lessons/ChandasLesson";
 
+// ─── Lesson Component Registry ────────────────────────────
+const LESSON_COMPONENTS: Record<number, React.ComponentType<{ onBack: () => void }>> = {
+  2: GreetingsLesson,
+  3: NumbersLesson,
+  4: SelfIntroLesson,
+  5: PronounsLesson,
+  6: VerbsLesson,
+  7: NounsLesson,
+  8: FamilyLesson,
+  9: QuestionWordsLesson,
+  10: TimeLesson,
+  11: VibhaktiLesson,
+  12: SandhiLesson,
+  13: TensesLesson,
+  14: MoodsLesson,
+  15: PronounsExtendedLesson,
+  16: UpasargaLesson,
+  17: VoiceLesson,
+  18: IndeclinablesLesson,
+  19: ParticiplesLesson,
+  20: ReadingCompositionLesson,
+  21: Samasa1Lesson,
+  22: Samasa2Lesson,
+  23: Participles2Lesson,
+  24: StriPratyayaLesson,
+  25: ChandasLesson,
+};
+
+// Level configuration
+const LEVEL_CONFIG = {
+  beginner: {
+    label: "Beginner",
+    icon: GraduationCap,
+    color: "#3B82F6",
+    bgColor: "rgba(59, 130, 246, 0.08)",
+    description: "Foundations of Sanskrit script, basic vocabulary, and simple sentence construction."
+  },
+  intermediate: {
+    label: "Intermediate",
+    icon: Target,
+    color: "#8B5CF6",
+    bgColor: "rgba(139, 92, 246, 0.08)",
+    description: "Systematic grammar: declensions, sandhi, tenses, moods, and extended vocabulary."
+  },
+  advanced: {
+    label: "Advanced",
+    icon: Award,
+    color: "#10B981",
+    bgColor: "rgba(16, 185, 129, 0.08)",
+    description: "Literary Sanskrit: compounds, advanced participles, feminine formation, and prosody."
+  }
+};
+
+const getLevelBadge = (level: string) => {
+  const config = LEVEL_CONFIG[level as keyof typeof LEVEL_CONFIG];
+  return config || LEVEL_CONFIG.beginner;
+};
+
+// ─── Alphabet Flashcards (Lesson 1) ───────────────────────
 const AlphabetFlashcards = () => {
   const [vowelImages, setVowelImages] = useState<string[]>([]);
   const [consonantImages, setConsonantImages] = useState<string[]>([]);
@@ -70,12 +139,11 @@ const AlphabetFlashcards = () => {
     <div className="flex flex-col gap-12 mt-12 pb-20 max-w-6xl mx-auto">
       <AnimatePresence>
         <motion.div
-          key="vowels-panel"
+          key="vowels-section"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           className="zen-card overflow-hidden border border-[var(--border-soft)] shadow-2xl relative"
         >
-          {/* Header Strip */}
           <div className="bg-gradient-to-r from-[var(--primary)] to-transparent p-10 flex items-center justify-between border-b border-[var(--border-soft)]">
             <div className="flex items-center gap-6">
               <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center text-white font-bold text-4xl shadow-xl ring-1 ring-white/30">अ</div>
@@ -85,7 +153,6 @@ const AlphabetFlashcards = () => {
               </div>
             </div>
           </div>
-
           <div className="p-10 bg-[var(--bg-card)]">
             {vowelImages.length > 0 ? (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -103,7 +170,6 @@ const AlphabetFlashcards = () => {
                       className="w-full h-auto rounded-2xl shadow-lg group-hover:scale-[1.01] transition-transform duration-500"
                       style={{ maxHeight: '600px', objectFit: 'contain' }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[rgba(var(--primary-rgb),0.1)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[32px] pointer-events-none"></div>
                   </motion.div>
                 ))}
               </div>
@@ -116,13 +182,12 @@ const AlphabetFlashcards = () => {
         </motion.div>
 
         <motion.div
-          key="consonants-panel"
+          key="consonants-section"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
           className="zen-card overflow-hidden border border-[var(--border-soft)] shadow-2xl relative"
         >
-          {/* Header Strip */}
           <div className="bg-gradient-to-r from-[var(--primary)] to-transparent p-10 flex items-center justify-between border-b border-[var(--border-soft)]">
             <div className="flex items-center gap-6">
               <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center text-white font-bold text-4xl shadow-xl ring-1 ring-white/30">क</div>
@@ -132,7 +197,6 @@ const AlphabetFlashcards = () => {
               </div>
             </div>
           </div>
-
           <div className="p-10 bg-[var(--bg-card)]">
             {consonantImages.length > 0 ? (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
@@ -150,13 +214,12 @@ const AlphabetFlashcards = () => {
                       className="w-full h-auto rounded-2xl shadow-lg group-hover:scale-[1.01] transition-transform duration-500"
                       style={{ maxHeight: '600px', objectFit: 'contain' }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[rgba(var(--primary-rgb),0.1)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[32px] pointer-events-none"></div>
                   </motion.div>
                 ))}
               </div>
             ) : (
               <div className="p-32 text-center bg-[var(--bg-main)] rounded-[40px] border-4 border-dashed border-[var(--border-soft)]">
-                <p className="text-[var(--text-light)] text-xl font-bold italic tracking-wide">Consonant charts currently being prepared by the acharya...</p>
+                <p className="text-[var(--text-light)] text-xl font-bold italic tracking-wide">Consonant charts currently being prepared...</p>
               </div>
             )}
           </div>
@@ -166,11 +229,15 @@ const AlphabetFlashcards = () => {
   );
 };
 
+// ─── Main Lessons Page ────────────────────────────────────
 export default function Lessons() {
   const [user, setUser] = useState<any>(null);
   const [lessons, setLessons] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedLesson, setSelectedLesson] = useState<any>(null);
+  const [toast, setToast] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeLevel, setActiveLevel] = useState<string>("all");
   const router = useRouter();
 
   useEffect(() => {
@@ -205,6 +272,15 @@ export default function Lessons() {
     fetchLessons();
   }, [router]);
 
+  const showToast = useCallback((message: string) => {
+    setToast(message);
+    setTimeout(() => setToast(null), 3000);
+  }, []);
+
+  const handleMarkComplete = useCallback(() => {
+    showToast("✨ Lesson marked as complete! +50 XP");
+  }, [showToast]);
+
   const handleNext = () => {
     const currentIndex = lessons.findIndex(l => l.id === selectedLesson.id);
     if (currentIndex < lessons.length - 1) {
@@ -219,77 +295,106 @@ export default function Lessons() {
     }
   };
 
-  if (!user || loading) return <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center' }}>
-    <motion.div animate={{ opacity: [0, 1, 0] }} transition={{ repeat: Infinity, duration: 1.5 }} style={{ fontSize: '1.2rem' }}>Preparing Curriculum...</motion.div>
-  </div>;
+  // Group lessons by level
+  const groupedLessons = lessons.reduce((acc: any, lesson: any) => {
+    const level = lesson.level || 'beginner';
+    if (!acc[level]) acc[level] = [];
+    acc[level].push(lesson);
+    return acc;
+  }, {});
 
+  Object.keys(groupedLessons).forEach(level => {
+    groupedLessons[level].sort((a: any, b: any) => a.id - b.id);
+  });
+
+  const getFilteredLessons = () => {
+    if (activeLevel === "all") return lessons;
+    return lessons.filter(l => l.level === activeLevel);
+  };
+
+  const getCompletionCount = (level: string) => {
+    const levelLessons = lessons.filter(l => l.level === level);
+    const completed = levelLessons.filter(l => l.id <= 10); // Mock progress
+    return { total: levelLessons.length, completed: completed.length };
+  };
+
+  if (!user || loading) return (
+    <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-main)' }}>
+      <motion.div
+        animate={{ opacity: [0.4, 1, 0.4], scale: [0.98, 1.02, 0.98] }}
+        transition={{ repeat: Infinity, duration: 2 }}
+        style={{ fontSize: '1.2rem', color: 'var(--text-dim)', fontWeight: 600 }}
+      >
+        Preparing Curriculum...
+      </motion.div>
+    </div>
+  );
+
+  // ─── Lesson Detail View ─────────────────────────────────
   if (selectedLesson) {
+    const LessonComponent = LESSON_COMPONENTS[selectedLesson.id];
+    const hasCustomComponent = selectedLesson.id === 1 || !!LessonComponent;
+    const currentIndex = lessons.findIndex(l => l.id === selectedLesson.id);
+    const isFirst = currentIndex === 0;
+    const isLast = currentIndex === lessons.length - 1;
+
     return (
       <div className="page-layout">
-        <Sidebar user={user} />
+        {/* Mobile menu button */}
+        <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+        <div className={`sidebar-overlay ${mobileMenuOpen ? 'open' : ''}`} onClick={() => setMobileMenuOpen(false)} />
+        <div className={mobileMenuOpen ? 'open' : ''} style={mobileMenuOpen ? {} : {}}>
+          <Sidebar user={user} />
+        </div>
         <main className="main-content">
-          <button className="flex items-center gap-2 mb-8" style={{ background: 'none', border: 'none', color: 'var(--text-dim)', cursor: 'pointer', fontWeight: '600' }} onClick={() => setSelectedLesson(null)}>
+          <button className="flex items-center gap-2 mb-8" style={{ background: 'none', border: 'none', color: 'var(--text-dim)', cursor: 'pointer', fontWeight: '600', fontFamily: 'inherit', fontSize: '0.95rem' }} onClick={() => setSelectedLesson(null)}>
             <ArrowLeft size={18} /> Back to Modules
           </button>
 
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="zen-card"
-            style={{ padding: '60px', maxWidth: '1000px', margin: '0 auto' }}
+            className="zen-card-static"
+            style={{ padding: '48px', maxWidth: '1000px', margin: '0 auto' }}
           >
-            <span style={{ background: 'rgba(192, 90, 43, 0.08)', color: 'var(--primary)', padding: '6px 14px', borderRadius: '10px', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
-              {selectedLesson.level} Path
-            </span>
-            <h1 style={{ fontSize: '3rem', marginTop: '1.5rem', marginBottom: '1rem' }}>{selectedLesson.title}</h1>
-            <div className="flex" style={{ gap: '20px', color: 'var(--text-light)', marginBottom: '40px' }}>
-              <div className="flex items-center gap-1"><Clock size={16} /> {selectedLesson.duration} minutes remaining</div>
+            {/* Level badge + difficulty */}
+            <div className="flex items-center gap-3" style={{ marginBottom: '16px' }}>
+              <span style={{
+                background: selectedLesson.level === 'beginner' ? 'rgba(39, 174, 96, 0.08)' : selectedLesson.level === 'advanced' ? 'rgba(16, 185, 129, 0.08)' : 'rgba(192, 90, 43, 0.08)',
+                color: selectedLesson.level === 'beginner' ? '#27ae60' : selectedLesson.level === 'advanced' ? '#10B981' : 'var(--primary)',
+                padding: '6px 14px',
+                borderRadius: '10px',
+                fontSize: '0.8rem',
+                fontWeight: '700',
+                textTransform: 'uppercase',
+                letterSpacing: '1px'
+              }}>
+                {selectedLesson.level} Path
+              </span>
+              {selectedLesson.difficulty && (
+                <div className="difficulty-bar">
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <div key={i} className={`difficulty-dot ${i < selectedLesson.difficulty ? 'active' : ''}`} />
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>{selectedLesson.title}</h1>
+            <div className="flex flex-wrap" style={{ gap: '20px', color: 'var(--text-light)', marginBottom: '32px' }}>
+              <div className="flex items-center gap-1"><Clock size={16} /> {selectedLesson.duration} minutes</div>
               <div className="flex items-center gap-1"><BookOpen size={16} /> Concept Study</div>
             </div>
 
-            <div style={{ fontSize: '1.2rem', lineHeight: '2', color: 'var(--text-main)', padding: '40px', background: 'var(--bg-main)', borderRadius: '24px', marginBottom: '40px' }}>
-              {selectedLesson.id !== 1 && selectedLesson.id !== 2 && selectedLesson.id !== 3 && selectedLesson.id !== 4 && selectedLesson.id !== 5 && selectedLesson.id !== 6 && selectedLesson.id !== 7 && selectedLesson.id !== 8 && selectedLesson.id !== 9 && selectedLesson.id !== 10 && selectedLesson.id !== 11 && selectedLesson.id !== 12 && selectedLesson.id !== 13 && selectedLesson.id !== 14 && selectedLesson.id !== 15 && selectedLesson.id !== 16 && selectedLesson.id !== 17 && selectedLesson.id !== 18 && selectedLesson.id !== 19 && selectedLesson.id !== 20 && selectedLesson.content}
+            <div style={{ fontSize: '1.15rem', lineHeight: '2', color: 'var(--text-main)', padding: '32px', background: 'var(--bg-main)', borderRadius: '20px', marginBottom: '32px' }}>
+              {!hasCustomComponent && selectedLesson.content}
 
               {selectedLesson.id === 1 ? (
                 <AlphabetFlashcards />
-              ) : selectedLesson.id === 2 ? (
-                <GreetingsLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 3 ? (
-                <NumbersLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 4 ? (
-                <SelfIntroLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 5 ? (
-                <PronounsLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 6 ? (
-                <VerbsLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 7 ? (
-                <NounsLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 8 ? (
-                <FamilyLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 9 ? (
-                <QuestionWordsLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 10 ? (
-                <TimeLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 20 ? (
-                <ReadingCompositionLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 19 ? (
-                <ParticiplesLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 18 ? (
-                <IndeclinablesLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 17 ? (
-                <VoiceLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 16 ? (
-                <UpasargaLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 15 ? (
-                <PronounsExtendedLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 14 ? (
-                <MoodsLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 13 ? (
-                <TensesLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 12 ? (
-                <SandhiLesson onBack={() => setSelectedLesson(null)} />
-              ) : selectedLesson.id === 11 ? (
-                <VibhaktiLesson onBack={() => setSelectedLesson(null)} />
+              ) : LessonComponent ? (
+                <LessonComponent onBack={() => setSelectedLesson(null)} />
               ) : (
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -299,45 +404,61 @@ export default function Lessons() {
                   style={{ fontSize: '3rem', textAlign: 'center', marginTop: '60px', color: 'var(--primary)' }}
                 >
                   {"सत्यं वद। धर्मं चर।"}
+                  <p style={{ fontSize: '1.2rem', color: 'var(--text-dim)', marginTop: '20px' }}>
+                    Advanced lesson content coming soon!
+                  </p>
                 </motion.div>
               )}
             </div>
 
-            <div className="flex justify-between items-center mt-12">
+            <div className="flex justify-between items-center flex-wrap gap-4" style={{ marginTop: '32px' }}>
               <div className="flex gap-3">
                 <button
                   className="btn-secondary"
                   onClick={handlePrev}
-                  disabled={lessons.findIndex(l => l.id === selectedLesson.id) === 0}
-                  style={{ opacity: lessons.findIndex(l => l.id === selectedLesson.id) === 0 ? 0.5 : 1 }}
+                  disabled={isFirst}
                 >
                   <ChevronLeft size={18} /> Previous
                 </button>
                 <button
                   className="btn-secondary"
                   onClick={handleNext}
-                  disabled={lessons.findIndex(l => l.id === selectedLesson.id) === lessons.length - 1}
-                  style={{ opacity: lessons.findIndex(l => l.id === selectedLesson.id) === lessons.length - 1 ? 0.5 : 1 }}
+                  disabled={isLast}
                 >
                   Next <ChevronRight size={18} />
                 </button>
               </div>
 
-              <div className="flex gap-4">
-                <button className="btn-secondary">Download PDF</button>
-                <button className="btn-primary" onClick={() => alert("Quiz manifest arriving soon!")}>
-                  Mark as Complete <CheckCircle2 size={18} />
-                </button>
-              </div>
+              <button className="btn-primary" onClick={handleMarkComplete}>
+                Mark as Complete <CheckCircle2 size={18} />
+              </button>
             </div>
           </motion.div>
         </main>
+
+        <AnimatePresence>
+          {toast && (
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.95 }}
+              className="toast toast-success"
+            >
+              <CheckCircle2 size={20} /> {toast}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     );
   }
 
+  // ─── Lesson Grid View ───────────────────────────────────
   return (
     <div className="page-layout">
+      <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+        {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+      </button>
+      <div className={`sidebar-overlay ${mobileMenuOpen ? 'open' : ''}`} onClick={() => setMobileMenuOpen(false)} />
       <Sidebar user={user} />
 
       <main className="main-content">
@@ -346,51 +467,263 @@ export default function Lessons() {
           <p style={{ color: 'var(--text-dim)' }}>Select a step in your journey. We recommend starting with the foundations.</p>
         </header>
 
-        <div className="grid" style={{ gridTemplateColumns: 'repeat(2, 1fr)', gap: '30px' }}>
-          {lessons.map((lesson, i) => (
-            <motion.div
-              key={lesson.id}
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={{ y: -5 }}
-              className="zen-card"
-              style={{ padding: '34px', cursor: 'pointer' }}
-              onClick={() => setSelectedLesson(lesson)}
-            >
-              <div className="flex justify-between items-start mb-6">
-                <span style={{
-                  fontSize: '0.75rem',
-                  padding: '5px 12px',
-                  borderRadius: '10px',
-                  backgroundColor: lesson.level === 'beginner' ? 'rgba(39, 174, 96, 0.08)' : 'rgba(192, 90, 43, 0.08)',
-                  color: lesson.level === 'beginner' ? '#27ae60' : 'var(--primary)',
-                  fontWeight: '700',
-                  textTransform: 'uppercase'
-                }}>
-                  {lesson.level}
-                </span>
-                <span style={{ color: 'var(--text-light)', fontSize: '0.85rem' }}>⏱️ {lesson.duration}m</span>
-              </div>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '12px' }}>{lesson.title}</h3>
-              <p style={{ color: 'var(--text-dim)', marginBottom: '30px', fontSize: '0.95rem', height: '4.8em', overflow: 'hidden' }}>{lesson.description}</p>
-
-              <div className="flex items-center gap-2" style={{ color: 'var(--primary)', fontWeight: '700', fontSize: '0.9rem' }}>
-                <Play size={16} fill="var(--primary)" /> Resume Lesson
-              </div>
-            </motion.div>
-          ))}
-
-          <div
-            className="zen-card flex items-center justify-center"
-            style={{ border: '2px dashed var(--border-soft)', background: 'transparent', opacity: 0.6 }}
+        {/* Level Filter Tabs */}
+        <div className="flex gap-3" style={{ marginBottom: '40px', flexWrap: 'wrap' }}>
+          <button
+            onClick={() => setActiveLevel("all")}
+            style={{
+              padding: '10px 24px',
+              borderRadius: '100px',
+              background: activeLevel === "all" ? 'var(--primary)' : 'var(--bg-card)',
+              color: activeLevel === "all" ? '#fff' : 'var(--text-dim)',
+              border: '1px solid var(--border-soft)',
+              fontWeight: 700,
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              fontSize: '0.9rem',
+            }}
           >
-            <div style={{ textAlign: 'center', padding: '40px' }}>
-              <Lock size={24} style={{ marginBottom: '16px', color: 'var(--text-light)' }} />
-              <p style={{ color: 'var(--text-light)', fontSize: '0.9rem' }}>Advanced modules unlocking as you progress...</p>
-            </div>
-          </div>
+            All ({lessons.length})
+          </button>
+          {Object.entries(LEVEL_CONFIG).map(([key, config]) => {
+            const count = lessons.filter(l => l.level === key).length;
+            const isActive = activeLevel === key;
+            return (
+              <button
+                key={key}
+                onClick={() => setActiveLevel(isActive ? "all" : key)}
+                style={{
+                  padding: '10px 24px',
+                  borderRadius: '100px',
+                  background: isActive ? config.color : 'var(--bg-card)',
+                  color: isActive ? '#fff' : 'var(--text-dim)',
+                  border: '1px solid var(--border-soft)',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  fontSize: '0.9rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  boxShadow: isActive ? `0 4px 16px ${config.color}44` : 'none',
+                }}
+              >
+                <config.icon size={16} />
+                {config.label} ({count})
+              </button>
+            );
+          })}
         </div>
+
+        {/* Level Sections */}
+        {activeLevel === "all" ? (
+          Object.entries(LEVEL_CONFIG).map(([levelKey, config]) => {
+            const levelLessons = groupedLessons[levelKey] || [];
+            if (levelLessons.length === 0) return null;
+            const { total, completed } = getCompletionCount(levelKey);
+            const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+            return (
+              <motion.div
+                key={levelKey}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{ marginBottom: '48px' }}
+              >
+                <div className="flex items-center justify-between flex-wrap gap-4 mb-4">
+                  <div className="flex items-center gap-3">
+                    <div style={{
+                      padding: '10px',
+                      borderRadius: '14px',
+                      background: config.bgColor,
+                      color: config.color,
+                    }}>
+                      <config.icon size={24} />
+                    </div>
+                    <div>
+                      <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-main)' }}>
+                        {config.label} Level
+                      </h2>
+                      <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)', maxWidth: '500px' }}>
+                        {config.description}
+                      </p>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-dim)' }}>
+                      {completed}/{total} Complete
+                    </div>
+                    <div style={{
+                      width: '120px',
+                      height: '6px',
+                      background: 'var(--border-soft)',
+                      borderRadius: '4px',
+                      marginTop: '4px',
+                      overflow: 'hidden',
+                    }}>
+                      <div style={{
+                        width: `${progress}%`,
+                        height: '100%',
+                        background: config.color,
+                        borderRadius: '4px',
+                        transition: 'width 0.6s ease',
+                      }} />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '24px' }}>
+                  {levelLessons.map((lesson: any, i: number) => (
+                    <motion.div
+                      key={lesson.id}
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.05 }}
+                      whileHover={{ y: -6, scale: 1.01 }}
+                      className="zen-card"
+                      style={{ padding: '0', cursor: 'pointer', overflow: 'hidden', borderLeft: `4px solid ${config.color}` }}
+                      onClick={() => setSelectedLesson(lesson)}
+                    >
+                      <div style={{ padding: '28px' }}>
+                        <div className="flex justify-between items-start mb-4">
+                          <div className="flex items-center gap-2">
+                            <span style={{
+                              fontSize: '0.65rem',
+                              padding: '3px 10px',
+                              borderRadius: '8px',
+                              background: config.bgColor,
+                              color: config.color,
+                              fontWeight: '700',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.5px',
+                            }}>
+                              {config.label}
+                            </span>
+                            <span style={{ color: 'var(--text-light)', fontSize: '0.8rem' }}>
+                              ⏱️ {lesson.duration}m
+                            </span>
+                          </div>
+                          <span style={{
+                            fontSize: '0.7rem',
+                            color: 'var(--text-light)',
+                            fontWeight: '600',
+                          }}>
+                            #{lesson.id}
+                          </span>
+                        </div>
+                        <h3 style={{ fontSize: '1.3rem', marginBottom: '8px', color: 'var(--text-main)' }}>
+                          {lesson.title}
+                        </h3>
+                        <p style={{ color: 'var(--text-dim)', fontSize: '0.9rem', lineHeight: '1.5', height: '3.6em', overflow: 'hidden' }}>
+                          {lesson.description}
+                        </p>
+                        
+                        <div className="flex justify-between items-center mt-4">
+                          {lesson.difficulty && (
+                            <div className="difficulty-bar">
+                              {Array.from({ length: 10 }).map((_, i) => (
+                                <div key={i} className={`difficulty-dot ${i < lesson.difficulty ? 'active' : ''}`} />
+                              ))}
+                            </div>
+                          )}
+                          <div className="flex items-center gap-2" style={{ color: config.color, fontWeight: '700', fontSize: '0.85rem' }}>
+                            <Play size={16} fill={config.color} /> Start Lesson
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                  
+                  {/* Advanced/Coming Soon Locks */}
+                  {levelKey === 'advanced' && lessons.length <= 25 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="zen-card-static flex items-center justify-center"
+                      style={{ border: '2px dashed var(--border-soft)', background: 'transparent', minHeight: '200px' }}
+                    >
+                      <div style={{ textAlign: 'center', padding: '40px' }}>
+                        <Lock size={28} style={{ marginBottom: '16px', color: 'var(--text-light)', opacity: 0.5 }} />
+                        <p style={{ color: 'var(--text-light)', fontSize: '0.9rem', fontWeight: 600 }}>More advanced modules in development...</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
+              </motion.div>
+            );
+          })
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '24px' }}>
+              {getFilteredLessons().map((lesson: any, i: number) => {
+                const config = getLevelBadge(lesson.level);
+                return (
+                  <motion.div
+                    key={lesson.id}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                    whileHover={{ y: -6, scale: 1.01 }}
+                    className="zen-card"
+                    style={{ padding: '0', cursor: 'pointer', overflow: 'hidden', borderLeft: `4px solid ${config.color}` }}
+                    onClick={() => setSelectedLesson(lesson)}
+                  >
+                    <div style={{ padding: '28px' }}>
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="flex items-center gap-2">
+                          <span style={{
+                            fontSize: '0.65rem',
+                            padding: '3px 10px',
+                            borderRadius: '8px',
+                            background: config.bgColor,
+                            color: config.color,
+                            fontWeight: '700',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.5px',
+                          }}>
+                            {config.label}
+                          </span>
+                          <span style={{ color: 'var(--text-light)', fontSize: '0.8rem' }}>
+                            ⏱️ {lesson.duration}m
+                          </span>
+                        </div>
+                        <span style={{
+                          fontSize: '0.7rem',
+                          color: 'var(--text-light)',
+                          fontWeight: '600',
+                        }}>
+                          #{lesson.id}
+                        </span>
+                      </div>
+                      <h3 style={{ fontSize: '1.3rem', marginBottom: '8px', color: 'var(--text-main)' }}>
+                        {lesson.title}
+                      </h3>
+                      <p style={{ color: 'var(--text-dim)', fontSize: '0.9rem', lineHeight: '1.5', height: '3.6em', overflow: 'hidden' }}>
+                        {lesson.description}
+                      </p>
+                      
+                      <div className="flex justify-between items-center mt-4">
+                        {lesson.difficulty && (
+                          <div className="difficulty-bar">
+                            {Array.from({ length: 10 }).map((_, i) => (
+                              <div key={i} className={`difficulty-dot ${i < lesson.difficulty ? 'active' : ''}`} />
+                            ))}
+                          </div>
+                        )}
+                        <div className="flex items-center gap-2" style={{ color: config.color, fontWeight: '700', fontSize: '0.85rem' }}>
+                          <Play size={16} fill={config.color} /> Start Lesson
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
       </main>
     </div>
   );

@@ -46,6 +46,11 @@ export const api = {
     getIndeclinables: () => apiRequest('/api/lessons/indeclinables'),
     getParticiples: () => apiRequest('/api/lessons/participles'),
     getReadingComposition: () => apiRequest('/api/lessons/reading-composition'),
+    getSamasa1: () => apiRequest('/api/lessons/samasa1'),
+    getSamasa2: () => apiRequest('/api/lessons/samasa2'),
+    getParticiples2: () => apiRequest('/api/lessons/participles2'),
+    getStriPratyaya: () => apiRequest('/api/lessons/stri-pratyaya'),
+    getChandas: () => apiRequest('/api/lessons/chandas'),
   },
   user: {
     getProgress: (username: string) => apiRequest(`/progress/${username}`),

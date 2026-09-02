@@ -12,12 +12,7 @@
         {
           "id": 1,
           "question": "How many vowels are there in Sanskrit?",
-          "options": [
-            "10",
-            "13",
-            "15",
-            "20"
-          ],
+          "options": ["10", "13", "15", "20"],
           "answer": "13",
           "explanation": "Sanskrit has 13 vowel sounds"
         }
@@ -36,23 +31,16 @@
         {
           "id": 1,
           "question": "What does 'धन्यवादः' mean?",
-          "options": [
-            "Hello",
-            "Thank you",
-            "Goodbye",
-            "Please"
-          ],
+          "options": ["Hello", "Thank you", "Goodbye", "Please"],
           "answer": "Thank you",
           "explanation": "धन्यवादः means 'Thank you'"
         }
       ],
-      "prerequisites": [
-        1
-      ]
+      "prerequisites": [1]
     },
     {
       "id": 3,
-      "title": "Numbers 1-10 in Sanskrit",
+      "title": "Numbers in Sanskrit",
       "description": "Learn to count in Sanskrit",
       "level": "beginner",
       "duration": 15,
@@ -62,19 +50,12 @@
         {
           "id": 1,
           "question": "What is the Sanskrit word for 5?",
-          "options": [
-            "एकः",
-            "द्वौ",
-            "त्रयः",
-            "पञ्च"
-          ],
+          "options": ["एकः", "द्वौ", "त्रयः", "पञ्च"],
           "answer": "पञ्च",
           "explanation": "पञ्च (pañca) means 5"
         }
       ],
-      "prerequisites": [
-        1
-      ]
+      "prerequisites": [1]
     },
     {
       "id": 4,
@@ -84,72 +65,8 @@
       "duration": 25,
       "difficulty": 4,
       "content": "self_introduction_special",
-      "quiz": [
-        {
-          "id": 1,
-          "question": "How do you say 'My name is Rama' in Sanskrit?",
-          "options": [
-            "रामः अस्ति।",
-            "मम नाम रामः अस्ति।",
-            "अहं रामः।",
-            "रामः नाम।"
-          ],
-          "answer": "मम नाम रामः अस्ति।",
-          "explanation": "'मम नाम' means 'my name', 'रामः' is Rama, 'अस्ति' means 'is'"
-        },
-        {
-          "id": 2,
-          "question": "What is the correct translation of 'I am 25 years old'?",
-          "options": [
-            "मम वयः पञ्चविंशति वर्षाणि सन्ति।",
-            "अहं पञ्चविंशति।",
-            "मम पञ्चविंशति वर्ष।",
-            "अहं पञ्चविंशति वर्षाणि।"
-          ],
-          "answer": "मम वयः पञ्चविंशति वर्षाणि सन्ति।",
-          "explanation": "'मम वयः' means 'my age', 'पञ्चविंशति' is 25, 'वर्षाणि सन्ति' means 'years are'"
-        },
-        {
-          "id": 3,
-          "question": "How do you say 'I am a student' in Sanskrit?",
-          "options": [
-            "अहं छात्रः अस्मि।",
-            "मम छात्रः।",
-            "अहं पठामि।",
-            "छात्रः अहम्।"
-          ],
-          "answer": "अहं छात्रः अस्मि।",
-          "explanation": "'अहं' means 'I', 'छात्रः' means 'student', 'अस्मि' means 'am'"
-        },
-        {
-          "id": 4,
-          "question": "What is 'I live in Mumbai' in Sanskrit?",
-          "options": [
-            "अहं मुम्बई नगरे वसामि।",
-            "मम मुम्बई।",
-            "अहं मुम्बई गच्छामि।",
-            "मुम्बई नगरम्।"
-          ],
-          "answer": "अहं मुम्बई नगरे वसामि।",
-          "explanation": "'अहं' means 'I', 'मुम्बई नगरे' means 'in Mumbai city', 'वसामि' means 'live'"
-        },
-        {
-          "id": 5,
-          "question": "How would you say 'Nice to meet you'?",
-          "options": [
-            "नमस्ते",
-            "भवता सह मेलनं सुखदम् अस्ति।",
-            "धन्यवादः",
-            "पुनः मिलामः"
-          ],
-          "answer": "भवता सह मेलनं सुखदम् अस्ति।",
-          "explanation": "This phrase literally means 'Meeting with you is pleasant'"
-        }
-      ],
-      "prerequisites": [
-        1,
-        2
-      ]
+      "quiz": [],
+      "prerequisites": [1, 2]
     },
     {
       "id": 5,
@@ -160,10 +77,7 @@
       "difficulty": 3,
       "content": "pronouns_special",
       "quiz": [],
-      "prerequisites": [
-        1,
-        2
-      ]
+      "prerequisites": [1, 2]
     },
     {
       "id": 6,
@@ -174,9 +88,7 @@
       "difficulty": 4,
       "content": "verbs_special",
       "quiz": [],
-      "prerequisites": [
-        5
-      ]
+      "prerequisites": [5]
     },
     {
       "id": 7,
@@ -187,9 +99,7 @@
       "difficulty": 4,
       "content": "nouns_special",
       "quiz": [],
-      "prerequisites": [
-        6
-      ]
+      "prerequisites": [6]
     },
     {
       "id": 8,
@@ -200,9 +110,7 @@
       "difficulty": 3,
       "content": "family_special",
       "quiz": [],
-      "prerequisites": [
-        7
-      ]
+      "prerequisites": [7]
     },
     {
       "id": 9,
@@ -213,9 +121,7 @@
       "difficulty": 3,
       "content": "questions_special",
       "quiz": [],
-      "prerequisites": [
-        8
-      ]
+      "prerequisites": [8]
     },
     {
       "id": 10,
@@ -226,9 +132,7 @@
       "difficulty": 3,
       "content": "time_special",
       "quiz": [],
-      "prerequisites": [
-        9
-      ]
+      "prerequisites": [9]
     },
     {
       "id": 11,
@@ -239,10 +143,7 @@
       "difficulty": 6,
       "content": "vibhakti_special",
       "quiz": [],
-      "prerequisites": [
-        4,
-        5
-      ]
+      "prerequisites": [4, 5]
     },
     {
       "id": 12,
@@ -253,12 +154,7 @@
       "difficulty": 7,
       "content": "sandhi_special",
       "quiz": [],
-      "prerequisites": [
-        1,
-        4,
-        5,
-        11
-      ]
+      "prerequisites": [1, 4, 5, 11]
     },
     {
       "id": 13,
@@ -269,10 +165,7 @@
       "difficulty": 6,
       "content": "tenses_special",
       "quiz": [],
-      "prerequisites": [
-        6,
-        11
-      ]
+      "prerequisites": [6, 11]
     },
     {
       "id": 14,
@@ -283,10 +176,7 @@
       "difficulty": 6,
       "content": "moods_special",
       "quiz": [],
-      "prerequisites": [
-        6,
-        13
-      ]
+      "prerequisites": [6, 13]
     },
     {
       "id": 15,
@@ -297,10 +187,7 @@
       "difficulty": 5,
       "content": "pronouns_extended_special",
       "quiz": [],
-      "prerequisites": [
-        5,
-        11
-      ]
+      "prerequisites": [5, 11]
     },
     {
       "id": 16,
@@ -311,10 +198,7 @@
       "difficulty": 5,
       "content": "upasarga_special",
       "quiz": [],
-      "prerequisites": [
-        6,
-        13
-      ]
+      "prerequisites": [6, 13]
     },
     {
       "id": 17,
@@ -325,11 +209,7 @@
       "difficulty": 6,
       "content": "voice_special",
       "quiz": [],
-      "prerequisites": [
-        6,
-        11,
-        13
-      ]
+      "prerequisites": [6, 11, 13]
     },
     {
       "id": 18,
@@ -340,11 +220,7 @@
       "difficulty": 5,
       "content": "indeclinables_special",
       "quiz": [],
-      "prerequisites": [
-        4,
-        5,
-        6
-      ]
+      "prerequisites": [4, 5, 6]
     },
     {
       "id": 19,
@@ -355,11 +231,7 @@
       "difficulty": 7,
       "content": "participles_special",
       "quiz": [],
-      "prerequisites": [
-        6,
-        11,
-        13
-      ]
+      "prerequisites": [6, 11, 13]
     },
     {
       "id": 20,
@@ -370,17 +242,62 @@
       "difficulty": 5,
       "content": "reading_composition_special",
       "quiz": [],
-      "prerequisites": [
-        11,
-        12,
-        13,
-        14,
-        15,
-        16,
-        17,
-        18,
-        19
-      ]
+      "prerequisites": [11, 12, 13, 14, 15, 16, 17, 18, 19]
+    },
+    {
+      "id": 21,
+      "title": "Samāsa – Compounds (Part 1)",
+      "description": "Understand the four main types of Sanskrit compounds: Avyayībhāva, Tatpuruṣa, Bahuvrīhi, and Dvandva. Essential for reading classical texts.",
+      "level": "advanced",
+      "duration": 35,
+      "difficulty": 8,
+      "content": "samasa_part1_special",
+      "quiz": [],
+      "prerequisites": [11, 12, 18]
+    },
+    {
+      "id": 22,
+      "title": "Samāsa – Compounds (Part 2)",
+      "description": "Advanced compound analysis and interpretation. Learn to identify compound types in texts, analyze their semantics, and expand them into full sentences.",
+      "level": "advanced",
+      "duration": 30,
+      "difficulty": 8,
+      "content": "samasa_part2_special",
+      "quiz": [],
+      "prerequisites": [21]
+    },
+    {
+      "id": 23,
+      "title": "Participles – Part 2 (Advanced)",
+      "description": "Master the remaining participle forms: Present active participle (शतृ/शानच्), Future active participle, and conditional forms for advanced reading.",
+      "level": "advanced",
+      "duration": 30,
+      "difficulty": 8,
+      "content": "participles_part2_special",
+      "quiz": [],
+      "prerequisites": [19]
+    },
+    {
+      "id": 24,
+      "title": "Strī Pratyaya – Feminine Formation",
+      "description": "Understand how feminine nouns are derived from masculine stems. Master the rules of feminine suffix formation and practice with common noun families.",
+      "level": "advanced",
+      "duration": 25,
+      "difficulty": 7,
+      "content": "strī_pratyaya_special",
+      "quiz": [],
+      "prerequisites": [7, 11]
+    },
+    {
+      "id": 25,
+      "title": "Introduction to Sanskrit Prosody (Chandas)",
+      "description": "Explore the poetic meters of Sanskrit. Learn the technical terms (Laghu, Guru, Gana, Mātrā), common meters (Anuṣṭubh, Indravajrā), and practice reading and reciting verses.",
+      "level": "advanced",
+      "duration": 35,
+      "difficulty": 9,
+      "content": "chandas_special",
+      "quiz": [],
+      "prerequisites": [20, 21]
     }
   ]
 }

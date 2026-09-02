@@ -198,6 +198,32 @@ def get_reading_composition():
     data = db.get_reading_composition()
     return {"success": True, "data": data}
 
+@app.get("/api/lessons/samasa1")
+def get_samasa1():
+    """Get Samāsa Part 1 data for Lesson 21"""
+    data = db.get_samasa1()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/samasa2")
+def get_samasa2():
+    data = db.get_samasa2()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/participles2")
+def get_participles2():
+    data = db.get_participles2()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/stri-pratyaya")
+def get_stri_pratyaya():
+    data = db.get_stri_pratyaya()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/chandas")
+def get_chandas():
+    data = db.get_chandas()
+    return {"success": True, "data": data}
+
 @app.get("/api/daily-questions")
 def get_daily_questions():
     with open(os.path.join(DATA_DIR, 'dailyQuestions.json'), encoding='utf-8') as questions_file:

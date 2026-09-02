@@ -3,7 +3,9 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "SanskritaAI | Divine Language Architecture",
-  description: "Experience the convergence of ancient wisdom and modern artificial intelligence.",
+  description: "Experience the convergence of ancient wisdom and modern artificial intelligence. Learn Sanskrit with adaptive AI-powered lessons, grammar analysis, and interactive games.",
+  keywords: "Sanskrit, learn Sanskrit, AI tutor, language learning, Devanagari, grammar",
+  authors: [{ name: "SanskritaAI" }],
 };
 
 export default function RootLayout({
@@ -14,13 +16,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <script src="https://www.google.com/jsapi"></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script src="https://www.google.com/jsapi" async defer></script>
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              google.load("elements", "1", {
-                packages: "transliteration"
-              });
+              if (window.google && google.load) {
+                google.load("elements", "1", {
+                  packages: "transliteration"
+                });
+              }
             `,
           }}
         />

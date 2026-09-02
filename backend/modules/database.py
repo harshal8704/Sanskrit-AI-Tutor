@@ -13,12 +13,20 @@ class MockDB:
         self.data_dir = data_dir
         os.makedirs(data_dir, exist_ok=True)
     
+    def _load_json_list(self, filename: str) -> List[Dict]:
+        """Universal JSON loader — all lesson data methods delegate here."""
+        file_path = os.path.join(self.data_dir, filename)
+        if os.path.exists(file_path):
+            with open(file_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
     def get_lessons(self) -> List[Dict]:
         """Get all lessons"""
         lessons_file = os.path.join(self.data_dir, 'lessons.json')
         
         if os.path.exists(lessons_file):
-            with open(lessons_file, 'r') as f:
+            with open(lessons_file, 'r', encoding='utf-8') as f:
                 return json.load(f)['lessons']
         
         # Return default lessons
@@ -55,12 +63,8 @@ class MockDB:
             }
         ]
 
-    def _load_json_list(self, filename: str) -> List[Dict]:
-        file_path = os.path.join(self.data_dir, filename)
-        if os.path.exists(file_path):
-            with open(file_path, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
+    # ─── Lesson Data Accessors ─────────────────────────────
+    # All use the shared _load_json_list helper for DRY code.
 
     def get_greetings(self) -> List[Dict]:
         """Get all greetings"""
@@ -100,83 +104,59 @@ class MockDB:
 
     def get_vibhakti(self):
         """Get vibhakti data"""
-        file_path = os.path.join(self.data_dir, 'sanskritVibhakti.json')
-        if os.path.exists(file_path):
-            with open(file_path, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
+        return self._load_json_list('sanskritVibhakti.json')
 
     def get_sandhi(self):
         """Get sandhi data"""
-        file_path = os.path.join(self.data_dir, 'sanskritSandhi.json')
-        if os.path.exists(file_path):
-            with open(file_path, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
+        return self._load_json_list('sanskritSandhi.json')
 
     def get_tenses(self):
         """Get verb tense data"""
-        file_path = os.path.join(self.data_dir, 'sanskritTenses.json')
-        if os.path.exists(file_path):
-            with open(file_path, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
+        return self._load_json_list('sanskritTenses.json')
 
     def get_moods(self):
         """Get verb moods data (Imperative & Optative)"""
-        file_path = os.path.join(self.data_dir, 'sanskritMoods.json')
-        if os.path.exists(file_path):
-            with open(file_path, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
+        return self._load_json_list('sanskritMoods.json')
 
     def get_pronouns_extended(self):
         """Get extended pronouns (dual & plural) data"""
-        file_path = os.path.join(self.data_dir, 'sanskritPronounsExtended.json')
-        if os.path.exists(file_path):
-            with open(file_path, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
+        return self._load_json_list('sanskritPronounsExtended.json')
 
     def get_upasarga(self):
         """Get upasarga (verbal prefix) data"""
-        file_path = os.path.join(self.data_dir, 'sanskritUpasarga.json')
-        if os.path.exists(file_path):
-            with open(file_path, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
+        return self._load_json_list('sanskritUpasarga.json')
 
     def get_voice(self):
         """Get active/passive voice data"""
-        file_path = os.path.join(self.data_dir, 'sanskritVoice.json')
-        if os.path.exists(file_path):
-            with open(file_path, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
+        return self._load_json_list('sanskritVoice.json')
 
     def get_indeclinables(self):
         """Get indeclinables (avyaya) data"""
-        file_path = os.path.join(self.data_dir, 'sanskritIndeclinables.json')
-        if os.path.exists(file_path):
-            with open(file_path, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
+        return self._load_json_list('sanskritIndeclinables.json')
 
     def get_participles(self):
         """Get participles data"""
-        file_path = os.path.join(self.data_dir, 'sanskritParticiples.json')
-        if os.path.exists(file_path):
-            with open(file_path, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
+        return self._load_json_list('sanskritParticiples.json')
 
     def get_reading_composition(self):
         """Get reading and composition data"""
-        file_path = os.path.join(self.data_dir, 'sanskritReadingComposition.json')
-        if os.path.exists(file_path):
-            with open(file_path, 'r', encoding='utf-8') as f:
-                return json.load(f)
-        return []
+        return self._load_json_list('sanskritReadingComposition.json')
+
+    def get_samasa1(self):
+        """Get Samāsa (compounds) Part 1 data"""
+        return self._load_json_list('sanskritSamasa1.json')
+
+    def get_samasa2(self):
+        return self._load_json_list('sanskritSamasa2.json')
+
+    def get_participles2(self):
+        return self._load_json_list('sanskritParticiples2.json')
+
+    def get_stri_pratyaya(self):
+        return self._load_json_list('sanskritStriPratyaya.json')
+
+    def get_chandas(self):
+        return self._load_json_list('sanskritChandas.json')
     
     def get_user_progress(self, username: str) -> Dict:
         """Get user progress"""
@@ -186,10 +166,10 @@ class MockDB:
             with open(progress_file, 'r') as f:
                 return json.load(f)
         
-        # Default progress
+        # Default progress — total_lessons reflects actual curriculum size
         return {
             "username": username,
-            "total_lessons": 10,
+            "total_lessons": 20,
             "completed": 0,
             "in_progress": 2,
             "avg_score": 0,
