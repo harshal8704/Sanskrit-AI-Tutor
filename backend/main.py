@@ -1,3 +1,11 @@
+import sys
+
+# Windows terminals can default to cp1252, while the application logs and
+# Sanskrit learning data contain Unicode characters. Configure stdout before
+# importing modules that emit startup messages.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+
 from fastapi import FastAPI, HTTPException, Depends, Body
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional, List, Dict, Any

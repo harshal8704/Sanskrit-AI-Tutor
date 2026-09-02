@@ -1,0 +1,11 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { Bell, Moon, Search, Sun } from "lucide-react";
+
+export default function DashboardHeader({ user }: { user: any }) {
+  const [theme, setTheme] = useState("light");
+  useEffect(() => setTheme(localStorage.getItem("theme") || "light"), []);
+  const toggleTheme = () => { const next = theme === "light" ? "dark" : "light"; setTheme(next); localStorage.setItem("theme", next); document.documentElement.setAttribute("data-theme", next); };
+  return <header className="hidden h-[100px] items-center justify-between border-b border-stone-200 bg-[#fffdfa] px-7 lg:flex dark:border-white/10 dark:bg-[var(--bg-main)]"><h1 className="text-2xl font-extrabold tracking-tight">Dashboard</h1><div className="flex items-center gap-3"><label className="relative"><Search className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" size={18} /><input aria-label="Search dictionary and grammar rules" placeholder="Search dictionary, grammar rules..." className="h-9 w-[264px] rounded-lg border border-stone-200 bg-[#fcfbf8] py-2 pl-9 pr-3 text-xs outline-none transition placeholder:text-stone-400 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 dark:border-white/10 dark:bg-[var(--bg-card)]" /></label><button onClick={toggleTheme} aria-label="Toggle theme" className="grid size-9 place-items-center rounded-lg border border-stone-200 text-stone-600 transition hover:border-orange-300 hover:bg-orange-50 dark:border-white/10 dark:text-[var(--text-main)]">{theme === "light" ? <Moon size={18} /> : <Sun size={18} />}</button><button aria-label="Notifications" className="grid size-9 place-items-center rounded-lg border border-stone-200 text-stone-600 transition hover:border-orange-300 hover:bg-orange-50 dark:border-white/10 dark:text-[var(--text-main)]"><Bell size={18} /></button><div className="ml-1 flex items-center gap-2 border-l border-stone-200 pl-4 dark:border-white/10"><span className="grid size-8 place-items-center rounded-full bg-stone-800 text-xs font-bold text-white">{String(user?.username || "S").slice(0, 1).toUpperCase()}</span><span className="text-xs font-bold">{user?.username}</span></div></div></header>;
+}

@@ -1,8 +1,13 @@
 
 import os
+import sys
 import requests
 import json
 from dotenv import load_dotenv
+
+# Keep Sanskrit and AI responses printable in the default Windows console.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
 
 # Load environment variables
 load_dotenv()
