@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
@@ -24,6 +24,9 @@ import NounsLesson from "@/components/lessons/NounsLesson";
 import FamilyLesson from "@/components/lessons/FamilyLesson";
 import QuestionWordsLesson from "@/components/lessons/QuestionWordsLesson";
 import TimeLesson from "@/components/lessons/TimeLesson";
+import VibhaktiLesson from "@/components/lessons/VibhaktiLesson";
+import SandhiLesson from "@/components/lessons/SandhiLesson";
+import TensesLesson from "@/components/lessons/TensesLesson";
 
 const AlphabetFlashcards = () => {
   const [vowelImages, setVowelImages] = useState<string[]>([]);
@@ -251,6 +254,12 @@ export default function Lessons() {
                 <QuestionWordsLesson onBack={() => setSelectedLesson(null)} />
               ) : selectedLesson.id === 10 ? (
                 <TimeLesson onBack={() => setSelectedLesson(null)} />
+              ) : selectedLesson.id === 13 ? (
+                <TensesLesson onBack={() => setSelectedLesson(null)} />
+              ) : selectedLesson.id === 12 ? (
+                <SandhiLesson onBack={() => setSelectedLesson(null)} />
+              ) : selectedLesson.id === 11 ? (
+                <VibhaktiLesson onBack={() => setSelectedLesson(null)} />
               ) : (
                 <motion.div 
                   initial={{ opacity: 0 }}

@@ -138,6 +138,24 @@ def get_question_words():
 def get_time_and_days():
     return db.get_time_and_days()
 
+@app.get("/api/lessons/vibhakti")
+def get_vibhakti():
+    """Get vibhakti (case) data for Lesson 11"""
+    data = db.get_vibhakti()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/sandhi")
+def get_sandhi():
+    """Get sandhi data for Lesson 12"""
+    data = db.get_sandhi()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/tenses")
+def get_tenses():
+    """Get verb tenses data for Lesson 13"""
+    data = db.get_tenses()
+    return {"success": True, "data": data}
+
 @app.get("/api/daily-questions")
 def get_daily_questions():
     with open(os.path.join(DATA_DIR, 'dailyQuestions.json'), encoding='utf-8') as questions_file:

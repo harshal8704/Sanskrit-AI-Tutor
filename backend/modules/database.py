@@ -97,6 +97,30 @@ class MockDB:
     def get_time_and_days(self) -> List[Dict]:
         """Get time and days lesson data"""
         return self._load_json_list('sanskritTimeAndDays.json')
+
+    def get_vibhakti(self):
+        """Get vibhakti data"""
+        file_path = os.path.join(self.data_dir, 'sanskritVibhakti.json')
+        if os.path.exists(file_path):
+            with open(file_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
+    def get_sandhi(self):
+        """Get sandhi data"""
+        file_path = os.path.join(self.data_dir, 'sanskritSandhi.json')
+        if os.path.exists(file_path):
+            with open(file_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
+    def get_tenses(self):
+        """Get verb tense data"""
+        file_path = os.path.join(self.data_dir, 'sanskritTenses.json')
+        if os.path.exists(file_path):
+            with open(file_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
     
     def get_user_progress(self, username: str) -> Dict:
         """Get user progress"""

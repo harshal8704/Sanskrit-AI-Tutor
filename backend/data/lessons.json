@@ -229,6 +229,50 @@
       "prerequisites": [
         9
       ]
+    },
+    {
+      "id": 11,
+      "title": "Vibhakti – The 7 Cases",
+      "description": "Master the 7 grammatical cases (Nominative, Accusative, Instrumental, Dative, Ablative, Genitive, Locative) with declension tables and practice exercises.",
+      "level": "intermediate",
+      "duration": 30,
+      "difficulty": 6,
+      "content": "vibhakti_special",
+      "quiz": [],
+      "prerequisites": [
+        4,
+        5
+      ]
+    },
+    {
+      "id": 12,
+      "title": "Sandhi – Euphonic Combinations",
+      "description": "Learn how sounds merge when words combine. Master Vowel Sandhi, Visarga Sandhi, and Consonant Sandhi rules for flawless Sanskrit pronunciation and writing.",
+      "level": "intermediate",
+      "duration": 35,
+      "difficulty": 7,
+      "content": "sandhi_special",
+      "quiz": [],
+      "prerequisites": [
+        1,
+        4,
+        5,
+        11
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Verb Tenses – Past & Future",
+      "description": "Expand your verb knowledge beyond the present tense. Learn the past (Imperfect) and future tenses to describe actions across time.",
+      "level": "intermediate",
+      "duration": 30,
+      "difficulty": 6,
+      "content": "tenses_special",
+      "quiz": [],
+      "prerequisites": [
+        6,
+        11
+      ]
     }
   ]
 }
