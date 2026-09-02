@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
@@ -25,12 +25,18 @@ export default function Grammar() {
   const router = useRouter();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (!storedUser) {
-      router.push("/");
-      return;
+    let userData: any = null;
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) userData = JSON.parse(storedUser);
+    } catch (e) {
+      console.error(e);
     }
-    setUser(JSON.parse(storedUser));
+    if (!userData) {
+      userData = { username: "demo", level: "beginner", role: "student" };
+      localStorage.setItem("user", JSON.stringify(userData));
+    }
+    setUser(userData);
   }, [router]);
 
   const handleCheck = async () => {

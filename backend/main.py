@@ -156,6 +156,48 @@ def get_tenses():
     data = db.get_tenses()
     return {"success": True, "data": data}
 
+@app.get("/api/lessons/moods")
+def get_moods():
+    """Get verb moods data for Lesson 14"""
+    data = db.get_moods()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/pronouns-extended")
+def get_pronouns_extended():
+    """Get extended pronouns data for Lesson 15"""
+    data = db.get_pronouns_extended()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/upasarga")
+def get_upasarga():
+    """Get upasarga data for Lesson 16"""
+    data = db.get_upasarga()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/voice")
+def get_voice():
+    """Get active/passive voice data for Lesson 17"""
+    data = db.get_voice()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/indeclinables")
+def get_indeclinables():
+    """Get indeclinables data for Lesson 18"""
+    data = db.get_indeclinables()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/participles")
+def get_participles():
+    """Get participles data for Lesson 19"""
+    data = db.get_participles()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/reading-composition")
+def get_reading_composition():
+    """Get reading and composition data for Lesson 20"""
+    data = db.get_reading_composition()
+    return {"success": True, "data": data}
+
 @app.get("/api/daily-questions")
 def get_daily_questions():
     with open(os.path.join(DATA_DIR, 'dailyQuestions.json'), encoding='utf-8') as questions_file:

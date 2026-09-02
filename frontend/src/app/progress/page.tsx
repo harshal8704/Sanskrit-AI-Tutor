@@ -22,12 +22,17 @@ export default function Progress() {
   const router = useRouter();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (!storedUser) {
-      router.push("/");
-      return;
+    let userData: any = null;
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) userData = JSON.parse(storedUser);
+    } catch (e) {
+      console.error(e);
     }
-    const userData = JSON.parse(storedUser);
+    if (!userData) {
+      userData = { username: "demo", level: "beginner", role: "student" };
+      localStorage.setItem("user", JSON.stringify(userData));
+    }
     setUser(userData);
 
     const fetchProgress = async () => {

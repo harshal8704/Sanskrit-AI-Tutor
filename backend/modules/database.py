@@ -121,6 +121,62 @@ class MockDB:
             with open(file_path, 'r', encoding='utf-8') as f:
                 return json.load(f)
         return []
+
+    def get_moods(self):
+        """Get verb moods data (Imperative & Optative)"""
+        file_path = os.path.join(self.data_dir, 'sanskritMoods.json')
+        if os.path.exists(file_path):
+            with open(file_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
+    def get_pronouns_extended(self):
+        """Get extended pronouns (dual & plural) data"""
+        file_path = os.path.join(self.data_dir, 'sanskritPronounsExtended.json')
+        if os.path.exists(file_path):
+            with open(file_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
+    def get_upasarga(self):
+        """Get upasarga (verbal prefix) data"""
+        file_path = os.path.join(self.data_dir, 'sanskritUpasarga.json')
+        if os.path.exists(file_path):
+            with open(file_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
+    def get_voice(self):
+        """Get active/passive voice data"""
+        file_path = os.path.join(self.data_dir, 'sanskritVoice.json')
+        if os.path.exists(file_path):
+            with open(file_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
+    def get_indeclinables(self):
+        """Get indeclinables (avyaya) data"""
+        file_path = os.path.join(self.data_dir, 'sanskritIndeclinables.json')
+        if os.path.exists(file_path):
+            with open(file_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
+    def get_participles(self):
+        """Get participles data"""
+        file_path = os.path.join(self.data_dir, 'sanskritParticiples.json')
+        if os.path.exists(file_path):
+            with open(file_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
+
+    def get_reading_composition(self):
+        """Get reading and composition data"""
+        file_path = os.path.join(self.data_dir, 'sanskritReadingComposition.json')
+        if os.path.exists(file_path):
+            with open(file_path, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        return []
     
     def get_user_progress(self, username: str) -> Dict:
         """Get user progress"""

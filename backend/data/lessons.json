@@ -273,6 +273,114 @@
         6,
         11
       ]
+    },
+    {
+      "id": 14,
+      "title": "Verb Moods – Imperative & Optative",
+      "description": "Learn how to give commands (Imperative), make polite requests, express wishes, and talk about possibilities (Optative) in Sanskrit.",
+      "level": "intermediate",
+      "duration": 25,
+      "difficulty": 6,
+      "content": "moods_special",
+      "quiz": [],
+      "prerequisites": [
+        6,
+        13
+      ]
+    },
+    {
+      "id": 15,
+      "title": "Pronouns – Dual & Plural Forms",
+      "description": "Master the complete pronoun system: learn dual (for two persons) and plural forms for first, second, and third persons, plus demonstrative pronouns in all numbers and genders.",
+      "level": "intermediate",
+      "duration": 25,
+      "difficulty": 5,
+      "content": "pronouns_extended_special",
+      "quiz": [],
+      "prerequisites": [
+        5,
+        11
+      ]
+    },
+    {
+      "id": 16,
+      "title": "Upasarga – Verbal Prefixes",
+      "description": "Master the 20+ verbal prefixes (उपसर्ग) that modify and enrich verb meanings. Learn how prefixes like प्र, परा, अप, सम् transform basic verbs into new words.",
+      "level": "intermediate",
+      "duration": 25,
+      "difficulty": 5,
+      "content": "upasarga_special",
+      "quiz": [],
+      "prerequisites": [
+        6,
+        13
+      ]
+    },
+    {
+      "id": 17,
+      "title": "Active & Passive Voice",
+      "description": "Learn how to transform sentences between active and passive voice in Sanskrit. Master karmaṇi prayoga (passive construction) and bhāve prayoga (impersonal passive).",
+      "level": "intermediate",
+      "duration": 25,
+      "difficulty": 6,
+      "content": "voice_special",
+      "quiz": [],
+      "prerequisites": [
+        6,
+        11,
+        13
+      ]
+    },
+    {
+      "id": 18,
+      "title": "Indeclinables (अव्यय)",
+      "description": "Master the words that never change form. Learn conjunctions (च, वा), adverbs (अत्र, कुत्र), particles (अपि, एव), prepositions, and interjections essential for fluent Sanskrit.",
+      "level": "intermediate",
+      "duration": 20,
+      "difficulty": 5,
+      "content": "indeclinables_special",
+      "quiz": [],
+      "prerequisites": [
+        4,
+        5,
+        6
+      ]
+    },
+    {
+      "id": 19,
+      "title": "Participles – Part 1 (कृत् प्रत्यय)",
+      "description": "Learn the essential participle forms: Past Passive Participle (क्त), Future Passive Participle (तव्य/अनीयर्), and Gerund (क्त्वा). These are crucial for expressing completed actions, obligations, and sequential actions.",
+      "level": "intermediate",
+      "duration": 30,
+      "difficulty": 7,
+      "content": "participles_special",
+      "quiz": [],
+      "prerequisites": [
+        6,
+        11,
+        13
+      ]
+    },
+    {
+      "id": 20,
+      "title": "Reading & Composition",
+      "description": "Apply all your Sanskrit knowledge! Read short passages with comprehension questions, expand your vocabulary, and practice writing paragraphs on given topics.",
+      "level": "intermediate",
+      "duration": 30,
+      "difficulty": 5,
+      "content": "reading_composition_special",
+      "quiz": [],
+      "prerequisites": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
     }
   ]
 }

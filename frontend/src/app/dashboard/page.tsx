@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import Sidebar from "@/components/Sidebar";
+import DailyStreak from "@/components/DailyStreak";
 import { motion } from "framer-motion";
 import { 
   Trophy, 
@@ -10,7 +11,9 @@ import {
   Target, 
   ChevronRight,
   BookOpen,
-  History
+  History,
+  Sparkles,
+  Zap
 } from "lucide-react";
 
 export default function Dashboard() {
@@ -21,22 +24,31 @@ export default function Dashboard() {
   const router = useRouter();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (!storedUser) {
-      router.push("/");
-      return;
+    let userData: any = null;
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        userData = JSON.parse(storedUser);
+      }
+    } catch (e) {
+      console.error("Error reading stored user", e);
     }
-    const userData = JSON.parse(storedUser);
+
+    if (!userData) {
+      userData = { username: "demo", level: "beginner", role: "student" };
+      localStorage.setItem("user", JSON.stringify(userData));
+    }
+
     setUser(userData);
 
     const fetchData = async () => {
       try {
         const [dashStats, recentActivities] = await Promise.all([
-          api.user.getDashboardStats(userData.username),
-          api.user.getActivities(userData.username)
+          api.user.getDashboardStats(userData.username).catch(() => null),
+          api.user.getActivities(userData.username).catch(() => [])
         ]);
-        setStats(dashStats);
-        setActivities(recentActivities);
+        setStats(dashStats || { words_learned: 0, lessons_completed: 0, points: 450 });
+        setActivities(Array.isArray(recentActivities) ? recentActivities : []);
       } catch (err) {
         console.error("Failed to fetch dashboard data", err);
       } finally {
@@ -48,9 +60,17 @@ export default function Dashboard() {
   }, [router]);
 
   if (loading || !user) {
-    return <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center' }}>
-      <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }} style={{ fontSize: '2rem' }}>🕉️</motion.div>
-    </div>;
+    return (
+      <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-main)' }}>
+        <motion.div 
+          animate={{ rotate: 360, scale: [1, 1.1, 1] }} 
+          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }} 
+          style={{ fontSize: '2.5rem' }}
+        >
+          🕉️
+        </motion.div>
+      </div>
+    );
   }
 
   return (
@@ -58,83 +78,138 @@ export default function Dashboard() {
       <Sidebar user={user} />
       
       <main className="main-content">
+        {/* Header */}
         <motion.header 
-          initial={{ opacity: 0, y: -10 }}
+          initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
-          style={{ marginBottom: '40px' }}
+          style={{ marginBottom: '32px' }}
         >
-          <h1 style={{ fontSize: '2.5rem', marginBottom: '8px' }}>शुभस्य संवर्धनं, {user.username}</h1>
-          <p style={{ color: 'var(--text-dim)' }}>Welcome back. Your quiet space for Sanskrit learning is ready.</p>
+          <div className="flex items-center justify-between flex-wrap gap-4 mb-2">
+            <div>
+              <div className="badge badge-primary mb-2">
+                <Sparkles size={14} /> Sanskrit Learning Space
+              </div>
+              <h1 className="devanagari" style={{ fontSize: '2.6rem', fontWeight: 700, margin: 0 }}>
+                शुभस्य संवर्धनं, {user.username}
+              </h1>
+            </div>
+          </div>
+          <p style={{ color: 'var(--text-dim)', fontSize: '1rem', margin: 0 }}>
+            Welcome back to your personalized sanctuary for Sanskrit mastery.
+          </p>
         </motion.header>
 
+        {/* Daily Streak Section */}
+        <div style={{ marginBottom: '32px' }}>
+          <DailyStreak />
+        </div>
+
         {/* Stats Grid */}
-        <div className="grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', marginBottom: '40px' }}>
+        <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', marginBottom: '32px', gap: '20px' }}>
           {[
-            { label: "Vocabulary", value: stats?.words_learned || 0, icon: BookOpen, color: "#3498db" },
-            { label: "Lessons", value: stats?.lessons_completed || 0, icon: Target, color: "#e67e22" },
-            { label: "Progression", value: user.level === 'beginner' ? '25%' : '60%', icon: Flame, color: "#e74c3c" },
-            { label: "Merits", value: stats?.points || 450, icon: Trophy, color: "#f1c40f" }
+            { label: "Vocabulary", value: stats?.words_learned || 0, icon: BookOpen, gradient: "linear-gradient(135deg, #3B82F6, #1D4ED8)" },
+            { label: "Lessons Completed", value: stats?.lessons_completed || 0, icon: Target, gradient: "linear-gradient(135deg, #E85D04, #FF9100)" },
+            { label: "Progression Level", value: user.level === 'beginner' ? '25%' : '60%', icon: Flame, gradient: "linear-gradient(135deg, #EF4444, #DC2626)" },
+            { label: "Merits & XP", value: stats?.points || 450, icon: Trophy, gradient: "linear-gradient(135deg, #F59E0B, #D97706)" }
           ].map((stat, i) => (
             <motion.div 
               key={stat.label}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ delay: i * 0.08 }}
               className="zen-card"
-              style={{ padding: '24px', display: 'flex', alignItems: 'center', gap: '20px' }}
+              style={{ padding: '22px', display: 'flex', alignItems: 'center', gap: '18px' }}
             >
-              <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: `${stat.color}10`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: stat.color }}>
+              <div style={{ 
+                width: '52px', 
+                height: '52px', 
+                borderRadius: '16px', 
+                background: stat.gradient, 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                color: '#ffffff',
+                boxShadow: '0 8px 18px -4px rgba(0,0,0,0.15)'
+              }}>
                 <stat.icon size={24} />
               </div>
               <div>
-                <div style={{ fontSize: '1.5rem', fontWeight: '700' }}>{stat.value}</div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', fontWeight: '500' }}>{stat.label}</div>
+                <div style={{ fontSize: '1.6rem', fontWeight: 800, color: 'var(--text-main)', lineHeight: 1.2 }}>
+                  {stat.value}
+                </div>
+                <div style={{ fontSize: '0.82rem', color: 'var(--text-dim)', fontWeight: 600, marginTop: '2px' }}>
+                  {stat.label}
+                </div>
               </div>
             </motion.div>
           ))}
         </div>
 
-        <div className="grid" style={{ gridTemplateColumns: '1.6fr 1fr', gap: '30px' }}>
-          
+        {/* Content Layout */}
+        <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
+          {/* Recent Activity */}
           <motion.section 
-             initial={{ opacity: 0, scale: 0.98 }}
-             animate={{ opacity: 1, scale: 1 }}
+             initial={{ opacity: 0, y: 20 }}
+             animate={{ opacity: 1, y: 0 }}
              className="zen-card" 
-             style={{ padding: '30px' }}
+             style={{ padding: '28px' }}
           >
-            <div className="flex items-center gap-3 mb-8">
-              <History size={20} color="var(--primary)" />
-              <h3 style={{ margin: 0 }}>Recent Learning Path</h3>
+            <div className="flex items-center gap-3 mb-6">
+              <div style={{ padding: '8px', background: 'var(--primary-light)', borderRadius: '12px', color: 'var(--primary)' }}>
+                <History size={20} />
+              </div>
+              <h3 style={{ margin: 0, fontSize: '1.3rem', fontWeight: 700 }}>Recent Learning Activity</h3>
             </div>
             
-            <div className="flex flex-col gap-4">
-              {activities.map((activity, i) => (
-                <div key={i} className="flex justify-between items-center p-4" style={{ borderBottom: '1px solid var(--border-soft)' }}>
-                  <div className="flex items-center gap-4">
-                    <div style={{ fontSize: '0.8rem', padding: '6px 12px', borderRadius: '8px', background: 'var(--bg-main)', color: 'var(--text-dim)' }}>
-                      {activity.action.split(' ')[0]}
+            <div className="flex flex-col gap-3">
+              {activities.length > 0 ? (
+                activities.map((activity, i) => (
+                  <div 
+                    key={i} 
+                    className="flex justify-between items-center p-3.5" 
+                    style={{ 
+                      borderRadius: '14px', 
+                      background: 'var(--bg-main)', 
+                      border: '1px solid var(--border-soft)' 
+                    }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div style={{ 
+                        fontSize: '0.75rem', 
+                        padding: '5px 10px', 
+                        borderRadius: '8px', 
+                        background: 'var(--primary-light)', 
+                        color: 'var(--primary)',
+                        fontWeight: 700 
+                      }}>
+                        {activity.action.split(' ')[0]}
+                      </div>
+                      <div>
+                        <div style={{ fontWeight: 700, fontSize: '0.9rem', color: 'var(--text-main)' }}>{activity.action}</div>
+                        <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>{activity.details}</div>
+                      </div>
                     </div>
-                    <div>
-                      <div style={{ fontWeight: '600', fontSize: '0.95rem' }}>{activity.action}</div>
-                      <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>{activity.details}</div>
+                    <div style={{ textAlign: 'right', fontSize: '0.85rem' }}>
+                      <div style={{ color: 'var(--primary)', fontWeight: 800 }}>{activity.score}</div>
+                      <div style={{ color: 'var(--text-light)', fontSize: '0.75rem' }}>{activity.timestamp}</div>
                     </div>
                   </div>
-                  <div style={{ textAlign: 'right', fontSize: '0.85rem' }}>
-                    <div style={{ color: 'var(--primary)', fontWeight: '600' }}>{activity.score}</div>
-                    <div style={{ color: 'var(--text-light)' }}>{activity.timestamp}</div>
-                  </div>
-                </div>
-              ))}
+                ))
+              ) : (
+                <p style={{ color: 'var(--text-dim)', fontSize: '0.9rem' }}>No recent activity logged yet.</p>
+              )}
             </div>
           </motion.section>
 
+          {/* Next Recommended Module */}
           <motion.section 
-            initial={{ opacity: 0, x: 10 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
             className="zen-card" 
             style={{ 
-              padding: '34px',
-              background: 'linear-gradient(135deg, var(--bg-card) 0%, #fffcf5 100%)',
+              padding: '28px',
+              background: 'linear-gradient(135deg, var(--bg-card) 0%, var(--primary-light) 100%)',
               display: 'flex',
               flexDirection: 'column',
               justifyContent: 'space-between'
@@ -142,20 +217,26 @@ export default function Dashboard() {
           >
             <div>
               <div className="flex items-center gap-2 mb-4" style={{ color: 'var(--primary)' }}>
-                <BookOpen size={20} />
-                <h4 style={{ margin: 0 }}>Next Module</h4>
+                <Zap size={20} />
+                <span style={{ fontSize: '0.85rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                  Recommended Next
+                </span>
               </div>
-              <h2 style={{ marginBottom: '12px' }}>Sanskrit Sandhi Rules</h2>
-              <p style={{ color: 'var(--text-dim)', fontSize: '0.95rem', marginBottom: '24px', lineHeight: '1.6' }}>Master the intricate rules of word joining—essential for advanced Sanskrit text comprehension.</p>
+              <h2 className="devanagari" style={{ fontSize: '1.8rem', fontWeight: 800, marginBottom: '10px', color: 'var(--text-main)' }}>
+                Sanskrit Sandhi Rules (सन्धिः)
+              </h2>
+              <p style={{ color: 'var(--text-dim)', fontSize: '0.92rem', marginBottom: '24px', lineHeight: '1.6' }}>
+                Master how Sanskrit sounds combine at word boundaries—essential for reading classical Sanskrit texts fluently.
+              </p>
               
-              <div className="flex" style={{ gap: '20px', marginBottom: '30px' }}>
-                <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>⏱️ 20 min</div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>🔱 Intermediate</div>
+              <div className="flex items-center gap-4 mb-6">
+                <span className="badge badge-primary">⏱️ 35 mins</span>
+                <span className="badge badge-primary">🔱 Intermediate</span>
               </div>
             </div>
             
             <button className="btn-primary w-full" onClick={() => router.push('/lessons')}>
-              Start Learning Now <ChevronRight size={18} />
+              Continue Learning <ChevronRight size={18} />
             </button>
           </motion.section>
         </div>

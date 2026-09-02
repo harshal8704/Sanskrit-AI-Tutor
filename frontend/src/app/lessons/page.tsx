@@ -4,9 +4,9 @@ import { useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import Sidebar from "@/components/Sidebar";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  BookOpen, 
-  Clock, 
+import {
+  BookOpen,
+  Clock,
   ArrowLeft,
   Play,
   CheckCircle2,
@@ -27,6 +27,13 @@ import TimeLesson from "@/components/lessons/TimeLesson";
 import VibhaktiLesson from "@/components/lessons/VibhaktiLesson";
 import SandhiLesson from "@/components/lessons/SandhiLesson";
 import TensesLesson from "@/components/lessons/TensesLesson";
+import MoodsLesson from "@/components/lessons/MoodsLesson";
+import PronounsExtendedLesson from "@/components/lessons/PronounsExtendedLesson";
+import UpasargaLesson from "@/components/lessons/UpasargaLesson";
+import VoiceLesson from "@/components/lessons/VoiceLesson";
+import IndeclinablesLesson from "@/components/lessons/IndeclinablesLesson";
+import ParticiplesLesson from "@/components/lessons/ParticiplesLesson";
+import ReadingCompositionLesson from "@/components/lessons/ReadingCompositionLesson";
 
 const AlphabetFlashcards = () => {
   const [vowelImages, setVowelImages] = useState<string[]>([]);
@@ -52,17 +59,17 @@ const AlphabetFlashcards = () => {
 
   if (loading) return (
     <div className="flex flex-col items-center justify-center py-40 gap-6">
-        <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 2 }} className="text-[var(--primary)]">
-            <Sparkles size={60} />
-        </motion.div>
-        <p className="text-[var(--text-dim)] font-medium">Preparing visual aids...</p>
+      <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 2 }} className="text-[var(--primary)]">
+        <Sparkles size={60} />
+      </motion.div>
+      <p className="text-[var(--text-dim)] font-medium">Preparing visual aids...</p>
     </div>
   );
 
   return (
     <div className="flex flex-col gap-12 mt-12 pb-20 max-w-6xl mx-auto">
       <AnimatePresence>
-        <motion.div 
+        <motion.div
           key="vowels-panel"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -78,23 +85,23 @@ const AlphabetFlashcards = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="p-10 bg-[var(--bg-card)]">
             {vowelImages.length > 0 ? (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                 {vowelImages.map((src, idx) => (
-                  <motion.div 
+                  <motion.div
                     key={idx}
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: idx * 0.1 }}
                     className="relative group p-4 bg-[var(--bg-main)] rounded-[32px] border border-[var(--border-soft)] shadow-inner"
                   >
-                    <img 
-                      src={src} 
-                      alt="Sanskrit Vowels" 
-                      className="w-full h-auto rounded-2xl shadow-lg group-hover:scale-[1.01] transition-transform duration-500" 
-                      style={{ maxHeight: '600px', objectFit: 'contain' }} 
+                    <img
+                      src={src}
+                      alt="Sanskrit Vowels"
+                      className="w-full h-auto rounded-2xl shadow-lg group-hover:scale-[1.01] transition-transform duration-500"
+                      style={{ maxHeight: '600px', objectFit: 'contain' }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[rgba(var(--primary-rgb),0.1)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[32px] pointer-events-none"></div>
                   </motion.div>
@@ -108,7 +115,7 @@ const AlphabetFlashcards = () => {
           </div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           key="consonants-panel"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -125,23 +132,23 @@ const AlphabetFlashcards = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="p-10 bg-[var(--bg-card)]">
             {consonantImages.length > 0 ? (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
                 {consonantImages.map((src, idx) => (
-                  <motion.div 
+                  <motion.div
                     key={idx}
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: idx * 0.1 }}
                     className="relative group p-4 bg-[var(--bg-main)] rounded-[32px] border border-[var(--border-soft)] shadow-inner"
                   >
-                    <img 
-                      src={src} 
-                      alt="Sanskrit Consonants" 
-                      className="w-full h-auto rounded-2xl shadow-lg group-hover:scale-[1.01] transition-transform duration-500" 
-                      style={{ maxHeight: '600px', objectFit: 'contain' }} 
+                    <img
+                      src={src}
+                      alt="Sanskrit Consonants"
+                      className="w-full h-auto rounded-2xl shadow-lg group-hover:scale-[1.01] transition-transform duration-500"
+                      style={{ maxHeight: '600px', objectFit: 'contain' }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[rgba(var(--primary-rgb),0.1)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-[32px] pointer-events-none"></div>
                   </motion.div>
@@ -167,18 +174,27 @@ export default function Lessons() {
   const router = useRouter();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (!storedUser) {
-      router.push("/");
-      return;
+    let userData: any = null;
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        userData = JSON.parse(storedUser);
+      }
+    } catch (e) {
+      console.error("Error reading stored user", e);
     }
-    const userData = JSON.parse(storedUser);
+
+    if (!userData) {
+      userData = { username: "demo", level: "beginner", role: "student" };
+      localStorage.setItem("user", JSON.stringify(userData));
+    }
+
     setUser(userData);
 
     const fetchLessons = async () => {
       try {
         const data = await api.lessons.getAll();
-        setLessons(data);
+        setLessons(Array.isArray(data) ? data : []);
       } catch (err) {
         console.error(err);
       } finally {
@@ -215,15 +231,15 @@ export default function Lessons() {
           <button className="flex items-center gap-2 mb-8" style={{ background: 'none', border: 'none', color: 'var(--text-dim)', cursor: 'pointer', fontWeight: '600' }} onClick={() => setSelectedLesson(null)}>
             <ArrowLeft size={18} /> Back to Modules
           </button>
-          
-          <motion.div 
+
+          <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             className="zen-card"
             style={{ padding: '60px', maxWidth: '1000px', margin: '0 auto' }}
           >
             <span style={{ background: 'rgba(192, 90, 43, 0.08)', color: 'var(--primary)', padding: '6px 14px', borderRadius: '10px', fontSize: '0.8rem', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '1px' }}>
-                {selectedLesson.level} Path
+              {selectedLesson.level} Path
             </span>
             <h1 style={{ fontSize: '3rem', marginTop: '1.5rem', marginBottom: '1rem' }}>{selectedLesson.title}</h1>
             <div className="flex" style={{ gap: '20px', color: 'var(--text-light)', marginBottom: '40px' }}>
@@ -232,8 +248,8 @@ export default function Lessons() {
             </div>
 
             <div style={{ fontSize: '1.2rem', lineHeight: '2', color: 'var(--text-main)', padding: '40px', background: 'var(--bg-main)', borderRadius: '24px', marginBottom: '40px' }}>
-              {selectedLesson.id !== 1 && selectedLesson.id !== 2 && selectedLesson.id !== 3 && selectedLesson.id !== 4 && selectedLesson.id !== 5 && selectedLesson.id !== 6 && selectedLesson.id !== 7 && selectedLesson.id !== 8 && selectedLesson.id !== 9 && selectedLesson.id !== 10 && selectedLesson.content}
-              
+              {selectedLesson.id !== 1 && selectedLesson.id !== 2 && selectedLesson.id !== 3 && selectedLesson.id !== 4 && selectedLesson.id !== 5 && selectedLesson.id !== 6 && selectedLesson.id !== 7 && selectedLesson.id !== 8 && selectedLesson.id !== 9 && selectedLesson.id !== 10 && selectedLesson.id !== 11 && selectedLesson.id !== 12 && selectedLesson.id !== 13 && selectedLesson.id !== 14 && selectedLesson.id !== 15 && selectedLesson.id !== 16 && selectedLesson.id !== 17 && selectedLesson.id !== 18 && selectedLesson.id !== 19 && selectedLesson.id !== 20 && selectedLesson.content}
+
               {selectedLesson.id === 1 ? (
                 <AlphabetFlashcards />
               ) : selectedLesson.id === 2 ? (
@@ -254,6 +270,20 @@ export default function Lessons() {
                 <QuestionWordsLesson onBack={() => setSelectedLesson(null)} />
               ) : selectedLesson.id === 10 ? (
                 <TimeLesson onBack={() => setSelectedLesson(null)} />
+              ) : selectedLesson.id === 20 ? (
+                <ReadingCompositionLesson onBack={() => setSelectedLesson(null)} />
+              ) : selectedLesson.id === 19 ? (
+                <ParticiplesLesson onBack={() => setSelectedLesson(null)} />
+              ) : selectedLesson.id === 18 ? (
+                <IndeclinablesLesson onBack={() => setSelectedLesson(null)} />
+              ) : selectedLesson.id === 17 ? (
+                <VoiceLesson onBack={() => setSelectedLesson(null)} />
+              ) : selectedLesson.id === 16 ? (
+                <UpasargaLesson onBack={() => setSelectedLesson(null)} />
+              ) : selectedLesson.id === 15 ? (
+                <PronounsExtendedLesson onBack={() => setSelectedLesson(null)} />
+              ) : selectedLesson.id === 14 ? (
+                <MoodsLesson onBack={() => setSelectedLesson(null)} />
               ) : selectedLesson.id === 13 ? (
                 <TensesLesson onBack={() => setSelectedLesson(null)} />
               ) : selectedLesson.id === 12 ? (
@@ -261,11 +291,11 @@ export default function Lessons() {
               ) : selectedLesson.id === 11 ? (
                 <VibhaktiLesson onBack={() => setSelectedLesson(null)} />
               ) : (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
-                  className="devanagari" 
+                  className="devanagari"
                   style={{ fontSize: '3rem', textAlign: 'center', marginTop: '60px', color: 'var(--primary)' }}
                 >
                   {"सत्यं वद। धर्मं चर।"}
@@ -275,16 +305,16 @@ export default function Lessons() {
 
             <div className="flex justify-between items-center mt-12">
               <div className="flex gap-3">
-                <button 
-                  className="btn-secondary" 
+                <button
+                  className="btn-secondary"
                   onClick={handlePrev}
                   disabled={lessons.findIndex(l => l.id === selectedLesson.id) === 0}
                   style={{ opacity: lessons.findIndex(l => l.id === selectedLesson.id) === 0 ? 0.5 : 1 }}
                 >
                   <ChevronLeft size={18} /> Previous
                 </button>
-                <button 
-                  className="btn-secondary" 
+                <button
+                  className="btn-secondary"
                   onClick={handleNext}
                   disabled={lessons.findIndex(l => l.id === selectedLesson.id) === lessons.length - 1}
                   style={{ opacity: lessons.findIndex(l => l.id === selectedLesson.id) === lessons.length - 1 ? 0.5 : 1 }}
@@ -309,7 +339,7 @@ export default function Lessons() {
   return (
     <div className="page-layout">
       <Sidebar user={user} />
-      
+
       <main className="main-content">
         <header style={{ marginBottom: '48px' }}>
           <h1 style={{ fontSize: '2.5rem', marginBottom: '8px' }}>Learning Modules</h1>
@@ -318,8 +348,8 @@ export default function Lessons() {
 
         <div className="grid" style={{ gridTemplateColumns: 'repeat(2, 1fr)', gap: '30px' }}>
           {lessons.map((lesson, i) => (
-            <motion.div 
-              key={lesson.id} 
+            <motion.div
+              key={lesson.id}
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
@@ -329,10 +359,10 @@ export default function Lessons() {
               onClick={() => setSelectedLesson(lesson)}
             >
               <div className="flex justify-between items-start mb-6">
-                <span style={{ 
-                  fontSize: '0.75rem', 
-                  padding: '5px 12px', 
-                  borderRadius: '10px', 
+                <span style={{
+                  fontSize: '0.75rem',
+                  padding: '5px 12px',
+                  borderRadius: '10px',
                   backgroundColor: lesson.level === 'beginner' ? 'rgba(39, 174, 96, 0.08)' : 'rgba(192, 90, 43, 0.08)',
                   color: lesson.level === 'beginner' ? '#27ae60' : 'var(--primary)',
                   fontWeight: '700',
@@ -344,15 +374,15 @@ export default function Lessons() {
               </div>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '12px' }}>{lesson.title}</h3>
               <p style={{ color: 'var(--text-dim)', marginBottom: '30px', fontSize: '0.95rem', height: '4.8em', overflow: 'hidden' }}>{lesson.description}</p>
-              
+
               <div className="flex items-center gap-2" style={{ color: 'var(--primary)', fontWeight: '700', fontSize: '0.9rem' }}>
                 <Play size={16} fill="var(--primary)" /> Resume Lesson
               </div>
             </motion.div>
           ))}
 
-          <div 
-            className="zen-card flex items-center justify-center" 
+          <div
+            className="zen-card flex items-center justify-center"
             style={{ border: '2px dashed var(--border-soft)', background: 'transparent', opacity: 0.6 }}
           >
             <div style={{ textAlign: 'center', padding: '40px' }}>

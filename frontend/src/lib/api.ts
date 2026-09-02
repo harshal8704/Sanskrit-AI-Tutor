@@ -1,4 +1,4 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8005';
 
 export async function apiRequest(endpoint: string, options: RequestInit = {}) {
   const url = `${API_BASE_URL}${endpoint}`;
@@ -39,6 +39,13 @@ export const api = {
     getVibhakti: () => apiRequest('/api/lessons/vibhakti'),
     getSandhi: () => apiRequest('/api/lessons/sandhi'),
     getTenses: () => apiRequest('/api/lessons/tenses'),
+    getMoods: () => apiRequest('/api/lessons/moods'),
+    getPronounsExtended: () => apiRequest('/api/lessons/pronouns-extended'),
+    getUpasarga: () => apiRequest('/api/lessons/upasarga'),
+    getVoice: () => apiRequest('/api/lessons/voice'),
+    getIndeclinables: () => apiRequest('/api/lessons/indeclinables'),
+    getParticiples: () => apiRequest('/api/lessons/participles'),
+    getReadingComposition: () => apiRequest('/api/lessons/reading-composition'),
   },
   user: {
     getProgress: (username: string) => apiRequest(`/progress/${username}`),

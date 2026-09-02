@@ -21,13 +21,19 @@ export default function DailyStreak() {
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const data = await api.lessons.getDailyQuestions();
+                const res = await api.lessons.getDailyQuestions();
+                const data = Array.isArray(res) ? res : (res?.data || []);
                 setQuestions(data);
-                initializeStreak(data);
+                if (data && data.length > 0) {
+                    initializeStreak(data);
+                } else {
+                    setStatus('playing');
+                }
             } catch (err) {
                 console.error("Failed to load daily questions", err);
+                setStatus('playing');
             } finally {
-                setTimeout(() => setLoading(false), 600);
+                setLoading(false);
             }
         };
         fetchQuestions();
