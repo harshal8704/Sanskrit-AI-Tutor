@@ -114,71 +114,49 @@ export default function Translation() {
                className="zen-card overflow-hidden"
                style={{ padding: '0', border: 'none', boxShadow: '0 20px 50px rgba(0,0,0,0.08)' }}
             >
-              <div className="flex items-center justify-between p-6 border-b" style={{ borderColor: 'var(--border-soft)', background: 'var(--bg-card)' }}>
-                <div className="flex items-center gap-6">
-                  <motion.div 
-                    animate={{ color: direction === 'en_to_sa' ? 'var(--primary)' : 'var(--text-dim)' }}
-                    style={{ fontWeight: '800', fontSize: '0.8rem', letterSpacing: '1px' }}
-                  >ENGLISH</motion.div>
+              {/* Header Bar */}
+              <div className="translator-header">
+                <div className="translator-lang-selector">
+                  <motion.span 
+                    animate={{ color: direction === 'en_to_sa' ? 'var(--primary)' : 'var(--text-light)' }}
+                    className={`translator-lang-label ${direction === 'en_to_sa' ? 'active' : 'inactive'}`}
+                  >ENGLISH</motion.span>
                   
                   <motion.button 
                     whileHover={{ scale: 1.1, rotate: 180 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={swapDirection}
-                    style={{ 
-                        background: 'var(--bg-main)', 
-                        border: '1px solid var(--border-soft)', 
-                        borderRadius: '12px', 
-                        width: '40px', 
-                        height: '40px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        color: 'var(--primary)'
-                    }}
+                    className="translator-swap-btn"
                   >
                     <ArrowRightLeft size={16} />
                   </motion.button>
                   
-                  <motion.div 
-                    animate={{ color: direction === 'sa_to_en' ? 'var(--primary)' : 'var(--text-dim)' }}
-                    style={{ fontWeight: '800', fontSize: '0.8rem', letterSpacing: '1px' }}
-                  >SANSKRIT</motion.div>
+                  <motion.span 
+                    animate={{ color: direction === 'sa_to_en' ? 'var(--primary)' : 'var(--text-light)' }}
+                    className={`translator-lang-label ${direction === 'sa_to_en' ? 'active' : 'inactive'}`}
+                  >SANSKRIT</motion.span>
                 </div>
                 
-                <div className="flex items-center gap-6">
-                  <label className="flex items-center gap-2 cursor-pointer group">
-                    <div className="relative flex items-center">
-                        <input 
-                        type="checkbox" 
-                        className="sr-only"
-                        checked={useApi} 
-                        onChange={(e) => setUseApi(e.target.checked)}
-                        />
-                        <div className={`w-10 h-5 rounded-full transition-colors ${useApi ? 'bg-primary' : 'bg-gray-300'}`} style={{ backgroundColor: useApi ? 'var(--primary)' : 'var(--border-soft)' }}></div>
-                        <div className={`absolute w-3 h-3 bg-white rounded-full transition-transform ${useApi ? 'translate-x-6' : 'translate-x-1'}`}></div>
-                    </div>
-                    <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'var(--text-dim)' }} className="group-hover:text-primary transition-colors">AI ENGINE</span>
+                <div className="translator-toggle-group">
+                  <label className="toggle-switch">
+                    <input 
+                      type="checkbox" 
+                      checked={useApi} 
+                      onChange={(e) => setUseApi(e.target.checked)}
+                    />
+                    <span className="toggle-slider"></span>
                   </label>
+                  <span 
+                    className={`translator-toggle-label ${useApi ? 'on' : ''}`}
+                    onClick={() => setUseApi(!useApi)}
+                  >AI ENGINE</span>
                 </div>
               </div>
 
               {/* Textarea and Suggestions Container */}
-              <div style={{ position: 'relative', background: 'var(--bg-card)' }}>
+              <div className="translator-input-area">
                 <textarea 
-                  className="w-full" 
-                  style={{ 
-                    minHeight: '260px', 
-                    fontSize: direction === 'sa_to_en' ? '2.2rem' : '1.6rem',
-                    lineHeight: '1.4',
-                    background: 'transparent',
-                    border: 'none',
-                    padding: '40px',
-                    fontFamily: direction === 'sa_to_en' ? 'Noto Sans Devanagari' : 'inherit',
-                    resize: 'none',
-                    fontWeight: direction === 'sa_to_en' ? '500' : '400'
-                  }}
+                  className={`translator-textarea ${direction === 'sa_to_en' ? 'devanagari-input' : ''}`}
                   placeholder={direction === 'en_to_sa' ? "Type English words..." : "Type in Roman (e.g., 'namaste') → instantly converts to Devanagari"}
                   value={shouldTransliterate ? transliteration.value : inputText}
                   onChange={(e) => {
@@ -203,20 +181,17 @@ export default function Translation() {
                   enabled={shouldTransliterate && inputText.length > 0}
                 />
                 
-                {direction === 'sa_to_en' && (
-                  <div style={{ position: 'absolute', bottom: '10px', left: '40px', fontSize: '0.7rem', color: 'var(--text-light)' }}>
-                    ✨ Real-time Roman → Devanagari conversion active
+                <div className="translator-bottom-bar">
+                  <div className="translator-hint">
+                    {direction === 'sa_to_en' && '✨ Real-time Roman → Devanagari conversion active'}
                   </div>
-                )}
-                
-                <div style={{ position: 'absolute', bottom: '30px', right: '30px' }}>
                   <motion.button 
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                     className="btn-primary" 
                     onClick={handleTranslate} 
                     disabled={loading || !inputText}
-                    style={{ padding: '16px 40px', borderRadius: '18px', fontSize: '1rem' }}
+                    style={{ padding: '14px 36px', borderRadius: '18px', fontSize: '1rem' }}
                   >
                     {loading ? <Loader2 className="animate-spin" size={20} /> : <Zap size={20} fill="currentColor" />}
                     <span>{loading ? "Translating..." : "Translate"}</span>
