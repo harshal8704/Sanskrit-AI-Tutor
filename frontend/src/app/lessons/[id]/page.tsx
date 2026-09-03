@@ -102,11 +102,14 @@ export default function LessonDetailPage() {
   const [available, setAvailable] = useState(true);
   const [answers, setAnswers] = useState<Record<string, number>>({});
   const [quizIndex, setQuizIndex] = useState(0);
+  const [quizSubmitting, setQuizSubmitting] = useState(false);
+  const [quizSubmitted, setQuizSubmitted] = useState(false);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
-    if (!storedUser) {
-      router.push('/');
+    const accessToken = localStorage.getItem('access_token');
+    if (!storedUser || !accessToken) {
+      router.replace('/');
       return;
     }
 
@@ -115,6 +118,8 @@ export default function LessonDetailPage() {
 
     const fetchData = async () => {
       try {
+        setAnswers({});
+        setQuizSubmitted(false);
         const [lessonsResponse, lessonResponse, progressResponse] = await Promise.all([
           api.lessons.getAll().catch(() => ({ success: false })),
           api.lessons.getById(params.id as string).catch(() => ({ success: false })),
@@ -175,6 +180,21 @@ export default function LessonDetailPage() {
   const goToQuestion = (index: number) => {
     if (quizQuestions.length === 0) return;
     setQuizIndex(Math.max(0, Math.min(index, quizQuestions.length - 1)));
+  };
+
+  const submitQuiz = async () => {
+    if (!user?.username || !lesson?.id || answeredCount !== quizQuestions.length) return;
+
+    setQuizSubmitting(true);
+    try {
+      await api.bkt.submitQuiz(user.username, lesson.id, answers);
+      setQuizSubmitted(true);
+    } catch (error) {
+      console.error('Failed to submit quiz:', error);
+      alert('Failed to save quiz result.');
+    } finally {
+      setQuizSubmitting(false);
+    }
   };
 
   const markComplete = async () => {
@@ -511,6 +531,15 @@ export default function LessonDetailPage() {
                   </span>
                 )}
               </div>
+              <button
+                type="button"
+                onClick={submitQuiz}
+                disabled={quizSubmitting || quizSubmitted || answeredCount !== quizQuestions.length}
+                className="mt-4 flex items-center gap-2 rounded-lg bg-terracotta px-3 py-2 text-sm font-medium text-white transition-colors hover:bg-terracotta-dark disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <CheckCircle className="h-4 w-4" />
+                {quizSubmitting ? 'Saving Quiz...' : quizSubmitted ? 'Quiz Saved' : 'Submit Quiz'}
+              </button>
             </div>
           )}
 

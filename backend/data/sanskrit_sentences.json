@@ -3286,6 +3286,150 @@
         "api-added"
       ],
       "created_at": "2026-09-01T21:28:31.420490"
+    },
+    {
+      "id": 206,
+      "sanskrit": "न्अम्अस्त्ए अस्ति।",
+      "devanagari": "न्अम्अस्त्ए अस्ति।",
+      "translation": "Namaste is.",
+      "words": [
+        "न्अम्अस्त्ए"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-03T13:35:40.523122"
+    },
+    {
+      "id": 207,
+      "sanskrit": "न्अम्अस्त्ए गच्छति।",
+      "devanagari": "न्अम्अस्त्ए गच्छति।",
+      "translation": "Namaste goes.",
+      "words": [
+        "न्अम्अस्त्ए"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-03T13:35:40.523159"
+    },
+    {
+      "id": 208,
+      "sanskrit": "न्अम्अस्त्ए पठति।",
+      "devanagari": "न्अम्अस्त्ए पठति।",
+      "translation": "Namaste reads.",
+      "words": [
+        "न्अम्अस्त्ए"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-03T13:35:40.523169"
+    },
+    {
+      "id": 209,
+      "sanskrit": "मम नाम मिथिलेशः अस्ति।",
+      "devanagari": "मम नाम मिथिलेशः अस्ति।",
+      "translation": "My Name Is Mithilesh is.",
+      "words": [
+        "मम नाम मिथिलेशः"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-03T13:36:25.130973"
+    },
+    {
+      "id": 210,
+      "sanskrit": "मम नाम मिथिलेशः गच्छति।",
+      "devanagari": "मम नाम मिथिलेशः गच्छति।",
+      "translation": "My Name Is Mithilesh goes.",
+      "words": [
+        "मम नाम मिथिलेशः"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-03T13:36:25.131004"
+    },
+    {
+      "id": 211,
+      "sanskrit": "मम नाम मिथिलेशः पठति।",
+      "devanagari": "मम नाम मिथिलेशः पठति।",
+      "translation": "My Name Is Mithilesh reads.",
+      "words": [
+        "मम नाम मिथिलेशः"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-03T13:36:25.131012"
+    },
+    {
+      "id": 212,
+      "sanskrit": "हिमांशुः उन्मत्तः अस्ति।",
+      "devanagari": "हिमांशुः उन्मत्तः अस्ति।",
+      "translation": "Himanshu Is Mad is.",
+      "words": [
+        "हिमांशुः उन्मत्तः"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-03T13:36:53.818515"
+    },
+    {
+      "id": 213,
+      "sanskrit": "हिमांशुः उन्मत्तः गच्छति।",
+      "devanagari": "हिमांशुः उन्मत्तः गच्छति।",
+      "translation": "Himanshu Is Mad goes.",
+      "words": [
+        "हिमांशुः उन्मत्तः"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-03T13:36:53.818553"
+    },
+    {
+      "id": 214,
+      "sanskrit": "हिमांशुः उन्मत्तः पठति।",
+      "devanagari": "हिमांशुः उन्मत्तः पठति।",
+      "translation": "Himanshu Is Mad reads.",
+      "words": [
+        "हिमांशुः उन्मत्तः"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-03T13:36:53.818561"
     }
   ],
   "patterns": [

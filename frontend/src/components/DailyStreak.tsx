@@ -33,22 +33,34 @@ export default function DailyStreak() {
         fetchQuestions();
     }, []);
 
-    const initializeStreak = (allQs: any[]) => {
+    const initializeStreak = async (allQs: any[]) => {
         if (!allQs || allQs.length === 0) return;
 
-        const storedStreak = parseInt(localStorage.getItem('sanskrit_streak') || '0', 10);
+        const storedUser = JSON.parse(localStorage.getItem('user') || 'null');
+        const username = storedUser?.username;
         const storedLastPlayed = localStorage.getItem('sanskrit_last_played');
         const storedCurrentDay = parseInt(localStorage.getItem('sanskrit_current_day') || '1', 10);
 
-        setStreak(storedStreak);
         setCurrentDay(storedCurrentDay);
-        
+
         let qIndex = allQs.findIndex(q => q.day === storedCurrentDay);
         if (qIndex === -1) qIndex = 0;
         setCurrentQuestionIndex(qIndex);
 
         const today = new Date().toISOString().split('T')[0];
         setCurrentDayStr(today);
+
+        if (username) {
+            try {
+                const summary = await api.user.getStreak(username);
+                setStreak(Number(summary?.current_streak || 0));
+            } catch (error) {
+                console.error('Failed to load streak from backend', error);
+                setStreak(0);
+            }
+        } else {
+            setStreak(0);
+        }
 
         if (storedLastPlayed === today) {
             setStatus('played_today');
@@ -60,8 +72,6 @@ export default function DailyStreak() {
             if (storedLastPlayed === yesterday) {
                 setStatus('playing');
             } else {
-                setStreak(0);
-                localStorage.setItem('sanskrit_streak', '0');
                 setStatus('playing');
             }
         } else {
@@ -76,14 +86,11 @@ export default function DailyStreak() {
         const currentQ = questions[currentQuestionIndex];
         
         if (option === currentQ.answer) {
-            const newStreak = streak + 1;
-            setStreak(newStreak);
-            localStorage.setItem('sanskrit_streak', newStreak.toString());
             localStorage.setItem('sanskrit_last_played', currentDayStr);
-            
+
             const nextDay = Math.min(currentQ.day + 1, questions.length);
             localStorage.setItem('sanskrit_current_day', nextDay.toString());
-            
+
             setTimeout(() => setStatus('completed'), 700);
         } else {
             if (attempts === 0) {
@@ -95,8 +102,6 @@ export default function DailyStreak() {
                     setShowHint(true);
                 }, 600);
             } else {
-                setStreak(0);
-                localStorage.setItem('sanskrit_streak', '0');
                 localStorage.setItem('sanskrit_last_played', currentDayStr);
                 setTimeout(() => setStatus('failed'), 700);
             }

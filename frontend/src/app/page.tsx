@@ -30,7 +30,12 @@ export default function Home() {
     try {
       if (isLogin) {
         const user = await api.auth.login({ username, password });
-        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("access_token", user.access_token);
+        localStorage.setItem("user", JSON.stringify({
+          username: user.username,
+          role: user.role,
+          level: user.level,
+        }));
         router.push("/dashboard");
       } else {
         if (password !== confirmPassword) {

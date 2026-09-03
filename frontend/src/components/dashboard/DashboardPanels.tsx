@@ -36,7 +36,28 @@ export function CurriculumCard({ lessons }: { lessons: number }) {
 
 export function ChallengeCard() { return <section className={`${card} p-5 sm:p-6`}><div className="flex justify-between gap-3"><p className="eyebrow">Daily analytical challenge</p><span className="rounded bg-orange-50 px-2 py-1 text-[10px] font-bold text-orange-600">+15 XP</span></div><h2 className="mt-3 text-sm font-bold">Translate this grammatical compound:</h2><div className="font-devanagari mt-2 rounded-lg border border-stone-200 bg-[#fdfbf7] px-4 py-3 text-center text-lg font-bold">परमेश्वर</div><p className="mt-2 text-xs italic text-stone-500">Identify the sandhi split and translate both components correctly.</p><div className="mt-4 space-y-2"><button className="w-full rounded-lg border border-stone-200 px-3 py-2.5 text-left text-xs font-medium transition hover:border-orange-300 hover:bg-orange-50 focus-visible:outline-orange-600">A. parama + īśvara (Highest Lord)</button><button className="w-full rounded-lg border border-stone-200 px-3 py-2.5 text-left text-xs font-medium transition hover:border-orange-300 hover:bg-orange-50 focus-visible:outline-orange-600">B. para + meśvara (Beyond the ruler)</button></div></section>; }
 
-export function RecommendedSteps() { return <section className={`${card} p-5 sm:p-6`}><p className="eyebrow">Recommended next steps</p><h2 className="mt-1 text-base font-bold">Intro to Declensions (Vibhaktivāda)</h2><p className="mt-3 text-sm text-stone-500 dark:text-[var(--text-dim)]">A deep structural dive into the 8 noun cases of Sanskrit grammar. Understand how case endings dictate sentence roles without rigid word constraints.</p><div className="mt-4 flex gap-5 text-xs text-stone-500"><span className="flex items-center gap-1.5"><Clock3 size={14} />45 mins</span><span className="flex items-center gap-1.5"><Library size={14} />Grammar Foundation</span></div></section>; }
+type RecommendationLesson = {
+  lesson_id?: string | null;
+  title?: string | null;
+  description?: string | null;
+  estimated_time?: number | null;
+  level?: string | null;
+  status?: string | null;
+  module?: string | null;
+};
+
+export function RecommendedSteps({ lesson }: { lesson?: RecommendationLesson | null }) {
+  if (!lesson || lesson.status === "all_lessons_completed") {
+    return <section className={`${card} p-5 sm:p-6`}><p className="eyebrow">Recommended next steps</p><h2 className="mt-1 text-base font-bold">Curriculum complete</h2><p className="mt-3 text-sm text-stone-500 dark:text-[var(--text-dim)]">You have finished the available Sanskrit curriculum. Review earlier lessons or continue with deeper practice.</p></section>;
+  }
+
+  const title = lesson.title || "Continue your Sanskrit lesson";
+  const description = lesson.description || "This lesson continues your structured path through the Sanskrit curriculum.";
+  const time = lesson.estimated_time ? `${lesson.estimated_time} mins` : "15 mins";
+  const moduleLabel = lesson.module ? lesson.module.replace(/_/g, " ").replace(/\b\w/g, (match) => match.toUpperCase()) : "Curriculum";
+
+  return <section className={`${card} p-5 sm:p-6`}><p className="eyebrow">Recommended next steps</p><h2 className="mt-1 text-base font-bold">{title}</h2><p className="mt-3 text-sm text-stone-500 dark:text-[var(--text-dim)]">{description}</p><div className="mt-4 flex gap-5 text-xs text-stone-500"><span className="flex items-center gap-1.5"><Clock3 size={14} />{time}</span><span className="flex items-center gap-1.5"><Library size={14} />{moduleLabel}</span></div>{lesson.level ? <p className="mt-3 text-[10px] font-bold uppercase tracking-[0.12em] text-orange-600">{lesson.level}</p> : null}</section>;
+}
 
 export function GrammarInstruments() { const tools = [["Compound Deconstructor", "Sandhi Analyst", Languages], ["Morphological parser", "Noun declension", BrainCircuit], ["Sanskrit Dictionary", "Root Lookup", Search]] as const; return <section className={`${card} p-5 sm:p-6`}><h2 className="text-base font-bold">AI Grammar Instruments</h2><div className="mt-4 space-y-2">{tools.map(([title, detail, Icon]) => <Link href={title === "Sanskrit Dictionary" ? "/translation" : "/grammar"} key={title} className="flex items-center gap-3 rounded-lg border border-stone-200 px-3 py-3 transition hover:border-orange-300 hover:bg-orange-50 dark:border-white/10"><span className="grid size-8 place-items-center rounded-md bg-orange-50 text-orange-600"><Icon size={16} /></span><span className="min-w-0 flex-1 text-xs font-bold"><span className="block">{title}</span><span className="font-medium text-stone-500">{detail}</span></span><ChevronRight size={17} className="text-stone-400" /></Link>)}</div></section>; }
 

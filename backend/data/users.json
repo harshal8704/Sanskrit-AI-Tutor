@@ -42,5 +42,12 @@
     "created_at": "2026-04-03T16:03:24.873084",
     "level": "beginner",
     "completed": 2
+  },
+  "Mithilesh": {
+    "password": "$2b$12$dHLxbQIxRNj/jDdKKeofueMhcIojV3.iBpF7VKNOt.haGoizHdima",
+    "role": "student",
+    "created_at": "2026-09-03T12:36:43.619527",
+    "level": "beginner",
+    "completed": 0
   }
 }

@@ -5,6 +5,7 @@ __pycache__/
 *.so
 .Python
 myenv/
+.venv/
 env/
 venv/
 ENV/
@@ -16,6 +17,8 @@ venv.bak/
 out/
 build/
 node_modules/
+frontend/next-env.d.ts
+*.tsbuildinfo
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -46,6 +49,9 @@ passwords.txt
 *.sqlite3
 *.db
 *.coverage
+.pytest_cache/
+htmlcov/
+coverage.xml
 
 # Logs
 logs/

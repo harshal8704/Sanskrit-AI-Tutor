@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { motion } from "framer-motion";
+import { api } from '@/lib/api';
 import { 
   LayoutGrid, 
   Library, 
@@ -47,8 +48,13 @@ const Sidebar = ({ user }: { user: any }) => {
     navItems.push({ label: "Admin", path: "/admin", icon: Settings });
   }
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await api.auth.logout();
+    } catch {
+    }
     localStorage.removeItem('user');
+    localStorage.removeItem('access_token');
     router.push('/');
   };
 

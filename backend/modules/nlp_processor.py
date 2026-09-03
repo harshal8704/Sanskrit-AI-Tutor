@@ -81,8 +81,7 @@ class SanskritNLP:
                 self.ai_model = "grok-beta"
                 print(f"SanskritNLP: Detected {self.ai_provider} API Key.")
             
-            key_display = api_key_str[:8] if len(api_key_str) >= 8 else api_key_str
-            print(f"SanskritNLP: AI Engine initialized with key starting with {key_display}...")
+            print("SanskritNLP: AI Engine initialized")
         else:
             print("SanskritNLP: AI Engine key NOT found. Check your .env file.")
     

@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { api } from "@/lib/api";
+import { api, DashboardResponse } from "@/lib/api";
 import Sidebar from "@/components/Sidebar";
 import { motion } from "framer-motion";
 import { 
@@ -15,8 +15,7 @@ import {
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null);
-  const [stats, setStats] = useState<any>(null);
-  const [activities, setActivities] = useState<any[]>([]);
+  const [dashboard, setDashboard] = useState<DashboardResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -31,12 +30,7 @@ export default function Dashboard() {
 
     const fetchData = async () => {
       try {
-        const [dashStats, recentActivities] = await Promise.all([
-          api.user.getDashboardStats(userData.username),
-          api.user.getActivities(userData.username)
-        ]);
-        setStats(dashStats);
-        setActivities(recentActivities);
+        setDashboard(await api.user.getDashboard(userData.username));
       } catch (err) {
         console.error("Failed to fetch dashboard data", err);
       } finally {
@@ -70,10 +64,10 @@ export default function Dashboard() {
         {/* Stats Grid */}
         <div className="grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', marginBottom: '40px' }}>
           {[
-            { label: "Vocabulary", value: stats?.words_learned || 0, icon: BookOpen, color: "#3498db" },
-            { label: "Lessons", value: stats?.lessons_completed || 0, icon: Target, color: "#e67e22" },
-            { label: "Progression", value: user.level === 'beginner' ? '25%' : '60%', icon: Flame, color: "#e74c3c" },
-            { label: "Merits", value: stats?.points || 450, icon: Trophy, color: "#f1c40f" }
+            { label: "Lessons completed", value: dashboard?.statistics.lessons_completed || 0, icon: BookOpen, color: "#3498db" },
+            { label: "Quiz attempts", value: dashboard?.statistics.quiz_attempts || 0, icon: Target, color: "#e67e22" },
+            { label: "Grammar activities", value: dashboard?.statistics.grammar_activity_count || 0, icon: Flame, color: "#e74c3c" },
+            { label: "Active learning days", value: dashboard?.statistics.active_learning_days || 0, icon: Trophy, color: "#f1c40f" }
           ].map((stat, i) => (
             <motion.div 
               key={stat.label}
@@ -108,20 +102,20 @@ export default function Dashboard() {
             </div>
             
             <div className="flex flex-col gap-4">
-              {activities.map((activity, i) => (
+              {(dashboard?.recent_activity || []).map((activity, i) => (
                 <div key={i} className="flex justify-between items-center p-4" style={{ borderBottom: '1px solid var(--border-soft)' }}>
                   <div className="flex items-center gap-4">
                     <div style={{ fontSize: '0.8rem', padding: '6px 12px', borderRadius: '8px', background: 'var(--bg-main)', color: 'var(--text-dim)' }}>
-                      {activity.action.split(' ')[0]}
+                      {activity.type}
                     </div>
                     <div>
-                      <div style={{ fontWeight: '600', fontSize: '0.95rem' }}>{activity.action}</div>
-                      <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>{activity.details}</div>
+                      <div style={{ fontWeight: '600', fontSize: '0.95rem' }}>{activity.detail}</div>
+                      <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>{activity.type} activity</div>
                     </div>
                   </div>
                   <div style={{ textAlign: 'right', fontSize: '0.85rem' }}>
-                    <div style={{ color: 'var(--primary)', fontWeight: '600' }}>{activity.score}</div>
-                    <div style={{ color: 'var(--text-light)' }}>{activity.timestamp}</div>
+                    <div style={{ color: 'var(--primary)', fontWeight: '600' }}>{activity.score_percent ?? 'Completed'}</div>
+                    <div style={{ color: 'var(--text-light)' }}>{activity.occurred_at}</div>
                   </div>
                 </div>
               ))}
@@ -145,12 +139,12 @@ export default function Dashboard() {
                 <BookOpen size={20} />
                 <h4 style={{ margin: 0 }}>Next Module</h4>
               </div>
-              <h2 style={{ marginBottom: '12px' }}>Sanskrit Sandhi Rules</h2>
-              <p style={{ color: 'var(--text-dim)', fontSize: '0.95rem', marginBottom: '24px', lineHeight: '1.6' }}>Master the intricate rules of word joining—essential for advanced Sanskrit text comprehension.</p>
+              <h2 style={{ marginBottom: '12px' }}>{dashboard?.recommendation.status === 'all_lessons_completed' ? 'Curriculum complete' : dashboard?.recommendation.title || 'Sanskrit curriculum pathway'}</h2>
+              <p style={{ color: 'var(--text-dim)', fontSize: '0.95rem', marginBottom: '24px', lineHeight: '1.6' }}>{dashboard?.recommendation.description || 'Continue along the structured Sanskrit curriculum with the next lesson that matches your completed progress.'}</p>
               
               <div className="flex" style={{ gap: '20px', marginBottom: '30px' }}>
-                <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>⏱️ 20 min</div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>🔱 Intermediate</div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>⏱️ {dashboard?.recommendation.estimated_time ? `${dashboard.recommendation.estimated_time} min` : '15 min'}</div>
+                <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>🔱 {dashboard?.recommendation.level || 'beginner'}</div>
               </div>
             </div>
             

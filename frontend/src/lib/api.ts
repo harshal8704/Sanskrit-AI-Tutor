@@ -1,17 +1,56 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
 
+export type DashboardRecommendation = {
+  status: string;
+  lesson_id: string | null;
+  title: string | null;
+  description: string | null;
+  module?: string | null;
+  estimated_time?: number | null;
+  level?: string | null;
+};
+
+export type DashboardActivity = {
+  type: string;
+  detail: string;
+  score_percent: number | null;
+  occurred_at: string;
+};
+
+export type DashboardResponse = {
+  statistics: {
+    lessons_completed: number;
+    total_lessons: number;
+    quiz_attempts: number;
+    quiz_average_score: number;
+    grammar_activity_count: number;
+    current_streak: number;
+    longest_streak: number;
+    active_learning_days: number;
+  };
+  recommendation: DashboardRecommendation;
+  recent_activity: DashboardActivity[];
+};
+
 export async function apiRequest(endpoint: string, options: RequestInit = {}) {
   const url = `${API_BASE_URL}${endpoint}`;
+  const accessToken = typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;
   const response = await fetch(url, {
     ...options,
     headers: {
       'Content-Type': 'application/json',
+      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
       ...options.headers,
     },
   });
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({ detail: 'An error occurred' }));
+    if (response.status === 401 && typeof window !== 'undefined') {
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('user');
+      window.location.assign('/');
+    }
     throw new Error(error.detail || 'API request failed');
   }
 
@@ -20,8 +59,9 @@ export async function apiRequest(endpoint: string, options: RequestInit = {}) {
 
 export const api = {
   auth: {
-    login: (credentials: any) => apiRequest('/auth/login', { method: 'POST', body: JSON.stringify(credentials) }),
-    signup: (data: any) => apiRequest('/auth/signup', { method: 'POST', body: JSON.stringify(data) }),
+    login: (credentials: { username: string; password: string }) => apiRequest('/auth/login', { method: 'POST', body: JSON.stringify(credentials) }),
+    signup: (data: { username: string; password: string; role: string }) => apiRequest('/auth/signup', { method: 'POST', body: JSON.stringify(data) }),
+    logout: () => apiRequest('/auth/logout', { method: 'POST' }),
   },
   lessons: {
     getAll: (level?: string) => apiRequest(`/api/lessons/all${level ? `?level=${level}` : ''}`),
@@ -43,12 +83,15 @@ export const api = {
     getProgress: (username: string) => apiRequest(`/progress/${username}`),
     getActivities: (username: string) => apiRequest(`/activities/${username}`),
     getDashboardStats: (username: string) => apiRequest(`/dashboard/stats/${username}`),
+    getStreak: (username: string) => apiRequest(`/streak/${username}`),
+    getRecommendation: (username: string) => apiRequest(`/recommendation/${username}`),
+    getDashboard: (username: string): Promise<DashboardResponse> => apiRequest(`/dashboard/${username}`),
   },
   tools: {
     translate: (data: { text: string; direction: string; use_api?: boolean }) => 
       apiRequest('/translate', { method: 'POST', body: JSON.stringify(data) }),
-    checkGrammar: (text: string, use_ai: boolean = false) => 
-      apiRequest('/grammar/check', { method: 'POST', body: JSON.stringify({ text, use_ai }) }),
+    checkGrammar: (username: string, text: string, use_ai: boolean = false) =>
+      apiRequest('/grammar/check', { method: 'POST', body: JSON.stringify({ username, text, use_ai }) }),
   },
   bkt: {
     getProgress: (username: string) => apiRequest(`/progress/${username}`),
@@ -56,6 +99,11 @@ export const api = {
       apiRequest(`/progress/${username}/complete`, {
         method: 'POST',
         body: JSON.stringify({ lesson_id: lessonId }),
+      }),
+    submitQuiz: (username: string, lessonId: string, answers: Record<string, number>) =>
+      apiRequest(`/progress/${username}/quiz`, {
+        method: 'POST',
+        body: JSON.stringify({ lesson_id: lessonId, answers }),
       }),
   },
   game: {

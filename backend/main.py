@@ -6,12 +6,12 @@ import sys
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
-from fastapi import FastAPI, HTTPException, Depends, Body
+from fastapi import FastAPI, HTTPException, Depends, Body, Request
 from fastapi.middleware.cors import CORSMiddleware
 from typing import Optional, List, Dict, Any
 import os
 import json
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 # Import existing modules
 from modules.database import MockDB
@@ -21,14 +21,22 @@ from modules.auth import Authenticator
 from modules.translator import SanskritTranslator
 from modules.snake_ladder import start_new_game, process_turn
 from modules.odd_one_out import get_random_question, check_answer
+from modules.sqlite_repository import SQLiteRepository
 
 app = FastAPI(title="SanskritAI API")
 
 # Configure CORS for frontend access
+frontend_origin = os.getenv("FRONTEND_ORIGIN", "http://localhost:3000")
+if os.getenv("APP_ENV", "development").lower() == "production":
+    if not os.getenv("FRONTEND_ORIGIN"):
+        raise RuntimeError("FRONTEND_ORIGIN must be configured in production")
+    if not os.getenv("AUTH_TOKEN_SECRET"):
+        raise RuntimeError("AUTH_TOKEN_SECRET must be configured in production")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify the frontend URL
-    allow_credentials=True,
+    allow_origins=[frontend_origin],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -42,6 +50,11 @@ db = MockDB(data_dir=DATA_DIR)
 learning_engine = AdaptiveLearning(lessons_file=os.path.join(DATA_DIR, 'lessons.json'))
 nlp = SanskritNLP()
 auth = Authenticator(users_file=os.path.join(DATA_DIR, 'users.json'))
+learning_db = SQLiteRepository(
+    database_path=os.getenv('SQLITE_DB_PATH', os.path.join(DATA_DIR, 'sanskrit_ai.sqlite3'))
+)
+learning_db.initialize()
+learning_db.migrate_users(auth.users)
 translator = SanskritTranslator(
     csv_path=os.path.join(DATA_DIR, 'sanskrit_words.csv'),
     sentences_path=os.path.join(DATA_DIR, 'sanskrit_sentences.json')
@@ -49,31 +62,53 @@ translator = SanskritTranslator(
 
 # Pydantic models for request/response
 class LoginRequest(BaseModel):
-    username: str
-    password: str
+    model_config = ConfigDict(extra="forbid")
+    username: str = Field(min_length=1, max_length=64)
+    password: str = Field(min_length=1, max_length=256)
 
 class SignupRequest(BaseModel):
-    username: str
-    password: str
-    role: str = "student"
+    model_config = ConfigDict(extra="forbid")
+    username: str = Field(min_length=1, max_length=64)
+    password: str = Field(min_length=1, max_length=256)
+    role: Optional[str] = None
 
 class TranslateRequest(BaseModel):
-    text: str
-    direction: str = "en_to_sa"  # "en_to_sa" or "sa_to_en"
+    model_config = ConfigDict(extra="forbid")
+    text: str = Field(max_length=5000)
+    direction: str = Field(default="en_to_sa", pattern="^(en_to_sa|sa_to_en)$")
     use_api: bool = True
 
 class GrammarRequest(BaseModel):
-    text: str
+    model_config = ConfigDict(extra="forbid")
+    username: str = Field(min_length=1, max_length=64)
+    text: str = Field(max_length=5000)
     use_ai: bool = False
 
 class GameTurnRequest(BaseModel):
-    current_position: int = 0
-    asked_word: str
-    user_answer: str
+    model_config = ConfigDict(extra="forbid")
+    current_position: int = Field(default=0, ge=0, le=100)
+    asked_word: str = Field(min_length=1, max_length=256)
+    user_answer: str = Field(min_length=1, max_length=256)
 
 class OddAnswerRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
     question_data: Dict
-    user_choice: int  # 1-based index
+    user_choice: int = Field(ge=1, le=100)  # 1-based index
+
+class QuizSubmissionRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    lesson_id: str = Field(min_length=1, max_length=128)
+    answers: Dict[str, int] = Field(max_length=100)
+    quiz_id: str = Field(default="lesson_quiz", min_length=1, max_length=128)
+
+    @field_validator("answers")
+    @classmethod
+    def validate_answer_values(cls, answers: Dict[str, int]) -> Dict[str, int]:
+        if any(not answer_id or len(answer_id) > 128 for answer_id in answers):
+            raise ValueError("answer identifiers must be between 1 and 128 characters")
+        if any(answer < 0 or answer > 100 for answer in answers.values()):
+            raise ValueError("answer values are out of range")
+        return answers
 
 # Endpoints
 @app.get("/")
@@ -85,13 +120,18 @@ def login(req: LoginRequest):
     user = auth.login(req.username, req.password)
     if not user:
         raise HTTPException(status_code=401, detail="Invalid username or password")
+    try:
+        user["access_token"] = auth.create_access_token(req.username)
+    except RuntimeError:
+        raise HTTPException(status_code=503, detail="Authentication service is not configured")
     return user
 
 @app.post("/auth/signup")
 def signup(req: SignupRequest):
-    success = auth.signup(req.username, req.password, req.role)
+    success = auth.signup(req.username, req.password)
     if not success:
         raise HTTPException(status_code=400, detail="Username already exists")
+    learning_db.migrate_users({req.username: auth.users[req.username]})
     return {"message": "Account created successfully"}
 
 @app.get("/lessons")
@@ -153,12 +193,54 @@ def get_daily_questions():
         return json.load(questions_file)
 
 @app.get("/progress/{username}")
-def get_progress(username: str):
-    return db.get_user_progress(username)
+def get_progress(username: str, request: Request = None):
+    user_id = _resolve_user(username, request)
+    completed_lessons = list(learning_db.get_completed_lesson_ids(user_id))
+    return {
+        "status": "success",
+        "completed_lessons": completed_lessons,
+        "lessons_completed": completed_lessons,
+    }
 
 @app.get("/activities/{username}")
-def get_activities(username: str):
-    return db.get_recent_activities(username)
+def get_activities(username: str, request: Request = None):
+    user_id = _resolve_user(username, request)
+    return learning_db.get_dashboard_summary(user_id, db.load_all_lessons())["recent_activity"]
+
+
+def _authenticated_username(request: Optional[Request]) -> Optional[str]:
+    if request is None:
+        return None
+    authorization = request.headers.get("Authorization", "")
+    if not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Authentication required")
+    try:
+        username = auth.verify_access_token(authorization[7:].strip())
+    except RuntimeError:
+        raise HTTPException(status_code=503, detail="Authentication service is not configured")
+    if username is None:
+        raise HTTPException(status_code=401, detail="Invalid or expired token")
+    return username
+
+
+@app.post("/auth/logout")
+def logout(request: Request):
+    authorization = request.headers.get("Authorization", "")
+    if authorization.startswith("Bearer "):
+        auth.revoke_access_token(authorization[7:].strip())
+    return {"success": True}
+
+
+def _resolve_user(username: str, request: Optional[Request] = None) -> int:
+    if username not in auth.users:
+        raise HTTPException(status_code=404, detail="User not found")
+    authenticated_username = _authenticated_username(request)
+    if authenticated_username is not None and authenticated_username != username:
+        raise HTTPException(status_code=403, detail="User identity does not match token")
+    user_id = learning_db.get_user_id(username)
+    if user_id is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return user_id
 
 @app.post("/translate")
 def translate_text(req: TranslateRequest):
@@ -168,50 +250,124 @@ def translate_text(req: TranslateRequest):
         else:
             result = translator.sanskrit_to_English(req.text, req.use_api)
         return result
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    except Exception:
+        raise HTTPException(status_code=502, detail="Translation service unavailable")
 
 @app.post("/grammar/check")
-def check_grammar(req: GrammarRequest):
+def check_grammar(req: GrammarRequest, request: Request = None):
+    user_id = _resolve_user(req.username, request)
+
     analysis = nlp.analyze_text(req.text, use_ai=req.use_ai)
+    if "error" in analysis:
+        return analysis
+
+    learning_db.record_grammar_activity(
+        user_id=user_id,
+        input_text=req.text,
+        score_percent=float(analysis["score"]),
+        analysis_mode=str(analysis["analysis_mode"]),
+        word_count=int(analysis["word_count"]),
+        issue_count=len(analysis.get("issues", [])),
+        result=analysis,
+    )
+    learning_db.record_learning_day(user_id, source="grammar")
     return analysis
 
 @app.get("/dashboard/stats/{username}")
-def get_dashboard_stats(username: str):
-    progress = db.get_user_progress(username)
-    activities = db.get_recent_activities(username)
-    stats = translator.get_database_stats()
-    
-    return {
-        "words_learned": len(activities),
-        "lessons_completed": progress.get('completed', 0),
-        "current_level": progress.get('level', 'beginner'),
-        "points": progress.get('points', 0),
-        "db_stats": stats
-    }
+def get_dashboard_stats(username: str, request: Request = None):
+    user_id = _resolve_user(username, request)
+    return learning_db.get_dashboard_summary(user_id, db.load_all_lessons())["statistics"]
+
+
+@app.get("/dashboard/{username}")
+def get_dashboard(username: str, request: Request = None):
+    user_id = _resolve_user(username, request)
+    return learning_db.get_dashboard_summary(user_id, db.load_all_lessons())
+
+@app.get("/streak/{username}")
+def get_streak_summary(username: str, request: Request = None):
+    user_id = _resolve_user(username, request)
+    return learning_db.get_streak_summary(user_id)
+
+
+@app.get("/recommendation/{username}")
+@app.get("/recommendations/{username}")
+def get_recommendation(username: str, request: Request = None):
+    user_id = _resolve_user(username, request)
+    return learning_db.get_next_lesson_recommendation(user_id, db.load_all_lessons())
+
 
 @app.post("/progress/{username}/complete")
-def mark_lesson_complete(username: str, payload: Dict[str, Any] = Body(...)):
-    if username not in auth.users:
-        raise HTTPException(status_code=404, detail="User not found")
+def mark_lesson_complete(username: str, payload: Dict[str, Any] = Body(...), request: Request = None):
+    """Record a unique lesson completion; SQLite is authoritative for progress.
+
+    The JSON user's legacy ``completed`` field remains for authentication
+    response compatibility and is intentionally not used for this operation.
+    """
+    user_id = _resolve_user(username, request)
 
     lesson_id = payload.get("lesson_id")
-    if lesson_id is None:
+    if not isinstance(lesson_id, str) or not lesson_id:
         raise HTTPException(status_code=400, detail="lesson_id is required")
 
-    user = auth.users[username]
-    completed = int(user.get("completed", 0))
-    user["completed"] = completed + 1
-    user["level"] = user.get("level", "beginner")
-    auth.save_users(auth.users)
+    lesson = next(
+        (item for item in db.load_all_lessons() if item.get("id") == lesson_id),
+        None,
+    )
+    if lesson is None:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+
+    completion = learning_db.complete_lesson(user_id, lesson_id)
+    if completion["created"]:
+        learning_db.record_learning_day(user_id, source="lesson")
 
     return {
         "success": True,
         "username": username,
         "lesson_id": lesson_id,
-        "completed": user["completed"],
+        "completed": completion["completed_count"],
         "message": "Lesson marked as complete"
     }
+
+@app.post("/progress/{username}/quiz")
+def submit_quiz(username: str, req: QuizSubmissionRequest, request: Request = None):
+    user_id = _resolve_user(username, request)
+
+    lessons = db.load_all_lessons()
+    lesson = next((item for item in lessons if item.get("id") == req.lesson_id), None)
+    if lesson is None:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+    if not req.quiz_id:
+        raise HTTPException(status_code=400, detail="quiz_id is required")
+
+    questions = [
+        question
+        for section in lesson.get("sections", [])
+        if section.get("type") == "quiz"
+        for question in section.get("questions", [])
+    ]
+    if not questions:
+        raise HTTPException(status_code=400, detail="Lesson has no quiz")
+    if set(req.answers) != {str(question.get("id")) for question in questions}:
+        raise HTTPException(status_code=400, detail="All quiz answers are required")
+
+    correct_answers = sum(
+        req.answers[str(question["id"])] == question.get("correct")
+        for question in questions
+    )
+    total_questions = len(questions)
+    score_percent = round((correct_answers / total_questions) * 100, 2)
+
+    attempt = learning_db.record_quiz_attempt(
+        user_id=user_id,
+        lesson_id=req.lesson_id,
+        quiz_id=req.quiz_id,
+        score_percent=score_percent,
+        correct_answers=correct_answers,
+        total_questions=total_questions,
+    )
+    learning_db.record_learning_day(user_id, source="quiz")
+    return attempt
 
 # ─── Suggestions Endpoint (Local DB + Groq Fallback) ──────────────────────────
 @app.get("/suggestions")
@@ -341,15 +497,12 @@ def odd_answer(req: OddAnswerRequest):
 # ─── Test API Key Endpoint ────────────────────────────────────
 @app.get("/test-api")
 def test_api():
-    """Test if API key is loaded correctly"""
+    """Return safe external-service configuration status only."""
     api_key = os.getenv("XAI_API_KEY")
     base_url = os.getenv("BASE_URL")
     return {
-        "has_api_key": bool(api_key),
-        "key_preview": api_key[:10] + "..." if api_key and len(api_key) > 10 else None,
-        "provider": "Groq" if api_key and api_key.startswith("gsk_") else "Grok" if api_key else "None",
-        "base_url": base_url,
-        "ai_available": bool(api_key)
+        "configured": bool(api_key),
+        "status": "available" if api_key else "local_only",
     }
 
 if __name__ == "__main__":

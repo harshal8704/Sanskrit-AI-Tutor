@@ -38,7 +38,7 @@ export default function Grammar() {
     setLoading(true);
     setAnalysis(null);
     try {
-      const res = await api.tools.checkGrammar(inputText, useAi);
+      const res = await api.tools.checkGrammar(user.username, inputText, useAi);
       setAnalysis(res);
     } catch (err) {
       console.error(err);

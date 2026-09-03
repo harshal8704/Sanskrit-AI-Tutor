@@ -7,30 +7,17 @@ print("🔧 Fixing all data files...\n")
 # Create data directory
 os.makedirs('data', exist_ok=True)
 
-# 1. Fix users.json
+# 1. Preserve users.json; do not recreate credentials from this utility.
 print("1️⃣ Fixing users.json...")
-users_data = {
-    "admin": {
-        "password": "hashed_admin123",
-        "role": "admin",
-        "created_at": datetime.now().isoformat(),
-        "level": "advanced",
-        "completed": 10,
-        "streak_days": 5
-    },
-    "demo": {
-        "password": "hashed_demo123",
-        "role": "student",
-        "created_at": datetime.now().isoformat(),
-        "level": "beginner",
-        "completed": 2,
-        "streak_days": 3
-    }
-}
-
-with open('data/users.json', 'w', encoding='utf-8') as f:
-    json.dump(users_data, f, indent=2, ensure_ascii=False)
-print("   ✅ users.json created/updated")
+users_path = 'data/users.json'
+if os.path.exists(users_path):
+    with open(users_path, 'r', encoding='utf-8') as f:
+        json.load(f)
+    print("   ✅ users.json preserved")
+else:
+    with open(users_path, 'w', encoding='utf-8') as f:
+        json.dump({}, f, indent=2)
+    print("   ✅ Empty users.json created")
 
 # 2. Check lessons.json
 print("\n2️⃣ Checking lessons.json...")

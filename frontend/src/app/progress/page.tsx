@@ -1,11 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { api } from "@/lib/api";
+import { api, DashboardResponse } from "@/lib/api";
 import Sidebar from "@/components/Sidebar";
 import { motion } from "framer-motion";
 import { 
-  BarChart3, 
   Target, 
   TrendingUp, 
   History,
@@ -17,14 +16,15 @@ import {
 
 export default function Progress() {
   const [user, setUser] = useState<any>(null);
-  const [progress, setProgress] = useState<any>(null);
+  const [dashboard, setDashboard] = useState<DashboardResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
-    if (!storedUser) {
-      router.push("/");
+    const accessToken = localStorage.getItem("access_token");
+    if (!storedUser || !accessToken) {
+      router.replace("/");
       return;
     }
     const userData = JSON.parse(storedUser);
@@ -32,8 +32,7 @@ export default function Progress() {
 
     const fetchProgress = async () => {
       try {
-        const data = await api.user.getProgress(userData.username);
-        setProgress(data);
+        setDashboard(await api.user.getDashboard(userData.username));
       } catch (err) {
         console.error(err);
       } finally {
@@ -46,10 +45,14 @@ export default function Progress() {
 
   if (!user || loading) return null;
 
+  const statistics = dashboard?.statistics;
+  const completionPercent = statistics?.total_lessons
+    ? Math.round((statistics.lessons_completed / statistics.total_lessons) * 100)
+    : 0;
   const stats = [
-    { label: "Current Rank", value: user.level.toUpperCase(), desc: "Moving to Vidvan", icon: Medal, color: "var(--primary)" },
-    { label: "Daily Streak", value: `${progress?.streak_days || 0} days`, desc: "Consistency build grit", icon: Target, color: "#3498db" },
-    { label: "Accuracy", value: `${progress?.avg_score || 0}%`, desc: "Recitation precision", icon: Zap, color: "var(--accent)" },
+    { label: "Current Rank", value: user.level.toUpperCase(), desc: "Current learning level", icon: Medal, color: "var(--primary)" },
+    { label: "Daily Streak", value: `${statistics?.current_streak || 0} days`, desc: "Consecutive learning days", icon: Target, color: "#3498db" },
+    { label: "Quiz Accuracy", value: `${statistics?.quiz_average_score || 0}%`, desc: "Average quiz performance", icon: Zap, color: "var(--accent)" },
   ];
 
   return (
@@ -105,9 +108,9 @@ export default function Progress() {
             
             <div className="flex flex-col gap-10">
               {[
-                { label: "Foundations", sub: "Alphabet & Basics", val: Math.round((progress?.completed || 0) / (progress?.total_lessons || 10) * 100) },
-                { label: "Morphology", sub: "Noun & Verb Forms", val: 42 },
-                { label: "Syntax", sub: "Sentence Building", val: 18 }
+                { label: "Curriculum", sub: `${statistics?.lessons_completed || 0} of ${statistics?.total_lessons || 0} lessons`, val: completionPercent },
+                { label: "Quizzes", sub: `${statistics?.quiz_attempts || 0} attempts`, val: statistics?.quiz_average_score || 0 },
+                { label: "Grammar", sub: `${statistics?.grammar_activity_count || 0} activities`, val: Math.min((statistics?.grammar_activity_count || 0) * 10, 100) }
               ].map((item, i) => (
                 <div key={item.label}>
                   <div className="flex justify-between items-end mb-3">
@@ -144,10 +147,10 @@ export default function Progress() {
             
             <div className="flex flex-col gap-5">
               {[
-                { label: "Reading", stars: 4, icon: "📖" },
-                { label: "Writing", stars: 3, icon: "✍️" },
-                { label: "Speaking", stars: 2, icon: "🗣️" },
-                { label: "Prosody", stars: 1, icon: "💎" }
+                { label: "Reading", stars: Math.round(completionPercent / 20), icon: "📖" },
+                { label: "Writing", stars: Math.round(Math.min((statistics?.grammar_activity_count || 0) / 2, 5)), icon: "✍️" },
+                { label: "Speaking", stars: 0, icon: "🗣️" },
+                { label: "Prosody", stars: 0, icon: "💎" }
               ].map((skill, i) => (
                 <div key={skill.label} className="flex items-center justify-between p-4" style={{ background: 'var(--bg-main)', borderRadius: '14px' }}>
                   <div className="flex items-center gap-4">
@@ -165,7 +168,7 @@ export default function Progress() {
 
             <div style={{ marginTop: '40px', padding: '20px', background: 'rgba(192, 90, 43, 0.05)', borderRadius: '16px', textAlign: 'center' }}>
                <History size={20} style={{ color: 'var(--primary)', marginBottom: '8px' }} />
-               <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)' }}>Next session: <strong>Tomorrow, 8 AM</strong></p>
+               <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)' }}>Next session: <strong>{dashboard?.recommendation.title || 'Curriculum complete'}</strong></p>
             </div>
           </motion.section>
         </div>
