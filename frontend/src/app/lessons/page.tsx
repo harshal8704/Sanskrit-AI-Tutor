@@ -1,390 +1,784 @@
-﻿'use client';
-
-import { useEffect, useMemo, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { api } from '@/lib/api';
-import Sidebar from '@/components/Sidebar';
-import { motion } from 'framer-motion';
+"use client";
+import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { api } from "@/lib/api";
+import Sidebar from "@/components/Sidebar";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   BookOpen,
-  CheckCircle,
-  ChevronRight,
   Clock,
+  ArrowLeft,
+  Play,
+  CheckCircle2,
   Lock,
-  Star,
-  TrendingUp,
-  Unlock,
-} from 'lucide-react';
+  ChevronLeft,
+  ChevronRight,
+  Sparkles,
+  GraduationCap,
+  Award,
+  Target,
+  Menu,
+  X
+} from "lucide-react";
+import GreetingsLesson from "@/components/lessons/GreetingsLesson";
+import NumbersLesson from "@/components/lessons/NumbersLesson";
+import SelfIntroLesson from "@/components/lessons/SelfIntroLesson";
+import PronounsLesson from "@/components/lessons/PronounsLesson";
+import VerbsLesson from "@/components/lessons/VerbsLesson";
+import NounsLesson from "@/components/lessons/NounsLesson";
+import FamilyLesson from "@/components/lessons/FamilyLesson";
+import QuestionWordsLesson from "@/components/lessons/QuestionWordsLesson";
+import TimeLesson from "@/components/lessons/TimeLesson";
+import VibhaktiLesson from "@/components/lessons/VibhaktiLesson";
+import SandhiLesson from "@/components/lessons/SandhiLesson";
+import TensesLesson from "@/components/lessons/TensesLesson";
+import MoodsLesson from "@/components/lessons/MoodsLesson";
+import PronounsExtendedLesson from "@/components/lessons/PronounsExtendedLesson";
+import UpasargaLesson from "@/components/lessons/UpasargaLesson";
+import VoiceLesson from "@/components/lessons/VoiceLesson";
+import IndeclinablesLesson from "@/components/lessons/IndeclinablesLesson";
+import ParticiplesLesson from "@/components/lessons/ParticiplesLesson";
+import ReadingCompositionLesson from "@/components/lessons/ReadingCompositionLesson";
+import Samasa1Lesson from "@/components/lessons/Samasa1Lesson";
+import Samasa2Lesson from "@/components/lessons/Samasa2Lesson";
+import Participles2Lesson from "@/components/lessons/Participles2Lesson";
+import StriPratyayaLesson from "@/components/lessons/StriPratyayaLesson";
+import ChandasLesson from "@/components/lessons/ChandasLesson";
 
-interface Lesson {
-  id: string;
-  title: string;
-  description: string;
-  level: string;
-  module: string;
-  difficulty: number;
-  prerequisites: string[];
-  estimated_time: number;
-}
-
-interface ProgressState {
-  completed_lessons: string[];
-  concept_mastery: Record<string, number>;
-}
-
-const MODULE_ORDER = [
-  'module_1_foundations',
-  'module_2_building',
-  'module_3_nouns',
-  'module_4_tenses',
-  'module_5_grammar',
-  'module_6_syntax',
-  'module_7_advanced',
-];
-
-const MODULE_LABELS: Record<string, string> = {
-  module_1_foundations: '🌟 Foundations',
-  module_2_building: '🏗️ Building Blocks',
-  module_3_nouns: '📖 Nouns & Grammar',
-  module_4_tenses: '⏰ Tenses',
-  module_5_grammar: '🔍 Grammar Deep Dive',
-  module_6_syntax: '📝 Syntax',
-  module_7_advanced: '🚀 Advanced',
+// ─── Lesson Component Registry ────────────────────────────
+const LESSON_COMPONENTS: Record<number, React.ComponentType<{ onBack: () => void }>> = {
+  2: GreetingsLesson,
+  3: NumbersLesson,
+  4: SelfIntroLesson,
+  5: PronounsLesson,
+  6: VerbsLesson,
+  7: NounsLesson,
+  8: FamilyLesson,
+  9: QuestionWordsLesson,
+  10: TimeLesson,
+  11: VibhaktiLesson,
+  12: SandhiLesson,
+  13: TensesLesson,
+  14: MoodsLesson,
+  15: PronounsExtendedLesson,
+  16: UpasargaLesson,
+  17: VoiceLesson,
+  18: IndeclinablesLesson,
+  19: ParticiplesLesson,
+  20: ReadingCompositionLesson,
+  21: Samasa1Lesson,
+  22: Samasa2Lesson,
+  23: Participles2Lesson,
+  24: StriPratyayaLesson,
+  25: ChandasLesson,
 };
 
-const MODULE_DESCRIPTIONS: Record<string, string> = {
-  module_1_foundations: 'Core essentials and first Sanskrit foundations.',
-  module_2_building: 'Build confidence through everyday language patterns.',
-  module_3_nouns: 'Learn nouns, cases, and their practical usage.',
-  module_4_tenses: 'Master time, actions, and sentence structure.',
-  module_5_grammar: 'Deepen grammar accuracy and comprehension.',
-  module_6_syntax: 'Arrange words correctly in meaningful Sanskrit sentences.',
-  module_7_advanced: 'Reach advanced fluency with nuanced expression.',
+// Level configuration
+const LEVEL_CONFIG = {
+  beginner: {
+    label: "Beginner",
+    icon: GraduationCap,
+    color: "#3B82F6",
+    bgColor: "rgba(59, 130, 246, 0.08)",
+    description: "Foundations of Sanskrit script, basic vocabulary, and simple sentence construction."
+  },
+  intermediate: {
+    label: "Intermediate",
+    icon: Target,
+    color: "#8B5CF6",
+    bgColor: "rgba(139, 92, 246, 0.08)",
+    description: "Systematic grammar: declensions, sandhi, tenses, moods, and extended vocabulary."
+  },
+  advanced: {
+    label: "Advanced",
+    icon: Award,
+    color: "#10B981",
+    bgColor: "rgba(16, 185, 129, 0.08)",
+    description: "Literary Sanskrit: compounds, advanced participles, feminine formation, and prosody."
+  }
 };
 
-const EMPTY_PROGRESS: ProgressState = {
-  completed_lessons: [],
-  concept_mastery: {},
+const getLevelBadge = (level: string) => {
+  const config = LEVEL_CONFIG[level as keyof typeof LEVEL_CONFIG];
+  return config || LEVEL_CONFIG.beginner;
 };
 
-function normalizeProgress(raw: any): ProgressState {
-  if (!raw) return EMPTY_PROGRESS;
-
-  if (Array.isArray(raw.completed_lessons)) {
-    return {
-      completed_lessons: raw.completed_lessons,
-      concept_mastery: raw.concept_mastery || {},
-    };
-  }
-
-  if (raw.status === 'success') {
-    return {
-      completed_lessons: raw.lessons_completed || raw.completed_lessons || [],
-      concept_mastery: raw.progress?.concept_mastery || raw.concept_mastery || {},
-    };
-  }
-
-  return {
-    completed_lessons: raw.lessons_completed || raw.completed_lessons || [],
-    concept_mastery: raw.progress?.concept_mastery || raw.concept_mastery || {},
-  };
-}
-
-function isLessonAvailable(lesson: Lesson, completed: string[]) {
-  if (!lesson.prerequisites || lesson.prerequisites.length === 0) return true;
-  return lesson.prerequisites.every((prereq) => completed.includes(prereq));
-}
-
-function getMissingPrerequisites(lesson: Lesson, completed: string[]) {
-  if (!lesson.prerequisites || lesson.prerequisites.length === 0) return [];
-  return lesson.prerequisites.filter((prereq) => !completed.includes(prereq));
-}
-
-function getLevelColor(level: string) {
-  switch (level) {
-    case 'beginner':
-      return 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300';
-    case 'intermediate':
-      return 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300';
-    case 'advanced':
-      return 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300';
-    default:
-      return 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
-  }
-}
-
-export default function LessonsPage() {
-  const router = useRouter();
-  const [user, setUser] = useState<any>(null);
-  const [lessons, setLessons] = useState<Lesson[]>([]);
-  const [progress, setProgress] = useState<ProgressState>(EMPTY_PROGRESS);
+// ─── Alphabet Flashcards (Lesson 1) ───────────────────────
+const AlphabetFlashcards = () => {
+  const [vowelImages, setVowelImages] = useState<string[]>([]);
+  const [consonantImages, setConsonantImages] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem('user');
-    if (!storedUser) {
-      router.push('/');
+    const fetchAlphabets = async () => {
+      try {
+        const [vResponse, cResponse] = await Promise.all([
+          fetch('/api/alphabets?type=vowels'),
+          fetch('/api/alphabets?type=consonants')
+        ]);
+        const [vData, cData] = await Promise.all([vResponse.json(), cResponse.json()]);
+        if (vData.images) setVowelImages(vData.images);
+        if (cData.images) setConsonantImages(cData.images);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAlphabets();
+  }, []);
+
+  if (loading) return (
+    <div className="flex flex-col items-center justify-center py-40 gap-6">
+      <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 2 }} className="text-[var(--primary)]">
+        <Sparkles size={60} />
+      </motion.div>
+      <p className="text-[var(--text-dim)] font-medium">Preparing visual aids...</p>
+    </div>
+  );
+
+  return (
+    <div className="flex flex-col gap-12 mt-12 pb-20 max-w-6xl mx-auto">
+      <AnimatePresence>
+        <motion.div
+          key="vowels-section"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="zen-card overflow-hidden border border-[var(--border-soft)] shadow-2xl relative"
+        >
+          <div className="bg-gradient-to-r from-[var(--primary)] to-transparent p-10 flex items-center justify-between border-b border-[var(--border-soft)]">
+            <div className="flex items-center gap-6">
+              <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center text-white font-bold text-4xl shadow-xl ring-1 ring-white/30">अ</div>
+              <div>
+                <h3 className="text-3xl font-bold text-white tracking-tight">Sanskrit Vowels</h3>
+                <p className="text-white/70 text-sm font-semibold tracking-[4px] uppercase mt-1">Swaras (Foundations)</p>
+              </div>
+            </div>
+          </div>
+          <div className="p-10 bg-[var(--bg-card)]">
+            {vowelImages.length > 0 ? (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                {vowelImages.map((src, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="relative group p-4 bg-[var(--bg-main)] rounded-[32px] border border-[var(--border-soft)] shadow-inner"
+                  >
+                    <img
+                      src={src}
+                      alt="Sanskrit Vowels"
+                      className="w-full h-auto rounded-2xl shadow-lg group-hover:scale-[1.01] transition-transform duration-500"
+                      style={{ maxHeight: '600px', objectFit: 'contain' }}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="p-32 text-center bg-[var(--bg-main)] rounded-[40px] border-4 border-dashed border-[var(--border-soft)]">
+                <p className="text-[var(--text-light)] text-xl font-bold italic tracking-wide">Manuscripts for vowels arriving soon...</p>
+              </div>
+            )}
+          </div>
+        </motion.div>
+
+        <motion.div
+          key="consonants-section"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="zen-card overflow-hidden border border-[var(--border-soft)] shadow-2xl relative"
+        >
+          <div className="bg-gradient-to-r from-[var(--primary)] to-transparent p-10 flex items-center justify-between border-b border-[var(--border-soft)]">
+            <div className="flex items-center gap-6">
+              <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-3xl flex items-center justify-center text-white font-bold text-4xl shadow-xl ring-1 ring-white/30">क</div>
+              <div>
+                <h3 className="text-3xl font-bold text-white tracking-tight">Sanskrit Consonants</h3>
+                <p className="text-white/70 text-sm font-semibold tracking-[4px] uppercase mt-1">Vyanjanas (Structures)</p>
+              </div>
+            </div>
+          </div>
+          <div className="p-10 bg-[var(--bg-card)]">
+            {consonantImages.length > 0 ? (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                {consonantImages.map((src, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: idx * 0.1 }}
+                    className="relative group p-4 bg-[var(--bg-main)] rounded-[32px] border border-[var(--border-soft)] shadow-inner"
+                  >
+                    <img
+                      src={src}
+                      alt="Sanskrit Consonants"
+                      className="w-full h-auto rounded-2xl shadow-lg group-hover:scale-[1.01] transition-transform duration-500"
+                      style={{ maxHeight: '600px', objectFit: 'contain' }}
+                    />
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="p-32 text-center bg-[var(--bg-main)] rounded-[40px] border-4 border-dashed border-[var(--border-soft)]">
+                <p className="text-[var(--text-light)] text-xl font-bold italic tracking-wide">Consonant charts currently being prepared...</p>
+              </div>
+            )}
+          </div>
+        </motion.div>
+      </AnimatePresence>
+    </div>
+  );
+};
+
+// ─── Main Lessons Page ────────────────────────────────────
+export default function Lessons() {
+  const [user, setUser] = useState<any>(null);
+  const [lessons, setLessons] = useState<any[]>([]);
+  const [completedLessonIds, setCompletedLessonIds] = useState<string[]>([]);
+  const [masteryMap, setMasteryMap] = useState<Record<number, number>>({});
+  const [masteryLoading, setMasteryLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [selectedLesson, setSelectedLesson] = useState<any>(null);
+  const [toast, setToast] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeLevel, setActiveLevel] = useState<string>("all");
+  const router = useRouter();
+
+  useEffect(() => {
+    let userData: any = null;
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        userData = JSON.parse(storedUser);
+      }
+    } catch (e) {
+      console.error("Error reading stored user", e);
+    }
+
+    if (!userData || !localStorage.getItem("access_token")) {
+      router.replace("/");
       return;
     }
 
-    const currentUser = JSON.parse(storedUser);
-    setUser(currentUser);
+    setUser(userData);
 
-    const fetchData = async () => {
+    const fetchLessons = async () => {
       try {
-        const [lessonsResponse, progressResponse] = await Promise.all([
+        const [lessonResponse, progressResponse] = await Promise.all([
           api.lessons.getAll(),
-          api.bkt.getProgress(currentUser.username).catch(() => ({ status: 'error' })),
+          api.bkt.getProgress(userData.username),
         ]);
-
-        if (lessonsResponse?.success) {
-          setLessons(lessonsResponse.data || []);
-        }
-
-        setProgress(normalizeProgress(progressResponse));
-      } catch (error) {
-        console.error('Failed to load lessons:', error);
+        setLessons(Array.isArray(lessonResponse) ? lessonResponse : lessonResponse?.data || []);
+        setCompletedLessonIds(progressResponse?.completed_lessons || progressResponse?.lessons_completed || []);
+      } catch (err) {
+        console.error(err);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchData();
+    fetchLessons();
   }, [router]);
 
-  const groupedLessons = useMemo(() => {
-    const groups: Record<string, Lesson[]> = {};
+  useEffect(() => {
+    const fetchMastery = async () => {
+      if (user?.username) {
+        try {
+          const data = await api.user.getBKTMastery(user.username);
+          setMasteryMap(data.mastery);
+        } catch (err) {
+          console.error("Failed to fetch mastery", err);
+        } finally {
+          setMasteryLoading(false);
+        }
+      }
+    };
+    fetchMastery();
+  }, [user]);
 
-    for (const module of MODULE_ORDER) {
-      groups[module] = lessons.filter((lesson) => (lesson.module || 'uncategorized') === module);
+  const showToast = useCallback((message: string) => {
+    setToast(message);
+    setTimeout(() => setToast(null), 3000);
+  }, []);
+
+  const handleMarkComplete = async () => {
+    if (!selectedLesson || !user?.username) return;
+    try {
+      await api.bkt.markLessonComplete(user.username, selectedLesson.id);
+      setCompletedLessonIds((current) => Array.from(new Set([...current, String(selectedLesson.id)])));
+      showToast("✨ Lesson mastered! +50 XP");
+    } catch (err) {
+      console.error(err);
+      showToast("Failed to record progress");
     }
+  };
 
-    return groups;
-  }, [lessons]);
+  const handleNext = () => {
+    const currentIndex = lessons.findIndex(l => l.id === selectedLesson.id);
+    if (currentIndex < lessons.length - 1) {
+      setSelectedLesson(lessons[currentIndex + 1]);
+    }
+  };
 
-  const nextLesson = useMemo(() => {
-    return lessons.find((lesson) => {
-      const completed = progress.completed_lessons.includes(lesson.id);
-      return !completed && isLessonAvailable(lesson, progress.completed_lessons);
-    });
-  }, [lessons, progress]);
+  const handlePrev = () => {
+    const currentIndex = lessons.findIndex(l => l.id === selectedLesson.id);
+    if (currentIndex > 0) {
+      setSelectedLesson(lessons[currentIndex - 1]);
+    }
+  };
 
-  const completedCount = progress.completed_lessons.length;
-  const totalLessons = lessons.length;
-  const overallProgress = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
+  // Group lessons by level
+  const groupedLessons = lessons.reduce((acc: any, lesson: any) => {
+    const level = lesson.level || 'beginner';
+    if (!acc[level]) acc[level] = [];
+    acc[level].push(lesson);
+    return acc;
+  }, {});
 
-  if (loading) {
+  Object.keys(groupedLessons).forEach(level => {
+    groupedLessons[level].sort((a: any, b: any) => a.id - b.id);
+  });
+
+  const getFilteredLessons = () => {
+    if (activeLevel === "all") return lessons;
+    return lessons.filter(l => l.level === activeLevel);
+  };
+
+  const getCompletionCount = (level: string) => {
+    const levelLessons = lessons.filter(l => l.level === level);
+    const completed = levelLessons.filter(l => completedLessonIds.includes(String(l.id)));
+    return { total: levelLessons.length, completed: completed.length };
+  };
+
+  if (!user || loading) return (
+    <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-main)' }}>
+      <motion.div
+        animate={{ opacity: [0.4, 1, 0.4], scale: [0.98, 1.02, 0.98] }}
+        transition={{ repeat: Infinity, duration: 2 }}
+        style={{ fontSize: '1.2rem', color: 'var(--text-dim)', fontWeight: 600 }}
+      >
+        Preparing Curriculum...
+      </motion.div>
+    </div>
+  );
+
+  // ─── Lesson Detail View ─────────────────────────────────
+  if (selectedLesson) {
+    const LessonComponent = LESSON_COMPONENTS[selectedLesson.id];
+    const hasCustomComponent = selectedLesson.id === 1 || !!LessonComponent;
+    const currentIndex = lessons.findIndex(l => l.id === selectedLesson.id);
+    const isFirst = currentIndex === 0;
+    const isLast = currentIndex === lessons.length - 1;
+
     return (
       <div className="page-layout">
-        <Sidebar user={user} />
+        {/* Mobile menu button */}
+        <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+        <div className={`sidebar-overlay ${mobileMenuOpen ? 'open' : ''}`} onClick={() => setMobileMenuOpen(false)} />
+        <div className={mobileMenuOpen ? 'open' : ''} style={mobileMenuOpen ? {} : {}}>
+          <Sidebar user={user} />
+        </div>
         <main className="main-content">
-          <div className="flex items-center justify-center h-64">
-            <div className="text-center">
-              <div className="text-4xl mb-4 animate-pulse">🕉️</div>
-              <p className="text-gray-500 dark:text-gray-400">Loading lessons...</p>
+          <button className="flex items-center gap-2 mb-8" style={{ background: 'none', border: 'none', color: 'var(--text-dim)', cursor: 'pointer', fontWeight: '600', fontFamily: 'inherit', fontSize: '0.95rem' }} onClick={() => setSelectedLesson(null)}>
+            <ArrowLeft size={18} /> Back to Modules
+          </button>
+
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="zen-card-static"
+            style={{ padding: '48px', maxWidth: '1000px', margin: '0 auto' }}
+          >
+            {/* Level badge + difficulty */}
+            <div className="flex items-center gap-3" style={{ marginBottom: '16px' }}>
+              <span style={{
+                background: selectedLesson.level === 'beginner' ? 'rgba(39, 174, 96, 0.08)' : selectedLesson.level === 'advanced' ? 'rgba(16, 185, 129, 0.08)' : 'rgba(192, 90, 43, 0.08)',
+                color: selectedLesson.level === 'beginner' ? '#27ae60' : selectedLesson.level === 'advanced' ? '#10B981' : 'var(--primary)',
+                padding: '6px 14px',
+                borderRadius: '10px',
+                fontSize: '0.8rem',
+                fontWeight: '700',
+                textTransform: 'uppercase',
+                letterSpacing: '1px'
+              }}>
+                {selectedLesson.level} Path
+              </span>
+              {selectedLesson.difficulty && (
+                <div className="difficulty-bar">
+                  {Array.from({ length: 10 }).map((_, i) => (
+                    <div key={i} className={`difficulty-dot ${i < selectedLesson.difficulty ? 'active' : ''}`} />
+                  ))}
+                </div>
+              )}
             </div>
-          </div>
+
+            <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>{selectedLesson.title}</h1>
+            <div className="flex flex-wrap" style={{ gap: '20px', color: 'var(--text-light)', marginBottom: '32px' }}>
+              <div className="flex items-center gap-1"><Clock size={16} /> {selectedLesson.duration} minutes</div>
+              <div className="flex items-center gap-1"><BookOpen size={16} /> Concept Study</div>
+            </div>
+
+            <div style={{ fontSize: '1.15rem', lineHeight: '2', color: 'var(--text-main)', padding: '32px', background: 'var(--bg-main)', borderRadius: '20px', marginBottom: '32px' }}>
+              {!hasCustomComponent && selectedLesson.content}
+
+              {selectedLesson.id === 1 ? (
+                <AlphabetFlashcards />
+              ) : LessonComponent ? (
+                <LessonComponent onBack={() => setSelectedLesson(null)} />
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.5 }}
+                  className="devanagari"
+                  style={{ fontSize: '3rem', textAlign: 'center', marginTop: '60px', color: 'var(--primary)' }}
+                >
+                  {"सत्यं वद। धर्मं चर।"}
+                  <p style={{ fontSize: '1.2rem', color: 'var(--text-dim)', marginTop: '20px' }}>
+                    Advanced lesson content coming soon!
+                  </p>
+                </motion.div>
+              )}
+            </div>
+
+            <div className="flex justify-between items-center flex-wrap gap-4" style={{ marginTop: '32px' }}>
+              <div className="flex gap-3">
+                <button
+                  className="btn-secondary"
+                  onClick={handlePrev}
+                  disabled={isFirst}
+                >
+                  <ChevronLeft size={18} /> Previous
+                </button>
+                <button
+                  className="btn-secondary"
+                  onClick={handleNext}
+                  disabled={isLast}
+                >
+                  Next <ChevronRight size={18} />
+                </button>
+              </div>
+
+              <button className="btn-primary" onClick={handleMarkComplete}>
+                Mark as Complete <CheckCircle2 size={18} />
+              </button>
+            </div>
+          </motion.div>
         </main>
+
+        <AnimatePresence>
+          {toast && (
+            <motion.div
+              initial={{ opacity: 0, y: 20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.95 }}
+              className="toast toast-success"
+            >
+              <CheckCircle2 size={20} /> {toast}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     );
   }
 
+  // ─── Lesson Grid View ───────────────────────────────────
   return (
     <div className="page-layout">
+      <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+        {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+      </button>
+      <div className={`sidebar-overlay ${mobileMenuOpen ? 'open' : ''}`} onClick={() => setMobileMenuOpen(false)} />
       <Sidebar user={user} />
+
       <main className="main-content">
-        <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
-          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between mb-6">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-200">
-                📚 Sanskrit Lessons
-              </h1>
-              <p className="text-gray-500 dark:text-gray-400 mt-1">
-                {lessons.length} lessons across 7 modules
-              </p>
-            </div>
+        <header style={{ marginBottom: '48px' }}>
+          <h1 style={{ fontSize: '2.5rem', marginBottom: '8px' }}>Learning Modules</h1>
+          <p style={{ color: 'var(--text-dim)' }}>Select a step in your journey. We recommend starting with the foundations.</p>
+        </header>
 
-            <div className="min-w-[220px] rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-3 shadow-sm">
-              <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-300 mb-2">
-                <span>Overall progress</span>
-                <span className="font-semibold text-terracotta">{overallProgress}%</span>
-              </div>
-              <div className="h-2.5 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
-                <div
-                  className="h-full rounded-full bg-terracotta transition-all duration-500"
-                  style={{ width: `${overallProgress}%` }}
-                />
-              </div>
-            </div>
-          </div>
+        {/* Level Filter Tabs */}
+        <div className="flex gap-3" style={{ marginBottom: '40px', flexWrap: 'wrap' }}>
+          <button
+            onClick={() => setActiveLevel("all")}
+            style={{
+              padding: '10px 24px',
+              borderRadius: '100px',
+              background: activeLevel === "all" ? 'var(--primary)' : 'var(--bg-card)',
+              color: activeLevel === "all" ? '#fff' : 'var(--text-dim)',
+              border: '1px solid var(--border-soft)',
+              fontWeight: 700,
+              cursor: 'pointer',
+              transition: 'all 0.2s',
+              fontSize: '0.9rem',
+            }}
+          >
+            All ({lessons.length})
+          </button>
+          {Object.entries(LEVEL_CONFIG).map(([key, config]) => {
+            const count = lessons.filter(l => l.level === key).length;
+            const isActive = activeLevel === key;
+            return (
+              <button
+                key={key}
+                onClick={() => setActiveLevel(isActive ? "all" : key)}
+                style={{
+                  padding: '10px 24px',
+                  borderRadius: '100px',
+                  background: isActive ? config.color : 'var(--bg-card)',
+                  color: isActive ? '#fff' : 'var(--text-dim)',
+                  border: '1px solid var(--border-soft)',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s',
+                  fontSize: '0.9rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  boxShadow: isActive ? `0 4px 16px ${config.color}44` : 'none',
+                }}
+              >
+                <config.icon size={16} />
+                {config.label} ({count})
+              </button>
+            );
+          })}
+        </div>
 
-          {nextLesson && (
-            <div className="mb-6 flex items-center gap-2 rounded-xl border border-terracotta/30 bg-orange-50 px-4 py-3 text-sm text-terracotta dark:bg-orange-900/20 dark:text-orange-200">
-              <TrendingUp className="h-4 w-4" />
-              <span>Next up:</span>
-              <span className="font-semibold">{nextLesson.title}</span>
-            </div>
-          )}
-        </motion.div>
+        {/* Level Sections */}
+        {activeLevel === "all" ? (
+          Object.entries(LEVEL_CONFIG).map(([levelKey, config]) => {
+            const levelLessons = groupedLessons[levelKey] || [];
+            if (levelLessons.length === 0) return null;
+            const { total, completed } = getCompletionCount(levelKey);
+            const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
 
-        {MODULE_ORDER.map((moduleKey) => {
-          const moduleLessons = groupedLessons[moduleKey] || [];
-          if (!moduleLessons.length) return null;
-
-          const completedInModule = moduleLessons.filter((lesson) =>
-            progress.completed_lessons.includes(lesson.id)
-          ).length;
-
-          return (
-            <motion.section
-              key={moduleKey}
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mb-8"
-            >
-              <div className="mb-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-                <div className="mb-2 flex items-center justify-between gap-3">
-                  <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-300">
-                    {MODULE_LABELS[moduleKey] || moduleKey}
-                  </h2>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
-                    {completedInModule}/{moduleLessons.length} complete
-                  </span>
+            return (
+              <motion.div
+                key={levelKey}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{ marginBottom: '48px' }}
+              >
+                <div className="flex items-center justify-between flex-wrap gap-4 mb-4">
+                  <div className="flex items-center gap-3">
+                    <div style={{
+                      padding: '10px',
+                      borderRadius: '14px',
+                      background: config.bgColor,
+                      color: config.color,
+                    }}>
+                      <config.icon size={24} />
+                    </div>
+                    <div>
+                      <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-main)' }}>
+                        {config.label} Level
+                      </h2>
+                      <p style={{ fontSize: '0.85rem', color: 'var(--text-dim)', maxWidth: '500px' }}>
+                        {config.description}
+                      </p>
+                    </div>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-dim)' }}>
+                      {completed}/{total} Complete
+                    </div>
+                    <div style={{
+                      width: '120px',
+                      height: '6px',
+                      background: 'var(--border-soft)',
+                      borderRadius: '4px',
+                      marginTop: '4px',
+                      overflow: 'hidden',
+                    }}>
+                      <div style={{
+                        width: `${progress}%`,
+                        height: '100%',
+                        background: config.color,
+                        borderRadius: '4px',
+                        transition: 'width 0.6s ease',
+                      }} />
+                    </div>
+                  </div>
                 </div>
 
-                <p className="mb-3 text-sm text-gray-500 dark:text-gray-400">
-                  {MODULE_DESCRIPTIONS[moduleKey] || 'Complete the module journey.'}
-                </p>
-
-                <div className="h-2.5 w-full overflow-hidden rounded-full bg-gray-200 dark:bg-gray-700">
-                  <div
-                    className="h-full rounded-full bg-terracotta transition-all duration-500"
-                    style={{ width: `${moduleLessons.length ? (completedInModule / moduleLessons.length) * 100 : 0}%` }}
-                  />
-                </div>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                {moduleLessons.map((lesson) => {
-                  const completed = progress.completed_lessons.includes(lesson.id);
-                  const available = isLessonAvailable(lesson, progress.completed_lessons);
-                  const isNext = nextLesson?.id === lesson.id;
-                  const missingPrereqs = getMissingPrerequisites(lesson, progress.completed_lessons);
-                  const mastery = progress.concept_mastery?.[lesson.id] ?? (completed ? 100 : 0);
-
-                  return (
+                <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '24px' }}>
+                  {levelLessons.map((lesson: any, i: number) => (
                     <motion.div
                       key={lesson.id}
-                      whileHover={{ scale: 1.01 }}
-                      className={`rounded-2xl border p-5 shadow-sm transition-all duration-200 ${
-                        completed
-                          ? 'border-green-200 bg-green-50 dark:border-green-900 dark:bg-green-900/10'
-                          : available
-                            ? 'border-gray-200 bg-white hover:border-terracotta/40 hover:shadow-md dark:border-gray-700 dark:bg-gray-800'
-                            : 'border-gray-200 bg-gray-100 opacity-80 dark:border-gray-700 dark:bg-gray-800/80'
-                      }`}
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.05 }}
+                      whileHover={{ y: -6, scale: 1.01 }}
+                      className="zen-card"
+                      style={{ padding: '0', cursor: 'pointer', overflow: 'hidden', borderLeft: `4px solid ${config.color}` }}
+                      onClick={() => setSelectedLesson(lesson)}
                     >
-                      <div className="mb-3 flex items-start justify-between gap-3">
-                        <div className="flex-1">
-                          <div className="mb-2 flex flex-wrap items-center gap-2">
-                            <span className={`rounded-full px-2 py-1 text-[10px] font-medium uppercase tracking-wide ${getLevelColor(lesson.level)}`}>
-                              {lesson.level}
+                      <div style={{ padding: '28px' }}>
+                        <div className="flex justify-between items-start mb-4">
+                          <div className="flex items-center gap-2">
+                            <span style={{
+                              fontSize: '0.65rem',
+                              padding: '3px 10px',
+                              borderRadius: '8px',
+                              background: config.bgColor,
+                              color: config.color,
+                              fontWeight: '700',
+                              textTransform: 'uppercase',
+                              letterSpacing: '0.5px',
+                            }}>
+                              {config.label}
                             </span>
-                            {completed && (
-                              <span className="inline-flex items-center gap-1 rounded-full bg-green-100 px-2 py-1 text-[10px] font-medium text-green-700 dark:bg-green-900/30 dark:text-green-300">
-                                <CheckCircle className="h-3.5 w-3.5" />
-                                Complete
-                              </span>
-                            )}
-                            {!completed && available && (
-                              <span className="inline-flex items-center gap-1 rounded-full bg-blue-100 px-2 py-1 text-[10px] font-medium text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
-                                <Unlock className="h-3.5 w-3.5" />
-                                Available
-                              </span>
-                            )}
-                            {!completed && !available && (
-                              <span
-                                className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-2 py-1 text-[10px] font-medium text-gray-600 dark:bg-gray-700 dark:text-gray-300"
-                                title={missingPrereqs.length ? `Missing prerequisites: ${missingPrereqs.join(', ')}` : 'Locked'}
-                              >
-                                <Lock className="h-3.5 w-3.5" />
-                                Locked
-                              </span>
-                            )}
-                            {isNext && (
-                              <span className="inline-flex items-center gap-1 rounded-full bg-terracotta/10 px-2 py-1 text-[10px] font-medium text-terracotta dark:bg-terracotta/20 dark:text-orange-200">
-                                <BookOpen className="h-3.5 w-3.5" />
-                                Next
-                              </span>
-                            )}
+                            <span style={{ color: 'var(--text-light)', fontSize: '0.8rem' }}>
+                              ⏱️ {lesson.duration}m
+                            </span>
                           </div>
-
-                          <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                            {lesson.title}
-                          </h3>
-                          <p className="mt-2 line-clamp-2 text-sm text-gray-600 dark:text-gray-300">
-                            {lesson.description}
-                          </p>
-                        </div>
-
-                        <button
-                          type="button"
-                          onClick={() => router.push(`/lessons/${lesson.id}`)}
-                          className="rounded-full border border-gray-200 bg-white p-2 text-gray-500 transition-colors hover:border-terracotta/50 hover:text-terracotta dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300"
-                          aria-label={`Open ${lesson.title}`}
-                        >
-                          <ChevronRight className="h-4 w-4" />
-                        </button>
-                      </div>
-
-                      <div className="mb-3 flex flex-wrap items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
-                        <span className="inline-flex items-center gap-1.5">
-                          <Clock className="h-3.5 w-3.5" />
-                          {lesson.estimated_time || 20} min
-                        </span>
-                        <span className="inline-flex items-center gap-1.5">
-                          <Star className="h-3.5 w-3.5" />
-                          {lesson.difficulty || 1}/5
-                        </span>
-                        {completed && (
-                          <span className="inline-flex items-center gap-1.5 text-green-700 dark:text-green-300">
-                            <CheckCircle className="h-3.5 w-3.5" />
-                            {mastery}% mastery
+                          <span style={{
+                            fontSize: '0.7rem',
+                            color: 'var(--text-light)',
+                            fontWeight: '600',
+                          }}>
+                            #{lesson.id}
                           </span>
-                        )}
-                      </div>
-
-                      {missingPrereqs.length > 0 && !completed && (
-                        <div className="mb-3 rounded-lg border border-amber-200 bg-amber-50 px-2.5 py-2 text-[11px] text-amber-700 dark:border-amber-900 dark:bg-amber-900/20 dark:text-amber-200">
-                          Locked by: {missingPrereqs.join(', ')}
                         </div>
-                      )}
+                        <h3 style={{ fontSize: '1.3rem', marginBottom: '8px', color: 'var(--text-main)' }}>
+                          {lesson.title}
+                        </h3>
+                        <p style={{ color: 'var(--text-dim)', fontSize: '0.9rem', lineHeight: '1.5', height: '3.6em', overflow: 'hidden' }}>
+                          {lesson.description}
+                        </p>
 
-                      <button
-                        type="button"
-                        onClick={() => router.push(`/lessons/${lesson.id}`)}
-                        className={`w-full rounded-xl px-3 py-2 text-sm font-medium transition-colors ${
-                          completed
-                            ? 'bg-green-600 text-white hover:bg-green-700'
-                            : available
-                              ? 'bg-terracotta text-white hover:bg-terracotta-dark'
-                              : 'cursor-not-allowed bg-gray-200 text-gray-500 dark:bg-gray-700 dark:text-gray-300'
-                        }`}
-                        disabled={!available && !completed}
-                      >
-                        {completed ? 'Review Lesson' : available ? 'Start Lesson' : 'Locked'}
-                      </button>
+                        <div className="flex justify-between items-center mt-4">
+                          {!masteryLoading && masteryMap[lesson.id] !== undefined && (
+                            <div style={{ flex: 1, marginRight: '12px' }}>
+                              <div style={{ height: '4px', background: 'var(--border-soft)', borderRadius: '4px', overflow: 'hidden' }}>
+                                <motion.div
+                                  initial={{ width: 0 }}
+                                  animate={{ width: `${masteryMap[lesson.id] * 100}%` }}
+                                  transition={{ duration: 0.6 }}
+                                  style={{
+                                    height: '100%',
+                                    background: masteryMap[lesson.id] >= 0.7 ? 'var(--accent)' : 'var(--primary)',
+                                    borderRadius: '4px',
+                                  }}
+                                />
+                              </div>
+                              <div style={{ fontSize: '0.65rem', color: 'var(--text-light)', marginTop: '2px' }}>
+                                {Math.round(masteryMap[lesson.id] * 100)}% Mastery
+                              </div>
+                            </div>
+                          )}
+                          <div className="flex items-center gap-2" style={{ color: config.color, fontWeight: '700', fontSize: '0.85rem' }}>
+                            <Play size={16} fill={config.color} /> Start Lesson
+                          </div>
+                        </div>
+                      </div>
                     </motion.div>
-                  );
-                })}
-              </div>
-            </motion.section>
-          );
-        })}
+                  ))}
+
+                  {/* Advanced/Coming Soon Locks */}
+                  {levelKey === 'advanced' && lessons.length <= 25 && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="zen-card-static flex items-center justify-center"
+                      style={{ border: '2px dashed var(--border-soft)', background: 'transparent', minHeight: '200px' }}
+                    >
+                      <div style={{ textAlign: 'center', padding: '40px' }}>
+                        <Lock size={28} style={{ marginBottom: '16px', color: 'var(--text-light)', opacity: 0.5 }} />
+                        <p style={{ color: 'var(--text-light)', fontSize: '0.9rem', fontWeight: 600 }}>More advanced modules in development...</p>
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
+              </motion.div>
+            );
+          })
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+          >
+            <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(340px, 1fr))', gap: '24px' }}>
+              {getFilteredLessons().map((lesson: any, i: number) => {
+                const config = getLevelBadge(lesson.level);
+                return (
+                  <motion.div
+                    key={lesson.id}
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                    whileHover={{ y: -6, scale: 1.01 }}
+                    className="zen-card"
+                    style={{ padding: '0', cursor: 'pointer', overflow: 'hidden', borderLeft: `4px solid ${config.color}` }}
+                    onClick={() => setSelectedLesson(lesson)}
+                  >
+                    <div style={{ padding: '28px' }}>
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="flex items-center gap-2">
+                          <span style={{
+                            fontSize: '0.65rem',
+                            padding: '3px 10px',
+                            borderRadius: '8px',
+                            background: config.bgColor,
+                            color: config.color,
+                            fontWeight: '700',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.5px',
+                          }}>
+                            {config.label}
+                          </span>
+                          <span style={{ color: 'var(--text-light)', fontSize: '0.8rem' }}>
+                            ⏱️ {lesson.duration}m
+                          </span>
+                        </div>
+                        <span style={{
+                          fontSize: '0.7rem',
+                          color: 'var(--text-light)',
+                          fontWeight: '600',
+                        }}>
+                          #{lesson.id}
+                        </span>
+                      </div>
+                      <h3 style={{ fontSize: '1.3rem', marginBottom: '8px', color: 'var(--text-main)' }}>
+                        {lesson.title}
+                      </h3>
+                      <p style={{ color: 'var(--text-dim)', fontSize: '0.9rem', lineHeight: '1.5', height: '3.6em', overflow: 'hidden' }}>
+                        {lesson.description}
+                      </p>
+
+                      <div className="flex justify-between items-center mt-4">
+                        {!masteryLoading && masteryMap[lesson.id] !== undefined && (
+                          <div style={{ flex: 1, marginRight: '12px' }}>
+                            <div style={{ height: '4px', background: 'var(--border-soft)', borderRadius: '4px', overflow: 'hidden' }}>
+                              <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: `${masteryMap[lesson.id] * 100}%` }}
+                                transition={{ duration: 0.6 }}
+                                style={{
+                                  height: '100%',
+                                  background: masteryMap[lesson.id] >= 0.7 ? 'var(--accent)' : 'var(--primary)',
+                                  borderRadius: '4px',
+                                }}
+                              />
+                            </div>
+                            <div style={{ fontSize: '0.65rem', color: 'var(--text-light)', marginTop: '2px' }}>
+                              {Math.round(masteryMap[lesson.id] * 100)}% Mastery
+                            </div>
+                          </div>
+                        )}
+                        <div className="flex items-center gap-2" style={{ color: config.color, fontWeight: '700', fontSize: '0.85rem' }}>
+                          <Play size={16} fill={config.color} /> Start Lesson
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
       </main>
     </div>
   );

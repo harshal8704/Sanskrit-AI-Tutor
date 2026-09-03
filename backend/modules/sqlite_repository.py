@@ -76,6 +76,18 @@ CREATE TABLE IF NOT EXISTS xp_transactions (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+CREATE TABLE IF NOT EXISTS skill_mastery (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    skill_id TEXT NOT NULL,
+    mastery REAL NOT NULL,
+    attempts INTEGER NOT NULL,
+    correct INTEGER NOT NULL,
+    updated_at TEXT NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    UNIQUE (user_id, skill_id)
+);
+
 CREATE INDEX IF NOT EXISTS idx_lesson_completions_user_completed
     ON lesson_completions (user_id, completed_at);
 CREATE INDEX IF NOT EXISTS idx_quiz_attempts_user_submitted
@@ -86,6 +98,8 @@ CREATE INDEX IF NOT EXISTS idx_daily_activity_user_date
     ON daily_activity (user_id, activity_date);
 CREATE INDEX IF NOT EXISTS idx_xp_transactions_user_created
     ON xp_transactions (user_id, created_at);
+CREATE INDEX IF NOT EXISTS idx_skill_mastery_user_skill
+    ON skill_mastery (user_id, skill_id);
 """
 
 
@@ -152,6 +166,66 @@ class SQLiteRepository:
                 "SELECT id FROM users WHERE username = ?", (username,)
             ).fetchone()
         return int(row["id"]) if row else None
+
+    def record_bkt_observation(
+        self,
+        user_id: int,
+        skill_id: str,
+        is_correct: bool,
+        difficulty: int = 3,
+    ) -> Dict[str, Any]:
+        """Apply the BKT algorithm and persist mastery for one SQLite user."""
+        from modules.bkt_engine import BKTEngine
+
+        timestamp = datetime.now(timezone.utc).isoformat()
+        skill_key = str(skill_id)
+        calculator = BKTEngine.__new__(BKTEngine)
+        numeric_skill_id = int(skill_id) if skill_key.isdigit() else 0
+        params = calculator.get_skill_params(numeric_skill_id, difficulty)
+        with self.connect() as connection:
+            row = connection.execute(
+                "SELECT mastery, attempts, correct FROM skill_mastery "
+                "WHERE user_id = ? AND skill_id = ?",
+                (user_id, skill_key),
+            ).fetchone()
+            current_mastery = float(row["mastery"]) if row else 0.0
+            attempts = int(row["attempts"]) if row else 0
+            correct = int(row["correct"]) if row else 0
+            if attempts == 0:
+                current_mastery = params["l0"]
+            new_mastery = calculator.update_mastery(current_mastery, is_correct, params)
+            attempts += 1
+            if is_correct:
+                correct += 1
+            connection.execute(
+                """
+                INSERT INTO skill_mastery
+                    (user_id, skill_id, mastery, attempts, correct, updated_at)
+                VALUES (?, ?, ?, ?, ?, ?)
+                ON CONFLICT(user_id, skill_id) DO UPDATE SET
+                    mastery = excluded.mastery,
+                    attempts = excluded.attempts,
+                    correct = excluded.correct,
+                    updated_at = excluded.updated_at
+                """,
+                (user_id, skill_key, new_mastery, attempts, correct, timestamp),
+            )
+        return {
+            "skill_id": skill_id,
+            "mastery": new_mastery,
+            "attempts": attempts,
+            "correct": correct,
+        }
+
+    def get_skill_mastery(self, user_id: int) -> Dict[str, Dict[str, Any]]:
+        """Return only persisted mastery rows belonging to one user."""
+        with self.connect() as connection:
+            rows = connection.execute(
+                "SELECT skill_id, mastery, attempts, correct, updated_at "
+                "FROM skill_mastery WHERE user_id = ? ORDER BY skill_id",
+                (user_id,),
+            ).fetchall()
+        return {row["skill_id"]: dict(row) for row in rows}
 
     def _normalize_utc_date(self, value: Optional[str], field_name: str = "activity_date") -> str:
         if value is None:

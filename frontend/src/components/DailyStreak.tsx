@@ -21,13 +21,19 @@ export default function DailyStreak() {
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const data = await api.lessons.getDailyQuestions();
+                const res = await api.lessons.getDailyQuestions();
+                const data = Array.isArray(res) ? res : (res?.data || []);
                 setQuestions(data);
-                initializeStreak(data);
+                if (data && data.length > 0) {
+                    initializeStreak(data);
+                } else {
+                    setStatus('playing');
+                }
             } catch (err) {
                 console.error("Failed to load daily questions", err);
+                setStatus('playing');
             } finally {
-                setTimeout(() => setLoading(false), 600);
+                setLoading(false);
             }
         };
         fetchQuestions();
@@ -84,7 +90,7 @@ export default function DailyStreak() {
         setSelectedOption(option);
 
         const currentQ = questions[currentQuestionIndex];
-        
+
         if (option === currentQ.answer) {
             localStorage.setItem('sanskrit_last_played', currentDayStr);
 
@@ -111,9 +117,9 @@ export default function DailyStreak() {
     if (loading) {
         return (
             <div className="daily-loading-card">
-                <motion.div 
-                    animate={{ scale: [1, 1.15, 1], rotate: [0, 8, -8, 0] }} 
-                    transition={{ repeat: Infinity, duration: 1.8 }} 
+                <motion.div
+                    animate={{ scale: [1, 1.15, 1], rotate: [0, 8, -8, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.8 }}
                     className="loading-icon"
                 >
                     <Flame size={48} fill="var(--primary)" />
@@ -144,11 +150,11 @@ export default function DailyStreak() {
         <LayoutGroup>
             <AnimatePresence mode="wait">
                 {status === 'played_today' ? (
-                    <motion.div 
+                    <motion.div
                         key="played"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="played-today-card" 
+                        className="played-today-card"
                     >
                         <div className="card-inner">
                             <div className="info-side">
@@ -203,13 +209,13 @@ export default function DailyStreak() {
                         `}</style>
                     </motion.div>
                 ) : status === 'completed' ? (
-                    <motion.div 
+                    <motion.div
                         key="completed"
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
                         className="success-overlay-card"
                     >
-                        <motion.div 
+                        <motion.div
                             initial={{ y: 15 }} animate={{ y: 0 }}
                             className="success-content"
                         >
@@ -218,12 +224,12 @@ export default function DailyStreak() {
                             </div>
                             <h2 className="success-title">Uttamam! (उत्तमम्)</h2>
                             <p className="success-msg">Your answer is accurate. Your daily streak has reached <strong>{streak} days</strong>.</p>
-                            
+
                             <div className="reward-badges">
                                 <div className="reward-pill">+25 Karma Points</div>
                                 <div className="reward-pill">Level Progress Boosted</div>
                             </div>
-                            
+
                             <button onClick={() => window.location.reload()} className="dismiss-btn">
                                 Continue Learning Journey <ArrowRight size={18} />
                             </button>
@@ -250,7 +256,7 @@ export default function DailyStreak() {
                         `}</style>
                     </motion.div>
                 ) : status === 'failed' ? (
-                    <motion.div 
+                    <motion.div
                         key="failed"
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -281,7 +287,7 @@ export default function DailyStreak() {
                         `}</style>
                     </motion.div>
                 ) : (
-                    <motion.div 
+                    <motion.div
                         key="playing"
                         layout
                         initial={{ opacity: 0, scale: 0.98 }}
@@ -346,7 +352,7 @@ export default function DailyStreak() {
 
                         <div className="quest-footer">
                             <div className="progress-bar-wrap">
-                                <motion.div 
+                                <motion.div
                                     className="progress-fill"
                                     initial={{ width: 0 }}
                                     animate={{ width: `${(currentDay / 50) * 100}%` }}
@@ -374,13 +380,13 @@ export default function DailyStreak() {
                             .day-badge { background: var(--primary-light); color: var(--primary); padding: 5px 14px; border-radius: 10px; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.5px; border: 1px solid rgba(var(--primary-rgb),0.2); }
                             .topic-label { font-size: 0.82rem; font-weight: 700; color: var(--text-dim); display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: 1px; }
                             .header-streak { display: flex; align-items: center; gap: 6px; color: #f59e0b; font-weight: 900; font-size: 1.25rem; }
-                            
+
                             .quest-body { padding: 36px 32px; }
                             .quest-question { font-size: 1.65rem; font-weight: 800; color: var(--text-main); margin-bottom: 32px; line-height: 1.4; letter-spacing: -0.4px; }
-                            
+
                             .options-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
                             @media (min-width: 768px) { .options-grid { grid-template-columns: repeat(3, 1fr); } }
-                            
+
                             .option-btn {
                                 background: var(--bg-main);
                                 border: 1.5px solid var(--border-soft);
@@ -397,23 +403,23 @@ export default function DailyStreak() {
                                 box-shadow: var(--shadow-sm);
                             }
                             .option-btn:hover:not(.selected) { border-color: var(--primary); transform: translateY(-3px); box-shadow: var(--shadow-md); }
-                            .option-btn.selected { 
-                                background: var(--primary); 
-                                border-color: var(--primary); 
+                            .option-btn.selected {
+                                background: var(--primary);
+                                border-color: var(--primary);
                                 color: #ffffff !important;
                                 transform: scale(1.01);
-                                boxShadow: var(--shadow-glow); 
+                                boxShadow: var(--shadow-glow);
                             }
-                            .option-index { 
-                                width: 30px; 
-                                height: 30px; 
-                                background: rgba(var(--primary-rgb), 0.12); 
-                                border-radius: 10px; 
-                                color: var(--primary); 
-                                font-weight: 800; 
-                                font-size: 0.8rem; 
-                                display: flex; 
-                                align-items: center; 
+                            .option-index {
+                                width: 30px;
+                                height: 30px;
+                                background: rgba(var(--primary-rgb), 0.12);
+                                border-radius: 10px;
+                                color: var(--primary);
+                                font-weight: 800;
+                                font-size: 0.8rem;
+                                display: flex;
+                                align-items: center;
                                 justify-content: center;
                                 transition: all 0.3s;
                             }
@@ -425,7 +431,7 @@ export default function DailyStreak() {
                             .hint-icon { width: 38px; height: 38px; background: rgba(245, 158, 11, 0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: #d97706; flex-shrink: 0; }
                             .hint-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: #d97706; letter-spacing: 1px; margin-bottom: 3px; }
                             .hint-text { margin: 0; color: var(--text-main); line-height: 1.5; font-size: 0.92rem; font-weight: 500; }
-                            
+
                             .quest-footer { background: var(--bg-main); padding: 0; }
                             .progress-bar-wrap { height: 6px; background: var(--border-soft); width: 100%; position: relative; }
                             .progress-fill { height: 100%; background: var(--primary); position: absolute; left: 0; top: 0; border-radius: 0 3px 3px 0; }

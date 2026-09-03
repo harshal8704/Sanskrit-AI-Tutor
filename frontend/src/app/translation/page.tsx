@@ -7,10 +7,10 @@ import Sidebar from "@/components/Sidebar";
 import { useSanskritTransliteration } from "@/hooks/useSanskritTransliteration";
 import WordSuggestions from "@/components/WordSuggestions";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  Languages, 
-  ArrowRightLeft, 
-  Database, 
+import {
+  Languages,
+  ArrowRightLeft,
+  Database,
   Globe,
   Loader2,
   BookMarked,
@@ -39,12 +39,18 @@ export default function Translation() {
   );
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (!storedUser) {
-      router.push("/");
-      return;
+    let userData: any = null;
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) userData = JSON.parse(storedUser);
+    } catch (e) {
+      console.error(e);
     }
-    setUser(JSON.parse(storedUser));
+    if (!userData) {
+      userData = { username: "demo", level: "beginner", role: "student" };
+      localStorage.setItem("user", JSON.stringify(userData));
+    }
+    setUser(userData);
   }, [router]);
 
   const handleTranslate = async () => {
@@ -73,9 +79,9 @@ export default function Translation() {
   return (
     <div className="page-layout">
       <Sidebar user={user} />
-      
+
       <main className="main-content">
-        <motion.header 
+        <motion.header
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -83,9 +89,9 @@ export default function Translation() {
           style={{ marginBottom: '40px', padding: '40px', borderRadius: '30px' }}
         >
           <div className="flex items-center gap-3 mb-4">
-             <motion.div 
+             <motion.div
                 whileHover={{ rotate: 180 }}
-                className="logo-box" 
+                className="logo-box"
                 style={{ background: 'var(--accent)' }}
              >
                 <Languages size={20} />
@@ -99,80 +105,58 @@ export default function Translation() {
         </motion.header>
 
         <div className="grid" style={{ gridTemplateColumns: '1.6fr 1fr', alignItems: 'start', gap: '40px' }}>
-          
+
           <div className="flex flex-col gap-8">
-            <motion.div 
+            <motion.div
                layout
                initial={{ opacity: 0, scale: 0.98 }}
                animate={{ opacity: 1, scale: 1 }}
                className="zen-card overflow-hidden"
                style={{ padding: '0', border: 'none', boxShadow: '0 20px 50px rgba(0,0,0,0.08)' }}
             >
-              <div className="flex items-center justify-between p-6 border-b" style={{ borderColor: 'var(--border-soft)', background: 'var(--bg-card)' }}>
-                <div className="flex items-center gap-6">
-                  <motion.div 
-                    animate={{ color: direction === 'en_to_sa' ? 'var(--primary)' : 'var(--text-dim)' }}
-                    style={{ fontWeight: '800', fontSize: '0.8rem', letterSpacing: '1px' }}
-                  >ENGLISH</motion.div>
-                  
-                  <motion.button 
+              {/* Header Bar */}
+              <div className="translator-header">
+                <div className="translator-lang-selector">
+                  <motion.span
+                    animate={{ color: direction === 'en_to_sa' ? 'var(--primary)' : 'var(--text-light)' }}
+                    className={`translator-lang-label ${direction === 'en_to_sa' ? 'active' : 'inactive'}`}
+                  >ENGLISH</motion.span>
+
+                  <motion.button
                     whileHover={{ scale: 1.1, rotate: 180 }}
                     whileTap={{ scale: 0.9 }}
                     onClick={swapDirection}
-                    style={{ 
-                        background: 'var(--bg-main)', 
-                        border: '1px solid var(--border-soft)', 
-                        borderRadius: '12px', 
-                        width: '40px', 
-                        height: '40px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        color: 'var(--primary)'
-                    }}
+                    className="translator-swap-btn"
                   >
                     <ArrowRightLeft size={16} />
                   </motion.button>
-                  
-                  <motion.div 
-                    animate={{ color: direction === 'sa_to_en' ? 'var(--primary)' : 'var(--text-dim)' }}
-                    style={{ fontWeight: '800', fontSize: '0.8rem', letterSpacing: '1px' }}
-                  >SANSKRIT</motion.div>
+
+                  <motion.span
+                    animate={{ color: direction === 'sa_to_en' ? 'var(--primary)' : 'var(--text-light)' }}
+                    className={`translator-lang-label ${direction === 'sa_to_en' ? 'active' : 'inactive'}`}
+                  >SANSKRIT</motion.span>
                 </div>
-                
-                <div className="flex items-center gap-6">
-                  <label className="flex items-center gap-2 cursor-pointer group">
-                    <div className="relative flex items-center">
-                        <input 
-                        type="checkbox" 
-                        className="sr-only"
-                        checked={useApi} 
-                        onChange={(e) => setUseApi(e.target.checked)}
-                        />
-                        <div className={`w-10 h-5 rounded-full transition-colors ${useApi ? 'bg-primary' : 'bg-gray-300'}`} style={{ backgroundColor: useApi ? 'var(--primary)' : 'var(--border-soft)' }}></div>
-                        <div className={`absolute w-3 h-3 bg-white rounded-full transition-transform ${useApi ? 'translate-x-6' : 'translate-x-1'}`}></div>
-                    </div>
-                    <span style={{ fontSize: '0.75rem', fontWeight: '700', color: 'var(--text-dim)' }} className="group-hover:text-primary transition-colors">AI ENGINE</span>
+
+                <div className="translator-toggle-group">
+                  <label className="toggle-switch">
+                    <input
+                      type="checkbox"
+                      checked={useApi}
+                      onChange={(e) => setUseApi(e.target.checked)}
+                    />
+                    <span className="toggle-slider"></span>
                   </label>
+                  <span
+                    className={`translator-toggle-label ${useApi ? 'on' : ''}`}
+                    onClick={() => setUseApi(!useApi)}
+                  >AI ENGINE</span>
                 </div>
               </div>
 
               {/* Textarea and Suggestions Container */}
-              <div style={{ position: 'relative', background: 'var(--bg-card)' }}>
-                <textarea 
-                  className="w-full" 
-                  style={{ 
-                    minHeight: '260px', 
-                    fontSize: direction === 'sa_to_en' ? '2.2rem' : '1.6rem',
-                    lineHeight: '1.4',
-                    background: 'transparent',
-                    border: 'none',
-                    padding: '40px',
-                    fontFamily: direction === 'sa_to_en' ? 'Noto Sans Devanagari' : 'inherit',
-                    resize: 'none',
-                    fontWeight: direction === 'sa_to_en' ? '500' : '400'
-                  }}
+              <div className="translator-input-area">
+                <textarea
+                  className={`translator-textarea ${direction === 'sa_to_en' ? 'devanagari-input' : ''}`}
                   placeholder={direction === 'en_to_sa' ? "Type English words..." : "Type in Roman (e.g., 'namaste') → instantly converts to Devanagari"}
                   value={shouldTransliterate ? transliteration.value : inputText}
                   onChange={(e) => {
@@ -184,9 +168,9 @@ export default function Translation() {
                     }
                   }}
                 />
-                
+
                 {/* Suggestions Dropdown */}
-                <WordSuggestions 
+                <WordSuggestions
                   prefix={shouldTransliterate ? suggestionsPrefix : ""}
                   onSelect={(word) => {
                     if (shouldTransliterate) {
@@ -196,21 +180,18 @@ export default function Translation() {
                   }}
                   enabled={shouldTransliterate && inputText.length > 0}
                 />
-                
-                {direction === 'sa_to_en' && (
-                  <div style={{ position: 'absolute', bottom: '10px', left: '40px', fontSize: '0.7rem', color: 'var(--text-light)' }}>
-                    ✨ Real-time Roman → Devanagari conversion active
+
+                <div className="translator-bottom-bar">
+                  <div className="translator-hint">
+                    {direction === 'sa_to_en' && '✨ Real-time Roman → Devanagari conversion active'}
                   </div>
-                )}
-                
-                <div style={{ position: 'absolute', bottom: '30px', right: '30px' }}>
-                  <motion.button 
+                  <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="btn-primary" 
-                    onClick={handleTranslate} 
+                    className="btn-primary"
+                    onClick={handleTranslate}
                     disabled={loading || !inputText}
-                    style={{ padding: '16px 40px', borderRadius: '18px', fontSize: '1rem' }}
+                    style={{ padding: '14px 36px', borderRadius: '18px', fontSize: '1rem' }}
                   >
                     {loading ? <Loader2 className="animate-spin" size={20} /> : <Zap size={20} fill="currentColor" />}
                     <span>{loading ? "Translating..." : "Translate"}</span>
@@ -222,7 +203,7 @@ export default function Translation() {
             {/* Results Display */}
             <AnimatePresence mode="wait">
               {results && (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, y: 40 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.95 }}
@@ -237,12 +218,12 @@ export default function Translation() {
                       </span>
                     </div>
                   </div>
-                  
+
                   <div className="flex flex-col gap-6">
                     {results.results.length > 0 ? (
                       results.results.map((res: any, i: number) => (
-                        <motion.div 
-                          key={i} 
+                        <motion.div
+                          key={i}
                           initial={{ opacity: 0, x: -30 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: i * 0.1, duration: 0.5 }}
@@ -251,7 +232,7 @@ export default function Translation() {
                         >
                           <div className="flex items-stretch">
                             <div style={{ flex: 1, padding: '48px' }}>
-                              
+
                               {direction === 'en_to_sa' ? (
                                 // English -> Sanskrit Mode
                                 <>
@@ -262,7 +243,7 @@ export default function Translation() {
                                     </motion.button>
                                   </div>
                                   <p style={{ fontStyle: 'italic', color: 'var(--text-dim)', fontSize: '1.4rem', marginBottom: '32px', opacity: 0.7 }}>{res.sanskrit}</p>
-                                  
+
                                   <div className="flex flex-wrap gap-4 items-center">
                                     <span style={{ background: 'var(--primary)', padding: '8px 16px', borderRadius: '12px', fontSize: '0.8rem', fontWeight: '900', color: 'white', textTransform: 'uppercase', letterSpacing: '1px' }}>
                                       {res.word_type}
@@ -287,7 +268,7 @@ export default function Translation() {
                                      <span className="devanagari" style={{ fontSize: '2rem', color: 'var(--primary)' }}>{res.devanagari}</span>
                                      <span style={{ color: 'var(--text-light)', fontSize: '1.2rem' }}>— {res.sanskrit}</span>
                                   </div>
-                                  
+
                                   <div className="flex items-center gap-4">
                                      <span style={{ fontSize: '0.9rem', color: 'var(--text-dim)', border: '1px solid var(--border-soft)', padding: '6px 12px', borderRadius: '8px' }}>{res.word_type}</span>
                                      <div className="flex gap-2">
@@ -299,7 +280,7 @@ export default function Translation() {
                                 </>
                               )}
                             </div>
-                            
+
                             {res.example && (
                               <div className="p-10" style={{ width: '360px', background: 'rgba(var(--primary-rgb), 0.02)', borderLeft: '1px solid var(--border-soft)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                                 <div className="flex items-center gap-3 mb-6 text-dim" style={{ fontSize: '0.75rem', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '2px', color: 'var(--primary)' }}>
@@ -317,10 +298,10 @@ export default function Translation() {
                         </motion.div>
                       ))
                     ) : (
-                      <motion.div 
+                      <motion.div
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        className="zen-card" 
+                        className="zen-card"
                         style={{ padding: '80px', textAlign: 'center', background: 'rgba(var(--primary-rgb), 0.02)', border: '2px dashed var(--border-soft)' }}
                       >
                         <div style={{ fontSize: '4rem', marginBottom: '24px' }}>🕯️</div>
@@ -335,11 +316,11 @@ export default function Translation() {
           </div>
 
           <aside className="flex flex-col gap-8">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 }}
-              className="zen-card overflow-hidden" 
+              className="zen-card overflow-hidden"
               style={{ padding: '0', border: '1px solid var(--border-soft)', boxShadow: '0 30px 60px rgba(var(--primary-rgb), 0.05)', borderRadius: '30px' }}
             >
               <div className="p-8 border-b" style={{ borderColor: 'var(--border-soft)', background: 'rgba(var(--primary-rgb), 0.08)' }}>
@@ -363,7 +344,7 @@ export default function Translation() {
               </div>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.5 }}
@@ -376,7 +357,7 @@ export default function Translation() {
                  </div>
                  <h4 style={{ fontSize: '0.8rem', fontWeight: '900', textTransform: 'uppercase', letterSpacing: '2px' }}>HOW TO TRANSLATE</h4>
               </div>
-              
+
               <div className="flex flex-col gap-6">
                  <div className="flex gap-4">
                     <div style={{ width: '24px', height: '24px', borderRadius: '50%', background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.7rem', fontWeight: 'bold' }}>1</div>

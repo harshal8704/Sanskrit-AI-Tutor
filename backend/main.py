@@ -187,6 +187,92 @@ def get_question_words():
 def get_time_and_days():
     return db.get_time_and_days()
 
+@app.get("/api/lessons/vibhakti")
+def get_vibhakti():
+    """Get vibhakti (case) data for Lesson 11"""
+    data = db.get_vibhakti()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/sandhi")
+def get_sandhi():
+    """Get sandhi data for Lesson 12"""
+    data = db.get_sandhi()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/tenses")
+def get_tenses():
+    """Get verb tenses data for Lesson 13"""
+    data = db.get_tenses()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/moods")
+def get_moods():
+    """Get verb moods data for Lesson 14"""
+    data = db.get_moods()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/pronouns-extended")
+def get_pronouns_extended():
+    """Get extended pronouns data for Lesson 15"""
+    data = db.get_pronouns_extended()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/upasarga")
+def get_upasarga():
+    """Get upasarga data for Lesson 16"""
+    data = db.get_upasarga()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/voice")
+def get_voice():
+    """Get active/passive voice data for Lesson 17"""
+    data = db.get_voice()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/indeclinables")
+def get_indeclinables():
+    """Get indeclinables data for Lesson 18"""
+    data = db.get_indeclinables()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/participles")
+def get_participles():
+    """Get participles data for Lesson 19"""
+    data = db.get_participles()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/reading-composition")
+def get_reading_composition():
+    """Get reading and composition data for Lesson 20"""
+    data = db.get_reading_composition()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/samasa1")
+def get_samasa1():
+    """Get Samāsa Part 1 data for Lesson 21"""
+    data = db.get_samasa1()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/samasa2")
+def get_samasa2():
+    data = db.get_samasa2()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/participles2")
+def get_participles2():
+    data = db.get_participles2()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/stri-pratyaya")
+def get_stri_pratyaya():
+    data = db.get_stri_pratyaya()
+    return {"success": True, "data": data}
+
+@app.get("/api/lessons/chandas")
+def get_chandas():
+    data = db.get_chandas()
+    return {"success": True, "data": data}
+
 @app.get("/api/daily-questions")
 def get_daily_questions():
     with open(os.path.join(DATA_DIR, 'dailyQuestions.json'), encoding='utf-8') as questions_file:
@@ -282,7 +368,14 @@ def get_dashboard_stats(username: str, request: Request = None):
 @app.get("/dashboard/{username}")
 def get_dashboard(username: str, request: Request = None):
     user_id = _resolve_user(username, request)
-    return learning_db.get_dashboard_summary(user_id, db.load_all_lessons())
+    summary = learning_db.get_dashboard_summary(user_id, db.load_all_lessons())
+    mastery = learning_db.get_skill_mastery(user_id)
+    summary["mastery"] = {
+        "average": sum(item["mastery"] for item in mastery.values()) / len(mastery) if mastery else 0.0,
+        "mastered_skills": sum(1 for item in mastery.values() if item["mastery"] >= 0.7),
+        "skills": mastery,
+    }
+    return summary
 
 @app.get("/streak/{username}")
 def get_streak_summary(username: str, request: Request = None):
@@ -307,8 +400,9 @@ def mark_lesson_complete(username: str, payload: Dict[str, Any] = Body(...), req
     user_id = _resolve_user(username, request)
 
     lesson_id = payload.get("lesson_id")
-    if not isinstance(lesson_id, str) or not lesson_id:
+    if not isinstance(lesson_id, (str, int)) or not str(lesson_id):
         raise HTTPException(status_code=400, detail="lesson_id is required")
+    lesson_id = str(lesson_id)
 
     lesson = next(
         (item for item in db.load_all_lessons() if item.get("id") == lesson_id),
@@ -366,8 +460,15 @@ def submit_quiz(username: str, req: QuizSubmissionRequest, request: Request = No
         correct_answers=correct_answers,
         total_questions=total_questions,
     )
+    mastery_observations = []
+    difficulty = int(lesson.get("difficulty", 3))
+    for question in questions:
+        is_correct = req.answers[str(question["id"])] == question.get("correct")
+        mastery_observations.append(
+            learning_db.record_bkt_observation(user_id, req.lesson_id, is_correct, difficulty)
+        )
     learning_db.record_learning_day(user_id, source="quiz")
-    return attempt
+    return {**attempt, "mastery": mastery_observations[-1] if mastery_observations else None}
 
 # ─── Suggestions Endpoint (Local DB + Groq Fallback) ──────────────────────────
 @app.get("/suggestions")
@@ -377,10 +478,10 @@ def get_suggestions(prefix: str, limit: int = 6):
     """
     if not prefix or len(prefix) < 1:
         return {"suggestions": []}
-    
+
     matches = []
     seen = set()
-    
+
     # First, search local database in 'devanagari' column
     df = translator.df
     for _, row in df.iterrows():
@@ -394,7 +495,7 @@ def get_suggestions(prefix: str, limit: int = 6):
             })
             if len(matches) >= limit:
                 return {"suggestions": matches}
-    
+
     # Also check 'sanskrit' transliterated column (e.g., "agniḥ" -> "अग्निः")
     if len(matches) < limit:
         for _, row in df.iterrows():
@@ -409,7 +510,7 @@ def get_suggestions(prefix: str, limit: int = 6):
                 })
                 if len(matches) >= limit:
                     return {"suggestions": matches}
-    
+
     # If not enough matches and Groq API key exists, call AI for suggestions
     if len(matches) < limit and translator.api_key:
         try:
@@ -448,7 +549,7 @@ def get_suggestions(prefix: str, limit: int = 6):
                                 break
         except Exception as e:
             print(f"Groq suggestion error: {e}")
-    
+
     return {"suggestions": matches}
 
 # ─── Snake & Ladder Translation Game ──────────────────────────
@@ -477,7 +578,7 @@ def get_lesson_by_id(lesson_id: str):
         return {"success": False, "message": "Lesson not found"}
     except Exception as e:
         return {"success": False, "message": str(e)}
-    
+
 @app.post("/game/turn")
 def game_turn(req: GameTurnRequest):
     """Process one turn: validate the answer, move the player."""
@@ -494,6 +595,65 @@ def odd_answer(req: OddAnswerRequest):
     """Check the user's answer for Odd One Out."""
     return check_answer(req.question_data, req.user_choice)
 
+# ─── BKT / Adaptive Learning Endpoints ──────────────────
+
+class LessonAttemptRequest(BaseModel):
+    lesson_id: int | str
+    correct: bool
+    username: str
+
+@app.post("/lesson/attempt")
+def lesson_attempt(req: LessonAttemptRequest, request: Request = None):
+    """
+    Record a student's attempt on a lesson (skill).
+    Updates BKT mastery and returns updated progress.
+    """
+    user_id = _resolve_user(req.username, request)
+    lesson_id = str(req.lesson_id)
+    lesson = next((l for l in db.load_all_lessons() if str(l.get('id')) == lesson_id), None)
+    if not lesson:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+
+    result = learning_db.record_bkt_observation(
+        user_id, lesson_id, req.correct, int(lesson.get('difficulty', 3))
+    )
+
+    return {
+        "skill_id": result["skill_id"],
+        "mastery": result["mastery"],
+        "attempts": result["attempts"],
+        "correct": result["correct"],
+        "recommended_lesson": learning_db.get_next_lesson_recommendation(
+            user_id, db.load_all_lessons()
+        ),
+    }
+
+@app.get("/bkt/summary/{username}")
+def get_bkt_summary(username: str, request: Request = None):
+    """Get the authenticated user's BKT progress summary from SQLite."""
+    user_id = _resolve_user(username, request)
+    skills = learning_db.get_skill_mastery(user_id)
+    mastered = sum(1 for skill in skills.values() if skill["mastery"] >= 0.7)
+    average = sum(skill["mastery"] for skill in skills.values()) / len(skills) if skills else 0.0
+    return {
+        "total_skills": len(skills),
+        "mastered_skills": mastered,
+        "average_mastery": average,
+        "skills": skills,
+    }
+
+@app.get("/bkt/mastery/{username}")
+def get_bkt_mastery(username: str, request: Request = None):
+    """Get persisted mastery for the authenticated user."""
+    user_id = _resolve_user(username, request)
+    lessons = db.load_all_lessons()
+    mastery_map = learning_db.get_skill_mastery(user_id)
+    return {
+        "mastery": {str(k): value["mastery"] for k, value in mastery_map.items()},
+        "total_lessons": len(lessons),
+    }
+
+
 # ─── Test API Key Endpoint ────────────────────────────────────
 @app.get("/test-api")
 def test_api():
@@ -508,11 +668,11 @@ def test_api():
 if __name__ == "__main__":
     import uvicorn
     import os
-    
+
     # Standardize on the documented backend port unless an override is explicitly set.
     port_str = os.getenv("PORT", "8000")
     port = int(port_str) if port_str.isdigit() else 8000
-    
+
     try:
         uvicorn.run(app, host="0.0.0.0", port=port)
     except OSError as e:

@@ -3,30 +3,62 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { api, DashboardResponse } from "@/lib/api";
 import Sidebar from "@/components/Sidebar";
+import DailyStreak from "@/components/DailyStreak";
 import { motion } from "framer-motion";
-import { 
-  Trophy, 
-  Flame, 
-  Target, 
-  ChevronRight,
+import {
+  Trophy,
+  Flame,
+  Target,
   BookOpen,
-  History
+  History,
+  Sparkles,
+  Zap,
+  Menu,
+  X,
+  ArrowRight
 } from "lucide-react";
+
+// Sanskrit motivational quotes that rotate
+const SANSKRIT_QUOTES = [
+  { sanskrit: "विद्या ददाति विनयम्", transliteration: "Vidyā dadāti vinayam", meaning: "Knowledge gives humility" },
+  { sanskrit: "सत्यमेव जयते", transliteration: "Satyameva jayate", meaning: "Truth alone triumphs" },
+  { sanskrit: "अहिंसा परमो धर्मः", transliteration: "Ahiṃsā paramo dharmaḥ", meaning: "Non-violence is the highest duty" },
+  { sanskrit: "वसुधैव कुटुम्बकम्", transliteration: "Vasudhaiva kuṭumbakam", meaning: "The world is one family" },
+  { sanskrit: "योगः कर्मसु कौशलम्", transliteration: "Yogaḥ karmasu kauśalam", meaning: "Yoga is skill in action" },
+  { sanskrit: "धर्मो रक्षति रक्षितः", transliteration: "Dharmo rakṣati rakṣitaḥ", meaning: "Dharma protects those who protect it" },
+];
 
 export default function Dashboard() {
   const [user, setUser] = useState<any>(null);
   const [dashboard, setDashboard] = useState<DashboardResponse | null>(null);
   const [loading, setLoading] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const router = useRouter();
 
+  // Daily quote based on day of year
+  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
+  const dailyQuote = SANSKRIT_QUOTES[dayOfYear % SANSKRIT_QUOTES.length];
+
+  // EFFECT 1: Load User & Dashboard Stats (Strictly mounted, no router dependency)
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (!storedUser) {
-      router.push("/");
+    let isMounted = true;
+    let userData: any = null;
+
+    try {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser) {
+        userData = JSON.parse(storedUser);
+      }
+    } catch (e) {
+      console.error("Error reading stored user", e);
+    }
+
+    if (!userData || !localStorage.getItem("access_token")) {
+      router.replace("/");
       return;
     }
-    const userData = JSON.parse(storedUser);
-    setUser(userData);
+
+    if (isMounted) setUser(userData);
 
     const fetchData = async () => {
       try {
@@ -34,73 +66,182 @@ export default function Dashboard() {
       } catch (err) {
         console.error("Failed to fetch dashboard data", err);
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
 
     fetchData();
-  }, [router]);
+
+    return () => { isMounted = false; };
+  }, []); // Runs exactly once
+
+  const stats = dashboard?.statistics;
+  const activities = (dashboard?.recent_activity || []).map((activity) => ({
+    action: activity.type,
+    details: activity.detail,
+    score: activity.score_percent ?? "Completed",
+    timestamp: activity.occurred_at,
+  }));
+  const recommendation = dashboard?.recommendation?.lesson_id
+    ? dashboard.recommendation
+    : null;
+  const loadingRecommendation = loading;
 
   if (loading || !user) {
-    return <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center' }}>
-      <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }} style={{ fontSize: '2rem' }}>🕉️</motion.div>
-    </div>;
+    return (
+      <div style={{ display: 'flex', height: '100vh', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-main)', flexDirection: 'column', gap: '16px' }}>
+        <motion.div
+          animate={{ rotate: 360, scale: [1, 1.1, 1] }}
+          transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
+          style={{ fontSize: '2.5rem' }}
+        >
+          🕉️
+        </motion.div>
+        <motion.p
+          animate={{ opacity: [0.5, 1, 0.5] }}
+          transition={{ repeat: Infinity, duration: 1.5 }}
+          style={{ color: 'var(--text-dim)', fontWeight: 600, fontSize: '0.9rem' }}
+        >
+          Loading your sanctuary...
+        </motion.p>
+      </div>
+    );
   }
 
   return (
     <div className="page-layout">
+      {/* Mobile menu */}
+      <button className="mobile-menu-btn" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+        {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+      </button>
+      <div className={`sidebar-overlay ${mobileMenuOpen ? 'open' : ''}`} onClick={() => setMobileMenuOpen(false)} />
       <Sidebar user={user} />
-      
+
       <main className="main-content">
-        <motion.header 
-          initial={{ opacity: 0, y: -10 }}
+        {/* Header */}
+        <motion.header
+          initial={{ opacity: 0, y: -15 }}
           animate={{ opacity: 1, y: 0 }}
-          style={{ marginBottom: '40px' }}
+          style={{ marginBottom: '32px' }}
         >
-          <h1 style={{ fontSize: '2.5rem', marginBottom: '8px' }}>शुभस्य संवर्धनं, {user.username}</h1>
-          <p style={{ color: 'var(--text-dim)' }}>Welcome back. Your quiet space for Sanskrit learning is ready.</p>
+          <div className="flex items-center justify-between flex-wrap gap-4 mb-2">
+            <div>
+              <div className="badge badge-primary mb-2">
+                <Sparkles size={14} /> Sanskrit Learning Space
+              </div>
+              <h1 className="devanagari" style={{ fontSize: '2.4rem', fontWeight: 700, margin: 0 }}>
+                शुभस्य संवर्धनं, {user.username}
+              </h1>
+            </div>
+          </div>
+          <p style={{ color: 'var(--text-dim)', fontSize: '1rem', margin: 0 }}>
+            Welcome back to your personalized sanctuary for Sanskrit mastery.
+          </p>
         </motion.header>
 
+        {/* Daily Inspirational Quote */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          style={{
+            marginBottom: '28px',
+            padding: '20px 28px',
+            borderRadius: 'var(--radius-lg)',
+            background: 'linear-gradient(135deg, rgba(var(--primary-rgb), 0.06), rgba(var(--primary-rgb), 0.02))',
+            border: '1px solid var(--border-soft)',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '20px',
+            flexWrap: 'wrap'
+          }}
+        >
+          <motion.div
+            animate={{ y: [0, -4, 0] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+            className="devanagari"
+            style={{ fontSize: '1.5rem', fontWeight: 700 }}
+          >
+            {dailyQuote.sanskrit}
+          </motion.div>
+          <div style={{ height: '24px', width: '1px', background: 'var(--border-soft)' }} />
+          <div>
+            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--text-dim)', fontStyle: 'italic' }}>
+              {dailyQuote.transliteration}
+            </div>
+            <div style={{ fontSize: '0.85rem', color: 'var(--text-main)', fontWeight: 600 }}>
+              "{dailyQuote.meaning}"
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Daily Streak Section */}
+        <div style={{ marginBottom: '28px' }}>
+          <DailyStreak />
+        </div>
+
         {/* Stats Grid */}
-        <div className="grid" style={{ gridTemplateColumns: 'repeat(4, 1fr)', marginBottom: '40px' }}>
+        <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', marginBottom: '28px', gap: '16px' }}>
           {[
-            { label: "Lessons completed", value: dashboard?.statistics.lessons_completed || 0, icon: BookOpen, color: "#3498db" },
-            { label: "Quiz attempts", value: dashboard?.statistics.quiz_attempts || 0, icon: Target, color: "#e67e22" },
-            { label: "Grammar activities", value: dashboard?.statistics.grammar_activity_count || 0, icon: Flame, color: "#e74c3c" },
-            { label: "Active learning days", value: dashboard?.statistics.active_learning_days || 0, icon: Trophy, color: "#f1c40f" }
+            { label: "Lessons completed", value: stats?.lessons_completed || 0, icon: BookOpen, gradient: "linear-gradient(135deg, #3B82F6, #1D4ED8)" },
+            { label: "Quiz attempts", value: stats?.quiz_attempts || 0, icon: Target, gradient: "linear-gradient(135deg, #E85D04, #FF9100)" },
+            { label: "Grammar activities", value: stats?.grammar_activity_count || 0, icon: Flame, gradient: "linear-gradient(135deg, #EF4444, #DC2626)" },
+            { label: "Active learning days", value: stats?.active_learning_days || 0, icon: Trophy, gradient: "linear-gradient(135deg, #F59E0B, #D97706)" },
+            { label: "Average mastery", value: `${Math.round((dashboard?.mastery?.average || 0) * 100)}%`, icon: Zap, gradient: "linear-gradient(135deg, #0F766E, #14B8A6)" }
           ].map((stat, i) => (
-            <motion.div 
+            <motion.div
               key={stat.label}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ delay: i * 0.08 }}
               className="zen-card"
-              style={{ padding: '24px', display: 'flex', alignItems: 'center', gap: '20px' }}
+              style={{ padding: '20px', display: 'flex', alignItems: 'center', gap: '16px' }}
             >
-              <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: `${stat.color}10`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: stat.color }}>
-                <stat.icon size={24} />
-              </div>
+              <motion.div
+                whileHover={{ scale: 1.1, rotate: 5 }}
+                style={{
+                  width: '48px',
+                  height: '48px',
+                  borderRadius: '14px',
+                  background: stat.gradient,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#ffffff',
+                  boxShadow: '0 8px 18px -4px rgba(0,0,0,0.15)',
+                  flexShrink: 0
+                }}
+              >
+                <stat.icon size={22} />
+              </motion.div>
               <div>
-                <div style={{ fontSize: '1.5rem', fontWeight: '700' }}>{stat.value}</div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)', fontWeight: '500' }}>{stat.label}</div>
+                <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-main)', lineHeight: 1.2 }}>
+                  {stat.value}
+                </div>
+                <div style={{ fontSize: '0.78rem', color: 'var(--text-dim)', fontWeight: 600, marginTop: '2px' }}>
+                  {stat.label}
+                </div>
               </div>
             </motion.div>
           ))}
         </div>
 
-        <div className="grid" style={{ gridTemplateColumns: '1.6fr 1fr', gap: '30px' }}>
-          
-          <motion.section 
-             initial={{ opacity: 0, scale: 0.98 }}
-             animate={{ opacity: 1, scale: 1 }}
-             className="zen-card" 
-             style={{ padding: '30px' }}
+        {/* Content Layout */}
+        <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
+          {/* Recent Activity */}
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="zen-card-static"
+            style={{ padding: '28px' }}
           >
-            <div className="flex items-center gap-3 mb-8">
-              <History size={20} color="var(--primary)" />
-              <h3 style={{ margin: 0 }}>Recent Learning Path</h3>
+            <div className="flex items-center gap-3 mb-6">
+              <div style={{ padding: '8px', background: 'var(--primary-light)', borderRadius: '12px', color: 'var(--primary)' }}>
+                <History size={20} />
+              </div>
+              <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 700 }}>Recent Activity</h3>
             </div>
-            
+
             <div className="flex flex-col gap-4">
               {(dashboard?.recent_activity || []).map((activity, i) => (
                 <div key={i} className="flex justify-between items-center p-4" style={{ borderBottom: '1px solid var(--border-soft)' }}>
@@ -122,11 +263,11 @@ export default function Dashboard() {
             </div>
           </motion.section>
 
-          <motion.section 
+          <motion.section
             initial={{ opacity: 0, x: 10 }}
             animate={{ opacity: 1, x: 0 }}
-            className="zen-card" 
-            style={{ 
+            className="zen-card"
+            style={{
               padding: '34px',
               background: 'linear-gradient(135deg, var(--bg-card) 0%, #fffcf5 100%)',
               display: 'flex',
@@ -141,15 +282,14 @@ export default function Dashboard() {
               </div>
               <h2 style={{ marginBottom: '12px' }}>{dashboard?.recommendation.status === 'all_lessons_completed' ? 'Curriculum complete' : dashboard?.recommendation.title || 'Sanskrit curriculum pathway'}</h2>
               <p style={{ color: 'var(--text-dim)', fontSize: '0.95rem', marginBottom: '24px', lineHeight: '1.6' }}>{dashboard?.recommendation.description || 'Continue along the structured Sanskrit curriculum with the next lesson that matches your completed progress.'}</p>
-              
+
               <div className="flex" style={{ gap: '20px', marginBottom: '30px' }}>
                 <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>⏱️ {dashboard?.recommendation.estimated_time ? `${dashboard.recommendation.estimated_time} min` : '15 min'}</div>
                 <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>🔱 {dashboard?.recommendation.level || 'beginner'}</div>
               </div>
             </div>
-            
             <button className="btn-primary w-full" onClick={() => router.push('/lessons')}>
-              Start Learning Now <ChevronRight size={18} />
+              Continue Learning <ArrowRight size={18} />
             </button>
           </motion.section>
         </div>

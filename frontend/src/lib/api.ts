@@ -30,6 +30,11 @@ export type DashboardResponse = {
   };
   recommendation: DashboardRecommendation;
   recent_activity: DashboardActivity[];
+  mastery?: {
+    average: number;
+    mastered_skills: number;
+    skills: Record<string, { mastery: number; attempts: number; correct: number }>;
+  };
 };
 
 export async function apiRequest(endpoint: string, options: RequestInit = {}) {
@@ -63,9 +68,29 @@ export const api = {
     signup: (data: { username: string; password: string; role: string }) => apiRequest('/auth/signup', { method: 'POST', body: JSON.stringify(data) }),
     logout: () => apiRequest('/auth/logout', { method: 'POST' }),
   },
+  lesson: {
+    attempt: (data: { lesson_id: number; correct: boolean; username: string }) =>
+      apiRequest('/lesson/attempt', {
+        method: 'POST',
+        body: JSON.stringify({
+          lesson_id: data.lesson_id,
+          correct: data.correct,
+          username: data.username,
+        }),
+      }),
+  },
   lessons: {
     getAll: (level?: string) => apiRequest(`/api/lessons/all${level ? `?level=${level}` : ''}`),
     getById: (id: string | number) => apiRequest(`/api/lessons/${id}`),
+    attempt: (data: { lesson_id: number; correct: boolean; username: string }) =>
+      apiRequest('/lesson/attempt', {
+        method: 'POST',
+        body: JSON.stringify({
+          lesson_id: data.lesson_id,
+          correct: data.correct,
+          username: data.username,
+        }),
+      }),
     getGreetings: () => apiRequest('/api/lessons/greetings'),
     getNumbers: () => apiRequest('/api/lessons/numbers'),
     getSelfIntro: () => apiRequest('/api/lessons/self-intro'),
@@ -78,6 +103,21 @@ export const api = {
     getDailyQuestions: () => apiRequest('/api/daily-questions'),
     getAllLessons: () => apiRequest('/api/lessons/all'),
     getLessonById: (id: string) => apiRequest(`/api/lessons/${id}`),
+    getVibhakti: () => apiRequest('/api/lessons/vibhakti'),
+    getSandhi: () => apiRequest('/api/lessons/sandhi'),
+    getTenses: () => apiRequest('/api/lessons/tenses'),
+    getMoods: () => apiRequest('/api/lessons/moods'),
+    getPronounsExtended: () => apiRequest('/api/lessons/pronouns-extended'),
+    getUpasarga: () => apiRequest('/api/lessons/upasarga'),
+    getVoice: () => apiRequest('/api/lessons/voice'),
+    getIndeclinables: () => apiRequest('/api/lessons/indeclinables'),
+    getParticiples: () => apiRequest('/api/lessons/participles'),
+    getReadingComposition: () => apiRequest('/api/lessons/reading-composition'),
+    getSamasa1: () => apiRequest('/api/lessons/samasa1'),
+    getSamasa2: () => apiRequest('/api/lessons/samasa2'),
+    getParticiples2: () => apiRequest('/api/lessons/participles2'),
+    getStriPratyaya: () => apiRequest('/api/lessons/stri-pratyaya'),
+    getChandas: () => apiRequest('/api/lessons/chandas'),
   },
   user: {
     getProgress: (username: string) => apiRequest(`/progress/${username}`),
@@ -86,9 +126,11 @@ export const api = {
     getStreak: (username: string) => apiRequest(`/streak/${username}`),
     getRecommendation: (username: string) => apiRequest(`/recommendation/${username}`),
     getDashboard: (username: string): Promise<DashboardResponse> => apiRequest(`/dashboard/${username}`),
+    getBKTSummary: (username: string) => apiRequest(`/bkt/summary/${username}`),
+    getBKTMastery: (username: string) => apiRequest(`/bkt/mastery/${username}`),
   },
   tools: {
-    translate: (data: { text: string; direction: string; use_api?: boolean }) => 
+    translate: (data: { text: string; direction: string; use_api?: boolean }) =>
       apiRequest('/translate', { method: 'POST', body: JSON.stringify(data) }),
     checkGrammar: (username: string, text: string, use_ai: boolean = false) =>
       apiRequest('/grammar/check', { method: 'POST', body: JSON.stringify({ username, text, use_ai }) }),
