@@ -19,6 +19,7 @@
     "simple-keyboard-layouts": "^3.4.188"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

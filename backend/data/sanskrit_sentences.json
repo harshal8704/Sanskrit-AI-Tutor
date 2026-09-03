@@ -3814,6 +3814,54 @@
         "api-added"
       ],
       "created_at": "2026-09-03T15:16:02.731714"
+    },
+    {
+      "id": 239,
+      "sanskrit": "वर्त्तमानः अस्ति।",
+      "devanagari": "वर्त्तमानः अस्ति।",
+      "translation": "Current is.",
+      "words": [
+        "वर्त्तमानः"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-03T19:56:58.928019"
+    },
+    {
+      "id": 240,
+      "sanskrit": "वर्त्तमानः गच्छति।",
+      "devanagari": "वर्त्तमानः गच्छति।",
+      "translation": "Current goes.",
+      "words": [
+        "वर्त्तमानः"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-03T19:56:58.928033"
+    },
+    {
+      "id": 241,
+      "sanskrit": "वर्त्तमानः पठति।",
+      "devanagari": "वर्त्तमानः पठति।",
+      "translation": "Current reads.",
+      "words": [
+        "वर्त्तमानः"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-03T19:56:58.928037"
     }
   ]
 }

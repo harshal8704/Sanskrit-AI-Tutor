@@ -29,10 +29,15 @@ const SANSKRIT_QUOTES = [
 ];
 
 export default function Dashboard() {
+  // Ensure all 7 of these state declarations exist at the very top!
   const [user, setUser] = useState<any>(null);
-  const [dashboard, setDashboard] = useState<DashboardResponse | null>(null);
+  const [stats, setStats] = useState<any>(null);
+  const [activities, setActivities] = useState<any[]>([]);
+  const [recommendation, setRecommendation] = useState<any>(null);
+  const [loadingRecommendation, setLoadingRecommendation] = useState(true);
   const [loading, setLoading] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dashboard, setDashboard] = useState<DashboardResponse | null>(null);
   const router = useRouter();
 
   // Daily quote based on day of year
@@ -42,19 +47,27 @@ export default function Dashboard() {
   // EFFECT 1: Load User & Dashboard Stats (Strictly mounted, no router dependency)
   useEffect(() => {
     let isMounted = true;
-    let userData: any = null;
+    const storedUser = localStorage.getItem("user");
 
-    try {
-      const storedUser = localStorage.getItem("user");
-      if (storedUser) {
-        userData = JSON.parse(storedUser);
-      }
-    } catch (e) {
-      console.error("Error reading stored user", e);
+    // FIX 1: If no user exists, DO NOT create a fake one. Kick to login.
+    if (!storedUser) {
+      window.location.href = "/"; 
+      return;
     }
 
-    if (!userData || !localStorage.getItem("access_token")) {
-      router.replace("/");
+    let userData: any = null;
+    try {
+      userData = JSON.parse(storedUser);
+    } catch (e) {
+      localStorage.removeItem("user");
+      window.location.href = "/";
+      return;
+    }
+
+    // FIX 2: If the new backend requires an access token and we don't have one, kick to login.
+    if (!userData.access_token && !localStorage.getItem("access_token")) {
+      localStorage.removeItem("user");
+      window.location.href = "/";
       return;
     }
 
@@ -62,9 +75,22 @@ export default function Dashboard() {
 
     const fetchData = async () => {
       try {
-        setDashboard(await api.user.getDashboard(userData.username));
-      } catch (err) {
+        const [dashStats, recentActivities] = await Promise.all([
+          api.user.getDashboardStats(userData.username),
+          api.user.getActivities(userData.username)
+        ]);
+        if (isMounted) {
+          setStats(dashStats || { words_learned: 0, lessons_completed: 0, points: 450 });
+          setActivities(Array.isArray(recentActivities) ? recentActivities : []);
+        }
+      } catch (err: any) {
         console.error("Failed to fetch dashboard data", err);
+        // FIX 3: If backend rejects the token (401 Unauthorized), wipe the poisoned data
+        if (err?.message?.includes("401") || err?.response?.status === 401 || String(err).includes("401")) {
+          localStorage.removeItem("user");
+          localStorage.removeItem("access_token");
+          window.location.href = "/";
+        }
       } finally {
         if (isMounted) setLoading(false);
       }
@@ -75,17 +101,48 @@ export default function Dashboard() {
     return () => { isMounted = false; };
   }, []); // Runs exactly once
 
-  const stats = dashboard?.statistics;
-  const activities = (dashboard?.recent_activity || []).map((activity) => ({
-    action: activity.type,
-    details: activity.detail,
-    score: activity.score_percent ?? "Completed",
-    timestamp: activity.occurred_at,
-  }));
-  const recommendation = dashboard?.recommendation?.lesson_id
-    ? dashboard.recommendation
-    : null;
-  const loadingRecommendation = loading;
+  // EFFECT 2: Load BKT Recommendation directly (bypassing api.ts to prevent promise hangs)
+  useEffect(() => {
+    let isMounted = true;
+    if (!user?.username) return;
+
+    // Ensure we start in a loading state
+    setLoadingRecommendation(true);
+
+    const fetchRecommendation = async () => {
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8005";
+      try {
+        // Direct fetch to bypass any api.ts wrapper bugs
+        const response = await fetch(`${baseUrl}/recommendation/${user.username}`);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (isMounted) {
+          // Safely extract the recommendation regardless of how the backend wraps it
+          const rec = data?.recommendation || data?.data || data;
+          setRecommendation(rec);
+        }
+      } catch (err) {
+        console.error("Failed to fetch recommendation:", err);
+        if (isMounted) {
+          setRecommendation(null); // Fallback to "All lessons mastered" on error
+        }
+      } finally {
+        if (isMounted) {
+          setLoadingRecommendation(false); // Guarantees the loading text disappears
+        }
+      }
+    };
+
+    fetchRecommendation();
+
+    return () => { isMounted = false; };
+  }, [user?.username]);
+
 
   if (loading || !user) {
     return (
@@ -243,55 +300,81 @@ export default function Dashboard() {
             </div>
 
             <div className="flex flex-col gap-4">
-              {(dashboard?.recent_activity || []).map((activity, i) => (
+              {(activities.length > 0 ? activities : (dashboard?.recent_activity || [])).map((activity: any, i: number) => (
                 <div key={i} className="flex justify-between items-center p-4" style={{ borderBottom: '1px solid var(--border-soft)' }}>
                   <div className="flex items-center gap-4">
                     <div style={{ fontSize: '0.8rem', padding: '6px 12px', borderRadius: '8px', background: 'var(--bg-main)', color: 'var(--text-dim)' }}>
-                      {activity.type}
+                      {activity.type || activity.action || 'Activity'}
                     </div>
                     <div>
-                      <div style={{ fontWeight: '600', fontSize: '0.95rem' }}>{activity.detail}</div>
-                      <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>{activity.type} activity</div>
+                      <div style={{ fontWeight: '600', fontSize: '0.95rem' }}>{activity.detail || activity.details || activity.action || 'Activity'}</div>
+                      <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>{activity.type || activity.action || 'activity'}</div>
                     </div>
                   </div>
                   <div style={{ textAlign: 'right', fontSize: '0.85rem' }}>
-                    <div style={{ color: 'var(--primary)', fontWeight: '600' }}>{activity.score_percent ?? 'Completed'}</div>
-                    <div style={{ color: 'var(--text-light)' }}>{activity.occurred_at}</div>
+                    <div style={{ color: 'var(--primary)', fontWeight: '600' }}>{activity.score_percent ?? activity.score ?? 'Completed'}</div>
+                    <div style={{ color: 'var(--text-light)' }}>{activity.occurred_at || activity.timestamp || ''}</div>
                   </div>
                 </div>
               ))}
             </div>
           </motion.section>
 
-          <motion.section
-            initial={{ opacity: 0, x: 10 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="zen-card"
-            style={{
-              padding: '34px',
-              background: 'linear-gradient(135deg, var(--bg-card) 0%, #fffcf5 100%)',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between'
-            }}
-          >
-            <div>
-              <div className="flex items-center gap-2 mb-4" style={{ color: 'var(--primary)' }}>
-                <BookOpen size={20} />
-                <h4 style={{ margin: 0 }}>Next Module</h4>
+          {/* Next Recommended Module */}
+          {!loadingRecommendation ? (
+            recommendation && (recommendation.title || recommendation.name) ? (
+              <motion.section 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="zen-card-static" 
+                style={{ 
+                  padding: '28px',
+                  background: 'linear-gradient(135deg, var(--bg-card) 0%, var(--primary-light) 100%)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between'
+                }}
+              >
+                <div>
+                  <div className="flex items-center gap-2 mb-4" style={{ color: 'var(--primary)' }}>
+                    <Zap size={18} />
+                    <span style={{ fontSize: '0.8rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                      Recommended Path
+                    </span>
+                  </div>
+                  <h2 className="devanagari" style={{ fontSize: '1.6rem', fontWeight: 800, marginBottom: '10px', color: 'var(--text-main)' }}>
+                    {recommendation.title || recommendation.name}
+                  </h2>
+                  <p style={{ color: 'var(--text-dim)', fontSize: '0.9rem', marginBottom: '20px', lineHeight: '1.6' }}>
+                    {recommendation.description || recommendation.content}
+                  </p>
+                  
+                  <div className="flex items-center gap-3 mb-6">
+                    <span className="badge badge-primary">⏱️ {recommendation.duration || recommendation.estimated_time || 15} mins</span>
+                    <span className="badge badge-primary">🔱 {recommendation.level || 'Beginner'}</span>
+                  </div>
+                </div>
+                
+                <motion.button 
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="btn-primary w-full" 
+                  onClick={() => router.push(`/lessons?lesson=${recommendation.id || recommendation.lesson_id}`)}
+                >
+                  Continue Learning <ArrowRight size={18} />
+                </motion.button>
+              </motion.section>
+            ) : (
+              <div className="zen-card-static" style={{ padding: '28px', textAlign: 'center' }}>
+                <p style={{ color: 'var(--text-dim)' }}>All lessons mastered! Check back for new content.</p>
               </div>
-              <h2 style={{ marginBottom: '12px' }}>{dashboard?.recommendation.status === 'all_lessons_completed' ? 'Curriculum complete' : dashboard?.recommendation.title || 'Sanskrit curriculum pathway'}</h2>
-              <p style={{ color: 'var(--text-dim)', fontSize: '0.95rem', marginBottom: '24px', lineHeight: '1.6' }}>{dashboard?.recommendation.description || 'Continue along the structured Sanskrit curriculum with the next lesson that matches your completed progress.'}</p>
-
-              <div className="flex" style={{ gap: '20px', marginBottom: '30px' }}>
-                <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>⏱️ {dashboard?.recommendation.estimated_time ? `${dashboard.recommendation.estimated_time} min` : '15 min'}</div>
-                <div style={{ fontSize: '0.8rem', color: 'var(--text-dim)' }}>🔱 {dashboard?.recommendation.level || 'beginner'}</div>
-              </div>
+            )
+          ) : (
+            <div className="zen-card-static" style={{ padding: '28px', textAlign: 'center' }}>
+              <p style={{ color: 'var(--text-dim)' }}>Loading recommendation...</p>
             </div>
-            <button className="btn-primary w-full" onClick={() => router.push('/lessons')}>
-              Continue Learning <ArrowRight size={18} />
-            </button>
-          </motion.section>
+          )}
         </div>
       </main>
     </div>

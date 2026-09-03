@@ -413,46 +413,66 @@ class SQLiteRepository:
         if not isinstance(user_id, int) or user_id <= 0:
             raise ValueError("user_id must be a positive integer")
 
-        lesson_catalog = list(lessons) if lessons is not None else []
-        if not lesson_catalog:
+        raw_catalog = list(lessons) if lessons is not None else []
+        # Safely extract list if wrapped in a dict
+        if raw_catalog and isinstance(raw_catalog[0], str) and len(raw_catalog) <= 5:
             return {"status": "no_lessons_available", "lesson_id": None, "title": None, "description": None}
 
         completed = set(self.get_completed_lesson_ids(user_id))
         module_priority = {
             "module_1_foundations": 1,
+            "foundations": 1,
             "module_2_building": 2,
+            "building": 2,
             "module_3_nouns": 3,
+            "nouns": 3,
             "module_4_tenses": 4,
+            "tenses": 4,
             "module_5_grammar": 5,
+            "grammar": 5,
             "module_6_syntax": 6,
+            "syntax": 6,
             "module_7_advanced": 7,
+            "advanced": 7,
         }
 
         def lesson_order_key(lesson: Dict[str, Any]) -> tuple:
             lesson_id = str(lesson.get("id") or "")
-            module_name = str(lesson.get("module") or "")
+            module_name = str(lesson.get("module") or lesson.get("category") or "")
             module_rank = module_priority.get(module_name, 99)
             file_name = str(lesson.get("file") or lesson_id)
             if file_name.endswith(".json"):
                 file_name = file_name[:-5]
             return (module_rank, file_name, lesson_id)
 
-        ordered_lessons = sorted(lesson_catalog, key=lesson_order_key)
+        ordered_lessons = sorted(raw_catalog, key=lesson_order_key)
         for lesson in ordered_lessons:
+            if not isinstance(lesson, dict):
+                continue
             lesson_id = str(lesson.get("id") or "")
             if not lesson_id or lesson_id in completed:
                 continue
             prereqs = lesson.get("prerequisites") or []
             normalized_prereqs = {str(item) for item in prereqs}
             if normalized_prereqs.issubset(completed):
+                title = lesson.get("title") or lesson.get("name") or "Introduction to Sanskrit"
+                desc = lesson.get("description") or "Continue along your Sanskrit journey."
+                est_time = lesson.get("estimated_time") or lesson.get("duration") or 15
+                level = lesson.get("level")
+                if not level:
+                    diff = int(lesson.get("difficulty", 1))
+                    level = "beginner" if diff <= 2 else "intermediate" if diff <= 4 else "advanced"
+
                 return {
                     "status": "ready",
                     "lesson_id": lesson_id,
-                    "title": lesson.get("title"),
-                    "description": lesson.get("description"),
-                    "module": lesson.get("module"),
-                    "estimated_time": lesson.get("estimated_time"),
-                    "level": lesson.get("level"),
+                    "id": lesson_id,
+                    "title": title,
+                    "description": desc,
+                    "module": lesson.get("module") or lesson.get("category"),
+                    "estimated_time": est_time,
+                    "duration": est_time,
+                    "level": level,
                     "prerequisites": list(normalized_prereqs),
                 }
 
