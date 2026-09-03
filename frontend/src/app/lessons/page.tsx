@@ -233,6 +233,8 @@ const AlphabetFlashcards = () => {
 export default function Lessons() {
   const [user, setUser] = useState<any>(null);
   const [lessons, setLessons] = useState<any[]>([]);
+  const [masteryMap, setMasteryMap] = useState<Record<number, number>>({});
+  const [masteryLoading, setMasteryLoading] = useState(true);
   const [loading, setLoading] = useState(true);
   const [selectedLesson, setSelectedLesson] = useState<any>(null);
   const [toast, setToast] = useState<string | null>(null);
@@ -272,14 +274,41 @@ export default function Lessons() {
     fetchLessons();
   }, [router]);
 
+  useEffect(() => {
+    const fetchMastery = async () => {
+      if (user?.username) {
+        try {
+          const data = await api.user.getBKTMastery(user.username);
+          setMasteryMap(data.mastery);
+        } catch (err) {
+          console.error("Failed to fetch mastery", err);
+        } finally {
+          setMasteryLoading(false);
+        }
+      }
+    };
+    fetchMastery();
+  }, [user]);
+
   const showToast = useCallback((message: string) => {
     setToast(message);
     setTimeout(() => setToast(null), 3000);
   }, []);
 
-  const handleMarkComplete = useCallback(() => {
-    showToast("✨ Lesson marked as complete! +50 XP");
-  }, [showToast]);
+  const handleMarkComplete = async () => {
+    if (!selectedLesson || !user?.username) return;
+    try {
+      await api.lesson.attempt({
+        lesson_id: selectedLesson.id,
+        correct: true,
+        username: user.username,
+      });
+      showToast("✨ Lesson mastered! +50 XP");
+    } catch (err) {
+      console.error(err);
+      showToast("Failed to record progress");
+    }
+  };
 
   const handleNext = () => {
     const currentIndex = lessons.findIndex(l => l.id === selectedLesson.id);
@@ -619,11 +648,23 @@ export default function Lessons() {
                         </p>
                         
                         <div className="flex justify-between items-center mt-4">
-                          {lesson.difficulty && (
-                            <div className="difficulty-bar">
-                              {Array.from({ length: 10 }).map((_, i) => (
-                                <div key={i} className={`difficulty-dot ${i < lesson.difficulty ? 'active' : ''}`} />
-                              ))}
+                          {!masteryLoading && masteryMap[lesson.id] !== undefined && (
+                            <div style={{ flex: 1, marginRight: '12px' }}>
+                              <div style={{ height: '4px', background: 'var(--border-soft)', borderRadius: '4px', overflow: 'hidden' }}>
+                                <motion.div 
+                                  initial={{ width: 0 }}
+                                  animate={{ width: `${masteryMap[lesson.id] * 100}%` }}
+                                  transition={{ duration: 0.6 }}
+                                  style={{ 
+                                    height: '100%', 
+                                    background: masteryMap[lesson.id] >= 0.7 ? 'var(--accent)' : 'var(--primary)',
+                                    borderRadius: '4px',
+                                  }} 
+                                />
+                              </div>
+                              <div style={{ fontSize: '0.65rem', color: 'var(--text-light)', marginTop: '2px' }}>
+                                {Math.round(masteryMap[lesson.id] * 100)}% Mastery
+                              </div>
                             </div>
                           )}
                           <div className="flex items-center gap-2" style={{ color: config.color, fontWeight: '700', fontSize: '0.85rem' }}>
@@ -706,11 +747,23 @@ export default function Lessons() {
                       </p>
                       
                       <div className="flex justify-between items-center mt-4">
-                        {lesson.difficulty && (
-                          <div className="difficulty-bar">
-                            {Array.from({ length: 10 }).map((_, i) => (
-                              <div key={i} className={`difficulty-dot ${i < lesson.difficulty ? 'active' : ''}`} />
-                            ))}
+                        {!masteryLoading && masteryMap[lesson.id] !== undefined && (
+                          <div style={{ flex: 1, marginRight: '12px' }}>
+                            <div style={{ height: '4px', background: 'var(--border-soft)', borderRadius: '4px', overflow: 'hidden' }}>
+                              <motion.div 
+                                initial={{ width: 0 }}
+                                animate={{ width: `${masteryMap[lesson.id] * 100}%` }}
+                                transition={{ duration: 0.6 }}
+                                style={{ 
+                                  height: '100%', 
+                                  background: masteryMap[lesson.id] >= 0.7 ? 'var(--accent)' : 'var(--primary)',
+                                  borderRadius: '4px',
+                                }} 
+                              />
+                            </div>
+                            <div style={{ fontSize: '0.65rem', color: 'var(--text-light)', marginTop: '2px' }}>
+                              {Math.round(masteryMap[lesson.id] * 100)}% Mastery
+                            </div>
                           </div>
                         )}
                         <div className="flex items-center gap-2" style={{ color: config.color, fontWeight: '700', fontSize: '0.85rem' }}>

@@ -100,8 +100,6 @@ const Sidebar = ({ user }: { user: any }) => {
                 onClick={(e) => {
                   if (pathname === item.path) {
                     e.preventDefault();
-                  } else {
-                    router.push(item.path);
                   }
                 }}
                 className={`sidebar-link ${isActive ? 'active' : ''}`}

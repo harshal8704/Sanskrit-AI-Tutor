@@ -6,7 +6,7 @@ Uses JSON files instead of real database
 import json
 import os
 from datetime import datetime
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Optional
 
 class MockDB:
     def __init__(self, data_dir='data'):
@@ -253,3 +253,43 @@ class MockDB:
                 return users
         
         return []
+
+    # ─── BKT Data Access ────────────────────────────────────────
+
+    def get_bkt_engine(self):
+        """Lazy load BKT engine (avoids circular import)."""
+        from modules.bkt_engine import BKTEngine
+        if not hasattr(self, '_bkt_engine'):
+            self._bkt_engine = BKTEngine(data_file=os.path.join(self.data_dir, 'bkt_progress.json'))
+        return self._bkt_engine
+
+    def get_bkt_skill_data(self, username: str, skill_id: int) -> Dict:
+        """Get BKT data for a specific skill."""
+        engine = self.get_bkt_engine()
+        return engine.get_user_skill_data(username, skill_id)
+
+    def record_bkt_attempt(self, username: str, skill_id: int, is_correct: bool, difficulty: int = 3) -> Dict:
+        """Record a BKT attempt and return updated mastery."""
+        engine = self.get_bkt_engine()
+        return engine.record_attempt(username, skill_id, is_correct, difficulty)
+
+    def get_bkt_mastery_for_skills(self, username: str, skill_ids: List[int]) -> Dict[int, float]:
+        """Get mastery for multiple skills."""
+        engine = self.get_bkt_engine()
+        return engine.get_mastery_for_skills(username, skill_ids)
+
+    def get_bkt_recommendation(self, username: str):
+        """Get the recommended next lesson based on BKT."""
+        # Import learning_engine locally to avoid circular imports
+        try:
+            from main import learning_engine
+            lessons = learning_engine.lessons
+        except Exception:
+            lessons = self.get_lessons()
+        return self.get_bkt_engine().get_recommendation(username, lessons)
+
+    def get_bkt_summary(self, username: str) -> Dict:
+        """Get BKT summary for the user."""
+        engine = self.get_bkt_engine()
+        return engine.get_user_summary(username)
+

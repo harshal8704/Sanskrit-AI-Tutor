@@ -19,7 +19,13 @@ app = FastAPI(title="SanskritAI API")
 # Configure CORS for frontend access
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, specify the frontend URL
+    allow_origins=[
+        "http://localhost:3000",
+        "http://127.0.0.1:3000",
+        "http://localhost:8005",
+        "http://127.0.0.1:8005",
+    ],
+    allow_origin_regex=r"https?://.*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -370,6 +376,66 @@ def odd_question():
 def odd_answer(req: OddAnswerRequest):
     """Check the user's answer for Odd One Out."""
     return check_answer(req.question_data, req.user_choice)
+
+# ─── BKT / Adaptive Learning Endpoints ──────────────────
+
+class LessonAttemptRequest(BaseModel):
+    lesson_id: int
+    correct: bool
+    username: str
+
+@app.post("/lesson/attempt")
+def lesson_attempt(req: LessonAttemptRequest):
+    """
+    Record a student's attempt on a lesson (skill).
+    Updates BKT mastery and returns updated progress.
+    """
+    # Get lesson difficulty to set initial parameters
+    lesson = next((l for l in learning_engine.lessons if l.get('id') == req.lesson_id), None)
+    if not lesson:
+        raise HTTPException(status_code=404, detail="Lesson not found")
+    
+    difficulty = lesson.get('difficulty', 3)
+    result = db.record_bkt_attempt(req.username, req.lesson_id, req.correct, difficulty)
+    
+    # Also update traditional progress
+    db.update_progress(req.username, req.lesson_id, 'completed' if req.correct else 'started')
+    
+    # Get next recommendation
+    recommended = db.get_bkt_recommendation(req.username)
+    
+    return {
+        "skill_id": result["skill_id"],
+        "mastery": result["mastery"],
+        "attempts": result["attempts"],
+        "correct": result["correct"],
+        "recommended_lesson": recommended,
+    }
+
+@app.get("/recommendation/{username}")
+def get_recommendation(username: str):
+    """Get the next recommended lesson based on BKT."""
+    recommended = db.get_bkt_recommendation(username)
+    if not recommended:
+        return {"recommendation": None, "message": "All lessons mastered or no lessons available."}
+    return {"recommendation": recommended}
+
+@app.get("/bkt/summary/{username}")
+def get_bkt_summary(username: str):
+    """Get BKT progress summary for a user."""
+    return db.get_bkt_summary(username)
+
+@app.get("/bkt/mastery/{username}")
+def get_bkt_mastery(username: str):
+    """Get mastery for all lessons (or specific ones via query param)."""
+    lessons = learning_engine.lessons
+    skill_ids = [l.get('id') for l in lessons if l.get('id')]
+    mastery_map = db.get_bkt_mastery_for_skills(username, skill_ids)
+    return {
+        "mastery": {str(k): v for k, v in mastery_map.items()},
+        "total_lessons": len(lessons),
+    }
+
 
 # ─── Test API Key Endpoint ────────────────────────────────────
 @app.get("/test-api")

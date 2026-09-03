@@ -12,7 +12,12 @@
         {
           "id": 1,
           "question": "How many vowels are there in Sanskrit?",
-          "options": ["10", "13", "15", "20"],
+          "options": [
+            "10",
+            "13",
+            "15",
+            "20"
+          ],
           "answer": "13",
           "explanation": "Sanskrit has 13 vowel sounds"
         }
@@ -31,12 +36,19 @@
         {
           "id": 1,
           "question": "What does 'धन्यवादः' mean?",
-          "options": ["Hello", "Thank you", "Goodbye", "Please"],
+          "options": [
+            "Hello",
+            "Thank you",
+            "Goodbye",
+            "Please"
+          ],
           "answer": "Thank you",
           "explanation": "धन्यवादः means 'Thank you'"
         }
       ],
-      "prerequisites": [1]
+      "prerequisites": [
+        1
+      ]
     },
     {
       "id": 3,
@@ -50,12 +62,19 @@
         {
           "id": 1,
           "question": "What is the Sanskrit word for 5?",
-          "options": ["एकः", "द्वौ", "त्रयः", "पञ्च"],
+          "options": [
+            "एकः",
+            "द्वौ",
+            "त्रयः",
+            "पञ्च"
+          ],
           "answer": "पञ्च",
           "explanation": "पञ्च (pañca) means 5"
         }
       ],
-      "prerequisites": [1]
+      "prerequisites": [
+        1
+      ]
     },
     {
       "id": 4,
@@ -66,7 +85,10 @@
       "difficulty": 4,
       "content": "self_introduction_special",
       "quiz": [],
-      "prerequisites": [1, 2]
+      "prerequisites": [
+        1,
+        2
+      ]
     },
     {
       "id": 5,
@@ -77,7 +99,10 @@
       "difficulty": 3,
       "content": "pronouns_special",
       "quiz": [],
-      "prerequisites": [1, 2]
+      "prerequisites": [
+        1,
+        2
+      ]
     },
     {
       "id": 6,
@@ -88,7 +113,9 @@
       "difficulty": 4,
       "content": "verbs_special",
       "quiz": [],
-      "prerequisites": [5]
+      "prerequisites": [
+        5
+      ]
     },
     {
       "id": 7,
@@ -99,7 +126,9 @@
       "difficulty": 4,
       "content": "nouns_special",
       "quiz": [],
-      "prerequisites": [6]
+      "prerequisites": [
+        6
+      ]
     },
     {
       "id": 8,
@@ -110,7 +139,9 @@
       "difficulty": 3,
       "content": "family_special",
       "quiz": [],
-      "prerequisites": [7]
+      "prerequisites": [
+        7
+      ]
     },
     {
       "id": 9,
@@ -121,7 +152,9 @@
       "difficulty": 3,
       "content": "questions_special",
       "quiz": [],
-      "prerequisites": [8]
+      "prerequisites": [
+        8
+      ]
     },
     {
       "id": 10,
@@ -132,7 +165,9 @@
       "difficulty": 3,
       "content": "time_special",
       "quiz": [],
-      "prerequisites": [9]
+      "prerequisites": [
+        9
+      ]
     },
     {
       "id": 11,
@@ -143,7 +178,10 @@
       "difficulty": 6,
       "content": "vibhakti_special",
       "quiz": [],
-      "prerequisites": [4, 5]
+      "prerequisites": [
+        4,
+        5
+      ]
     },
     {
       "id": 12,
@@ -154,7 +192,12 @@
       "difficulty": 7,
       "content": "sandhi_special",
       "quiz": [],
-      "prerequisites": [1, 4, 5, 11]
+      "prerequisites": [
+        1,
+        4,
+        5,
+        11
+      ]
     },
     {
       "id": 13,
@@ -165,7 +208,10 @@
       "difficulty": 6,
       "content": "tenses_special",
       "quiz": [],
-      "prerequisites": [6, 11]
+      "prerequisites": [
+        6,
+        11
+      ]
     },
     {
       "id": 14,
@@ -176,7 +222,10 @@
       "difficulty": 6,
       "content": "moods_special",
       "quiz": [],
-      "prerequisites": [6, 13]
+      "prerequisites": [
+        6,
+        13
+      ]
     },
     {
       "id": 15,
@@ -187,7 +236,10 @@
       "difficulty": 5,
       "content": "pronouns_extended_special",
       "quiz": [],
-      "prerequisites": [5, 11]
+      "prerequisites": [
+        5,
+        11
+      ]
     },
     {
       "id": 16,
@@ -198,7 +250,10 @@
       "difficulty": 5,
       "content": "upasarga_special",
       "quiz": [],
-      "prerequisites": [6, 13]
+      "prerequisites": [
+        6,
+        13
+      ]
     },
     {
       "id": 17,
@@ -209,7 +264,11 @@
       "difficulty": 6,
       "content": "voice_special",
       "quiz": [],
-      "prerequisites": [6, 11, 13]
+      "prerequisites": [
+        6,
+        11,
+        13
+      ]
     },
     {
       "id": 18,
@@ -220,7 +279,11 @@
       "difficulty": 5,
       "content": "indeclinables_special",
       "quiz": [],
-      "prerequisites": [4, 5, 6]
+      "prerequisites": [
+        4,
+        5,
+        6
+      ]
     },
     {
       "id": 19,
@@ -231,7 +294,11 @@
       "difficulty": 7,
       "content": "participles_special",
       "quiz": [],
-      "prerequisites": [6, 11, 13]
+      "prerequisites": [
+        6,
+        11,
+        13
+      ]
     },
     {
       "id": 20,
@@ -242,7 +309,17 @@
       "difficulty": 5,
       "content": "reading_composition_special",
       "quiz": [],
-      "prerequisites": [11, 12, 13, 14, 15, 16, 17, 18, 19]
+      "prerequisites": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
     },
     {
       "id": 21,
@@ -253,7 +330,11 @@
       "difficulty": 8,
       "content": "samasa_part1_special",
       "quiz": [],
-      "prerequisites": [11, 12, 18]
+      "prerequisites": [
+        11,
+        12,
+        18
+      ]
     },
     {
       "id": 22,
@@ -264,7 +345,9 @@
       "difficulty": 8,
       "content": "samasa_part2_special",
       "quiz": [],
-      "prerequisites": [21]
+      "prerequisites": [
+        21
+      ]
     },
     {
       "id": 23,
@@ -275,7 +358,9 @@
       "difficulty": 8,
       "content": "participles_part2_special",
       "quiz": [],
-      "prerequisites": [19]
+      "prerequisites": [
+        19
+      ]
     },
     {
       "id": 24,
@@ -286,7 +371,10 @@
       "difficulty": 7,
       "content": "strī_pratyaya_special",
       "quiz": [],
-      "prerequisites": [7, 11]
+      "prerequisites": [
+        7,
+        11
+      ]
     },
     {
       "id": 25,
@@ -297,7 +385,10 @@
       "difficulty": 9,
       "content": "chandas_special",
       "quiz": [],
-      "prerequisites": [20, 21]
+      "prerequisites": [
+        20,
+        21
+      ]
     }
   ]
 }

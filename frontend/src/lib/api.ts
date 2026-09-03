@@ -23,7 +23,27 @@ export const api = {
     login: (credentials: any) => apiRequest('/auth/login', { method: 'POST', body: JSON.stringify(credentials) }),
     signup: (data: any) => apiRequest('/auth/signup', { method: 'POST', body: JSON.stringify(data) }),
   },
+  lesson: {
+    attempt: (data: { lesson_id: number; correct: boolean; username: string }) =>
+      apiRequest('/lesson/attempt', {
+        method: 'POST',
+        body: JSON.stringify({
+          lesson_id: data.lesson_id,
+          correct: data.correct,
+          username: data.username,
+        }),
+      }),
+  },
   lessons: {
+    attempt: (data: { lesson_id: number; correct: boolean; username: string }) =>
+      apiRequest('/lesson/attempt', {
+        method: 'POST',
+        body: JSON.stringify({
+          lesson_id: data.lesson_id,
+          correct: data.correct,
+          username: data.username,
+        }),
+      }),
     getAll: (level?: string) => apiRequest(`/lessons${level ? `?level=${level}` : ''}`),
     getById: (id: string | number) => apiRequest(`/lessons/${id}`),
     getGreetings: () => apiRequest('/api/lessons/greetings'),
@@ -56,6 +76,9 @@ export const api = {
     getProgress: (username: string) => apiRequest(`/progress/${username}`),
     getActivities: (username: string) => apiRequest(`/activities/${username}`),
     getDashboardStats: (username: string) => apiRequest(`/dashboard/stats/${username}`),
+    getRecommendation: (username: string) => apiRequest(`/recommendation/${username}`),
+    getBKTSummary: (username: string) => apiRequest(`/bkt/summary/${username}`),
+    getBKTMastery: (username: string) => apiRequest(`/bkt/mastery/${username}`),
   },
   tools: {
     translate: (data: { text: string; direction: string; use_api?: boolean }) => 

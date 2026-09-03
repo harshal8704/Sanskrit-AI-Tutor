@@ -3382,6 +3382,102 @@
         "api-added"
       ],
       "created_at": "2026-09-03T02:36:38.291545"
+    },
+    {
+      "id": 212,
+      "sanskrit": "आत्त अस्ति।",
+      "devanagari": "आत्त अस्ति।",
+      "translation": "Ready is.",
+      "words": [
+        "आत्त"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-03T14:21:05.587956"
+    },
+    {
+      "id": 213,
+      "sanskrit": "आत्त गच्छति।",
+      "devanagari": "आत्त गच्छति।",
+      "translation": "Ready goes.",
+      "words": [
+        "आत्त"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-03T14:21:05.587973"
+    },
+    {
+      "id": 214,
+      "sanskrit": "आत्त पठति।",
+      "devanagari": "आत्त पठति।",
+      "translation": "Ready reads.",
+      "words": [
+        "आत्त"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-03T14:21:05.587976"
+    },
+    {
+      "id": 215,
+      "sanskrit": "उत्तीर्णः अस्ति।",
+      "devanagari": "उत्तीर्णः अस्ति।",
+      "translation": "Pass is.",
+      "words": [
+        "उत्तीर्णः"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-03T14:21:11.547508"
+    },
+    {
+      "id": 216,
+      "sanskrit": "उत्तीर्णः गच्छति।",
+      "devanagari": "उत्तीर्णः गच्छति।",
+      "translation": "Pass goes.",
+      "words": [
+        "उत्तीर्णः"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-03T14:21:11.547515"
+    },
+    {
+      "id": 217,
+      "sanskrit": "उत्तीर्णः पठति।",
+      "devanagari": "उत्तीर्णः पठति।",
+      "translation": "Pass reads.",
+      "words": [
+        "उत्तीर्णः"
+      ],
+      "pattern": "Subject Verb",
+      "difficulty": "beginner",
+      "tags": [
+        "auto-generated",
+        "api-added"
+      ],
+      "created_at": "2026-09-03T14:21:11.547517"
     }
   ],
   "patterns": [

@@ -1,0 +1,30 @@
+{
+  "demo": {
+    "skills": {
+      "1": {
+        "mastery": 0.9920477123926615,
+        "attempts": 4,
+        "correct": 4
+      },
+      "25": {
+        "mastery": 0.28539823008849563,
+        "attempts": 1,
+        "correct": 1
+      }
+    }
+  },
+  "user": {
+    "skills": {
+      "1": {
+        "mastery": 0.8734676007005254,
+        "attempts": 2,
+        "correct": 2
+      },
+      "2": {
+        "mastery": 0.6136363636363636,
+        "attempts": 1,
+        "correct": 1
+      }
+    }
+  }
+}
