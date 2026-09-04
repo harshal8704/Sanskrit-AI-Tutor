@@ -497,7 +497,10 @@ def get_streak_summary(username: str, request: Request = None):
 @app.get("/recommendations/{username}")
 def get_recommendation(username: str, request: Request = None):
     user_id = _resolve_user(username, request)
-    rec = learning_db.get_next_lesson_recommendation(user_id, _get_clean_catalog())
+    # Keep recommendations aligned with the lessons exposed by /api/lessons.
+    # knowledge_graph.json is a separate legacy curriculum whose IDs do not
+    # correspond to the interactive lessons in the frontend.
+    rec = learning_db.get_next_lesson_recommendation(user_id, get_normalized_lessons())
     # Return both wrapped and root properties to satisfy all frontend variations
     return {
         "recommendation": rec,

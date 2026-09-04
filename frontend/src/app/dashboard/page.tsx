@@ -110,7 +110,7 @@ export default function Dashboard() {
     setLoadingRecommendation(true);
 
     const fetchRecommendation = async () => {
-      const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8005";
+      const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
       try {
         // Direct fetch to bypass any api.ts wrapper bugs
         const response = await fetch(`${baseUrl}/recommendation/${user.username}`);

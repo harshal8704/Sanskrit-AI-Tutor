@@ -267,7 +267,17 @@ export default function Lessons() {
           api.lessons.getAll(),
           api.bkt.getProgress(userData.username),
         ]);
-        setLessons(Array.isArray(lessonResponse) ? lessonResponse : lessonResponse?.data || []);
+        const currentLessons = Array.isArray(lessonResponse) ? lessonResponse : lessonResponse?.data || [];
+        setLessons(currentLessons);
+
+        // The dashboard links to /lessons?lesson=<id>. Open that exact lesson
+        // once the same live curriculum has loaded.
+        const requestedLessonId = new URLSearchParams(window.location.search).get("lesson");
+        const requestedLesson = currentLessons.find(
+          (lesson: any) => String(lesson.id) === requestedLessonId
+        );
+        if (requestedLesson) setSelectedLesson(requestedLesson);
+
         setCompletedLessonIds(progressResponse?.completed_lessons || progressResponse?.lessons_completed || []);
       } catch (err) {
         console.error(err);

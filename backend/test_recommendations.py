@@ -40,7 +40,7 @@ class RecommendationTests(unittest.TestCase):
         self.temp_directory.cleanup()
 
     def test_new_user_gets_first_lesson(self):
-        with patch.object(main.db, "load_all_lessons", return_value=self.catalog), patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users):
+        with patch.object(main, "get_normalized_lessons", return_value=self.catalog), patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users):
             response = main.get_recommendation("alice")
         self.assertEqual(response["lesson_id"], "lesson_1")
         self.assertEqual(response["title"], "Lesson 1")
@@ -48,7 +48,7 @@ class RecommendationTests(unittest.TestCase):
     def test_completed_lessons_are_excluded(self):
         user_id = self.repository.get_user_id("alice")
         self.repository.complete_lesson(user_id, "lesson_1")
-        with patch.object(main.db, "load_all_lessons", return_value=self.catalog), patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users):
+        with patch.object(main, "get_normalized_lessons", return_value=self.catalog), patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users):
             response = main.get_recommendation("alice")
         self.assertEqual(response["lesson_id"], "lesson_2")
 
@@ -56,7 +56,7 @@ class RecommendationTests(unittest.TestCase):
         user_id = self.repository.get_user_id("alice")
         self.repository.complete_lesson(user_id, "lesson_1")
         self.repository.complete_lesson(user_id, "lesson_3")
-        with patch.object(main.db, "load_all_lessons", return_value=self.catalog), patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users):
+        with patch.object(main, "get_normalized_lessons", return_value=self.catalog), patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users):
             response = main.get_recommendation("alice")
         self.assertEqual(response["lesson_id"], "lesson_2")
 
@@ -65,7 +65,7 @@ class RecommendationTests(unittest.TestCase):
         self.repository.complete_lesson(user_id, "lesson_1")
         self.repository.complete_lesson(user_id, "lesson_2")
         self.repository.complete_lesson(user_id, "lesson_4")
-        with patch.object(main.db, "load_all_lessons", return_value=self.catalog), patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users):
+        with patch.object(main, "get_normalized_lessons", return_value=self.catalog), patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users):
             response = main.get_recommendation("alice")
         self.assertEqual(response["lesson_id"], "lesson_3")
 
@@ -73,7 +73,7 @@ class RecommendationTests(unittest.TestCase):
         user_id = self.repository.get_user_id("alice")
         self.repository.complete_lesson(user_id, "lesson_3")
         self.repository.complete_lesson(user_id, "lesson_1")
-        with patch.object(main.db, "load_all_lessons", return_value=self.catalog), patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users):
+        with patch.object(main, "get_normalized_lessons", return_value=self.catalog), patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users):
             response = main.get_recommendation("alice")
         self.assertEqual(response["lesson_id"], "lesson_2")
 
@@ -81,7 +81,7 @@ class RecommendationTests(unittest.TestCase):
         user_id = self.repository.get_user_id("alice")
         for lesson in ["lesson_1", "lesson_2", "lesson_3", "lesson_4"]:
             self.repository.complete_lesson(user_id, lesson)
-        with patch.object(main.db, "load_all_lessons", return_value=self.catalog), patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users):
+        with patch.object(main, "get_normalized_lessons", return_value=self.catalog), patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users):
             response = main.get_recommendation("alice")
         self.assertEqual(response["status"], "all_lessons_completed")
 
@@ -95,7 +95,7 @@ class RecommendationTests(unittest.TestCase):
         bob_id = self.repository.get_user_id("bob")
         self.repository.complete_lesson(alice_id, "lesson_1")
         self.repository.complete_lesson(bob_id, "lesson_2")
-        with patch.object(main.db, "load_all_lessons", return_value=self.catalog), patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users):
+        with patch.object(main, "get_normalized_lessons", return_value=self.catalog), patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users):
             alice_response = main.get_recommendation("alice")
             bob_response = main.get_recommendation("bob")
         self.assertEqual(alice_response["lesson_id"], "lesson_2")

@@ -47,7 +47,7 @@ class DashboardAndSecurityTests(unittest.TestCase):
         self.repository.record_quiz_attempt(alice_id, "lesson_1", "quiz", 80, 4, 5)
         self.repository.record_grammar_activity(alice_id, "रामः गच्छति।", 90, "basic", 2, 0, {"score": 90})
         self.repository.record_learning_day(alice_id, "2026-09-03", source="lesson")
-        with patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users), patch.object(main.db, "load_all_lessons", return_value=self.catalog):
+        with patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users), patch.object(main, "get_normalized_lessons", return_value=self.catalog):
             body = main.get_dashboard("alice", self.request(self.request_headers("alice")))
         self.assertEqual(body["statistics"]["lessons_completed"], 1)
         self.assertEqual(body["statistics"]["quiz_attempts"], 1)
@@ -58,7 +58,7 @@ class DashboardAndSecurityTests(unittest.TestCase):
         self.assertEqual(len(body["recent_activity"]), 3)
 
     def test_new_user_dashboard_has_zero_activity_and_first_recommendation(self):
-        with patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users), patch.object(main.db, "load_all_lessons", return_value=self.catalog):
+        with patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users), patch.object(main, "get_normalized_lessons", return_value=self.catalog):
             body = main.get_dashboard("bob", self.request(self.request_headers("bob")))
         self.assertEqual(body["statistics"]["lessons_completed"], 0)
         self.assertEqual(body["statistics"]["quiz_attempts"], 0)
@@ -67,7 +67,7 @@ class DashboardAndSecurityTests(unittest.TestCase):
         self.assertEqual(body["recent_activity"], [])
 
     def test_dashboard_requires_matching_authenticated_identity(self):
-        with patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users), patch.object(main.db, "load_all_lessons", return_value=self.catalog):
+        with patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users), patch.object(main, "get_normalized_lessons", return_value=self.catalog):
             with self.assertRaises(Exception) as missing:
                 main.get_dashboard("alice", self.request())
             self.assertEqual(missing.exception.status_code, 401)
@@ -76,7 +76,7 @@ class DashboardAndSecurityTests(unittest.TestCase):
             self.assertEqual(mismatch.exception.status_code, 403)
 
     def test_user_a_cannot_submit_or_read_user_b_data(self):
-        with patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users), patch.object(main.db, "load_all_lessons", return_value=self.catalog):
+        with patch.object(main, "learning_db", self.repository), patch.object(main.auth, "users", self.users), patch.object(main, "get_normalized_lessons", return_value=self.catalog):
             request = self.request(self.request_headers("alice"))
             calls = [
                 lambda: main.mark_lesson_complete("bob", {"lesson_id": "lesson_1"}, request),
