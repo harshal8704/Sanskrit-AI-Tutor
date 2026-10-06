@@ -1,0 +1,1105 @@
+{
+  "metadata": {
+    "baseline_count": 40,
+    "dictionary_count": 65,
+    "total": 105
+  },
+  "cases": [
+    {
+      "form": "गच्छति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "गच्छतः",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "dvi",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "गच्छन्ति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "bahu",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "गच्छसि",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "law",
+        "purusha": "maDyama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "गच्छामि",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "law",
+        "purusha": "uttama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "पठति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "paW",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "पठन्ति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "paW",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "bahu",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "पठामि",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "paW",
+        "lakara": "law",
+        "purusha": "uttama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "भवति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "BU",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "भवन्ति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "BU",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "bahu",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "अस्ति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "as",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "adAdi"
+      }
+    },
+    {
+      "form": "सन्ति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "as",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "bahu",
+        "gana": "adAdi"
+      }
+    },
+    {
+      "form": "अस्मि",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "as",
+        "lakara": "law",
+        "purusha": "uttama",
+        "vachana": "eka",
+        "gana": "adAdi"
+      }
+    },
+    {
+      "form": "पिबति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "pA",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "पिबामि",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "pA",
+        "lakara": "law",
+        "purusha": "uttama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "खादति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "KAd",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "खादन्ति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "KAd",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "bahu",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "हसति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "has",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "हसन्ति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "has",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "bahu",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "वदति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "vad",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "वदन्ति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "vad",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "bahu",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "अगच्छत्",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "laG",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "अपठत्",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "paW",
+        "lakara": "laG",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "गमिष्यति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "lfw",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "पठिष्यति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "paW",
+        "lakara": "lfw",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "रामः",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "वनम्",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "सीता",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "फलम्",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "पुस्तकम्",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "बालकः",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "बालिका",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "गृहम्",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "जलम्",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "अहम्",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "त्वम्",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "सः",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "सा",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "तत्",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "मित्रम्",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "गच्छति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "आगच्छति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      },
+      "note": "with upasarga ā"
+    },
+    {
+      "form": "तिष्ठति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "sTA",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "उपविशति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "viz",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      },
+      "note": "with upasarga upa"
+    },
+    {
+      "form": "शेते",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "SI",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "adAdi"
+      }
+    },
+    {
+      "form": "पठति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "paW",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "लिखति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "liK",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "भाषते",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "BAz",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "शृणोति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "Sru",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "sunAdi"
+      }
+    },
+    {
+      "form": "पश्यति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "dfS",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "खादति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "KAd",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "पिबति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "pA",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "करोति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "kf",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "tanAdi"
+      }
+    },
+    {
+      "form": "गृह्णाति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "grah",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "kryAdi"
+      }
+    },
+    {
+      "form": "वदति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "vad",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "हसति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "has",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "रोदिति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "rud",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "adAdi"
+      }
+    },
+    {
+      "form": "अगच्छत्",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "laG",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "चिन्तयति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "cint",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "curAdi"
+      }
+    },
+    {
+      "form": "ददाति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "dA",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "juhotyAdi"
+      }
+    },
+    {
+      "form": "जानाति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "jYA",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "kryAdi"
+      }
+    },
+    {
+      "form": "पाठयति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "paW",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "curAdi"
+      },
+      "note": "causal"
+    },
+    {
+      "form": "रक्षति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "rakz",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "अस्ति",
+      "category": "finite",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "as",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "adAdi"
+      }
+    },
+    {
+      "form": "गच्छ",
+      "category": "imperative",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "loW",
+        "purusha": "maDyama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "आगच्छ",
+      "category": "imperative",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "loW",
+        "purusha": "maDyama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "उपविश",
+      "category": "imperative",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "viz",
+        "lakara": "loW",
+        "purusha": "maDyama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "तिष्ठ",
+      "category": "imperative",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "sTA",
+        "lakara": "loW",
+        "purusha": "maDyama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "वद",
+      "category": "imperative",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "vad",
+        "lakara": "loW",
+        "purusha": "maDyama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "शृणु",
+      "category": "imperative",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "Sru",
+        "lakara": "loW",
+        "purusha": "maDyama",
+        "vachana": "eka",
+        "gana": "sunAdi"
+      }
+    },
+    {
+      "form": "पिब",
+      "category": "imperative",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "pA",
+        "lakara": "loW",
+        "purusha": "maDyama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "कुरु",
+      "category": "imperative",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "kf",
+        "lakara": "loW",
+        "purusha": "maDyama",
+        "vachana": "eka",
+        "gana": "tanAdi"
+      }
+    },
+    {
+      "form": "पठ",
+      "category": "imperative",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "paW",
+        "lakara": "loW",
+        "purusha": "maDyama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "लिख",
+      "category": "imperative",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "liK",
+        "lakara": "loW",
+        "purusha": "maDyama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "पश्य",
+      "category": "imperative",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "dfS",
+        "lakara": "loW",
+        "purusha": "maDyama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "स्वप",
+      "category": "imperative",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "svap",
+        "lakara": "loW",
+        "purusha": "maDyama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "चर",
+      "category": "imperative",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "car",
+        "lakara": "loW",
+        "purusha": "maDyama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "धाव",
+      "category": "imperative",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "DAv",
+        "lakara": "loW",
+        "purusha": "maDyama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "अश",
+      "category": "imperative",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "aS",
+        "lakara": "loW",
+        "purusha": "maDyama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "ददातु",
+      "category": "imperative",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "dA",
+        "lakara": "loW",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "juhotyAdi"
+      }
+    },
+    {
+      "form": "दद्यात्",
+      "category": "optative",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "dA",
+        "lakara": "viDiliG",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "juhotyAdi"
+      }
+    },
+    {
+      "form": "जानीयात्",
+      "category": "optative",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "jYA",
+        "lakara": "viDiliG",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "kryAdi"
+      }
+    },
+    {
+      "form": "कृतम्",
+      "category": "participle",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "चिन्तितम्",
+      "category": "participle",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "दत्तम्",
+      "category": "participle",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "पठितम्",
+      "category": "participle",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "लिखितम्",
+      "category": "participle",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "दृष्टम्",
+      "category": "participle",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "ज्ञातम्",
+      "category": "participle",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "सहायम् कर",
+      "category": "multi_word",
+      "expected": {
+        "is_verb": false
+      },
+      "note": "excluded: two words"
+    },
+    {
+      "form": "उष्णतया पक्ति",
+      "category": "multi_word",
+      "expected": {
+        "is_verb": false
+      },
+      "note": "excluded: two words"
+    },
+    {
+      "form": "भङ्गुरतया करोति",
+      "category": "multi_word",
+      "expected": {
+        "is_verb": false
+      },
+      "note": "excluded: two words"
+    },
+    {
+      "form": "प्रार्थयति",
+      "category": "questionable",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "prArT",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "curAdi"
+      }
+    },
+    {
+      "form": "क्रोध्यति",
+      "category": "questionable",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "kruD",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "divAdi"
+      }
+    },
+    {
+      "form": "मन्ये",
+      "category": "questionable",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "man",
+        "lakara": "law",
+        "purusha": "uttama",
+        "vachana": "eka",
+        "gana": "divAdi"
+      }
+    },
+    {
+      "form": "भव्यति",
+      "category": "questionable",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "BU",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "तलति",
+      "category": "questionable",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "tal",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "भस्मीभवति",
+      "category": "questionable",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "BU",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "सुदाम्यति",
+      "category": "questionable",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "dAm",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "अनुक्षिपति",
+      "category": "questionable",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "kzip",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "मिशति",
+      "category": "questionable",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "miz",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "कृणाति",
+      "category": "questionable",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "kf",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "kryAdi"
+      }
+    },
+    {
+      "form": "छिनति",
+      "category": "questionable",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "Cid",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "विभाजति",
+      "category": "questionable",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "Baj",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "पक्षि",
+      "category": "questionable",
+      "expected": {
+        "is_verb": false
+      }
+    }
+  ]
+}

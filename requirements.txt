@@ -9,3 +9,4 @@ deep-translator==1.11.4
 pydantic>=2.5.2
 python-multipart==0.0.6
 fastapi-cors==0.0.6
+indic-transliteration

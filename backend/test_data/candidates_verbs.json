@@ -1,0 +1,327 @@
+[
+  {
+    "devanagari": "गच्छति",
+    "pos": "verb",
+    "meaning": "goes"
+  },
+  {
+    "devanagari": "आगच्छति",
+    "pos": "verb",
+    "meaning": "comes"
+  },
+  {
+    "devanagari": "तिष्ठति",
+    "pos": "verb",
+    "meaning": "stands"
+  },
+  {
+    "devanagari": "उपविशति",
+    "pos": "verb",
+    "meaning": "sits"
+  },
+  {
+    "devanagari": "शेते",
+    "pos": "verb",
+    "meaning": "sleeps"
+  },
+  {
+    "devanagari": "पठति",
+    "pos": "verb",
+    "meaning": "reads"
+  },
+  {
+    "devanagari": "लिखति",
+    "pos": "verb",
+    "meaning": "writes"
+  },
+  {
+    "devanagari": "भाषते",
+    "pos": "verb",
+    "meaning": "speaks"
+  },
+  {
+    "devanagari": "शृणोति",
+    "pos": "verb",
+    "meaning": "listens"
+  },
+  {
+    "devanagari": "पश्यति",
+    "pos": "verb",
+    "meaning": "sees"
+  },
+  {
+    "devanagari": "खादति",
+    "pos": "verb",
+    "meaning": "eats"
+  },
+  {
+    "devanagari": "पिबति",
+    "pos": "verb",
+    "meaning": "drinks"
+  },
+  {
+    "devanagari": "करोति",
+    "pos": "verb",
+    "meaning": "does"
+  },
+  {
+    "devanagari": "दद्यात्",
+    "pos": "verb",
+    "meaning": "gives"
+  },
+  {
+    "devanagari": "गृह्णाति",
+    "pos": "verb",
+    "meaning": "takes"
+  },
+  {
+    "devanagari": "वदति",
+    "pos": "verb",
+    "meaning": "says"
+  },
+  {
+    "devanagari": "प्रार्थयति",
+    "pos": "verb",
+    "meaning": "prays"
+  },
+  {
+    "devanagari": "क्रोध्यति",
+    "pos": "verb",
+    "meaning": "gets angry"
+  },
+  {
+    "devanagari": "हसति",
+    "pos": "verb",
+    "meaning": "laughs"
+  },
+  {
+    "devanagari": "रोदिति",
+    "pos": "verb",
+    "meaning": "cries"
+  },
+  {
+    "devanagari": "गच्छ",
+    "pos": "verb",
+    "meaning": "go"
+  },
+  {
+    "devanagari": "अगच्छत्",
+    "pos": "verb",
+    "meaning": "went"
+  },
+  {
+    "devanagari": "आगच्छ",
+    "pos": "verb",
+    "meaning": "come"
+  },
+  {
+    "devanagari": "उपविश",
+    "pos": "verb",
+    "meaning": "sit"
+  },
+  {
+    "devanagari": "तिष्ठ",
+    "pos": "verb",
+    "meaning": "stand"
+  },
+  {
+    "devanagari": "वद",
+    "pos": "verb",
+    "meaning": "speak"
+  },
+  {
+    "devanagari": "शृणु",
+    "pos": "verb",
+    "meaning": "listen"
+  },
+  {
+    "devanagari": "अश",
+    "pos": "verb",
+    "meaning": "eat"
+  },
+  {
+    "devanagari": "पिब",
+    "pos": "verb",
+    "meaning": "drink"
+  },
+  {
+    "devanagari": "स्वप",
+    "pos": "verb",
+    "meaning": "sleep"
+  },
+  {
+    "devanagari": "चर",
+    "pos": "verb",
+    "meaning": "walk"
+  },
+  {
+    "devanagari": "धाव",
+    "pos": "verb",
+    "meaning": "run"
+  },
+  {
+    "devanagari": "सहायम् कर",
+    "pos": "verb",
+    "meaning": "help"
+  },
+  {
+    "devanagari": "कुरु",
+    "pos": "verb",
+    "meaning": "do"
+  },
+  {
+    "devanagari": "कृतम्",
+    "pos": "verb",
+    "meaning": "done"
+  },
+  {
+    "devanagari": "मन्ये",
+    "pos": "verb",
+    "meaning": "think"
+  },
+  {
+    "devanagari": "चिन्तयति",
+    "pos": "verb",
+    "meaning": "thinking"
+  },
+  {
+    "devanagari": "चिन्तितम्",
+    "pos": "verb",
+    "meaning": "thought"
+  },
+  {
+    "devanagari": "ददातु",
+    "pos": "verb",
+    "meaning": "give"
+  },
+  {
+    "devanagari": "ददाति",
+    "pos": "verb",
+    "meaning": "giving"
+  },
+  {
+    "devanagari": "दत्तम्",
+    "pos": "verb",
+    "meaning": "given"
+  },
+  {
+    "devanagari": "पठ",
+    "pos": "verb",
+    "meaning": "read"
+  },
+  {
+    "devanagari": "पठितम्",
+    "pos": "verb",
+    "meaning": "read (past)"
+  },
+  {
+    "devanagari": "लिख",
+    "pos": "verb",
+    "meaning": "write"
+  },
+  {
+    "devanagari": "लिखितम्",
+    "pos": "verb",
+    "meaning": "written"
+  },
+  {
+    "devanagari": "पश्य",
+    "pos": "verb",
+    "meaning": "see"
+  },
+  {
+    "devanagari": "दृष्टम्",
+    "pos": "verb",
+    "meaning": "seen"
+  },
+  {
+    "devanagari": "जानीयात्",
+    "pos": "verb",
+    "meaning": "learn"
+  },
+  {
+    "devanagari": "जानाति",
+    "pos": "verb",
+    "meaning": "learning"
+  },
+  {
+    "devanagari": "ज्ञातम्",
+    "pos": "verb",
+    "meaning": "learned"
+  },
+  {
+    "devanagari": "पक्षि",
+    "pos": "verb",
+    "meaning": "cook"
+  },
+  {
+    "devanagari": "भव्यति",
+    "pos": "verb",
+    "meaning": "bake"
+  },
+  {
+    "devanagari": "उष्णतया पक्ति",
+    "pos": "verb",
+    "meaning": "boil"
+  },
+  {
+    "devanagari": "तलति",
+    "pos": "verb",
+    "meaning": "fry"
+  },
+  {
+    "devanagari": "भस्मीभवति",
+    "pos": "verb",
+    "meaning": "roast"
+  },
+  {
+    "devanagari": "सुदाम्यति",
+    "pos": "verb",
+    "meaning": "grill"
+  },
+  {
+    "devanagari": "अनुक्षिपति",
+    "pos": "verb",
+    "meaning": "stir"
+  },
+  {
+    "devanagari": "मिशति",
+    "pos": "verb",
+    "meaning": "mix"
+  },
+  {
+    "devanagari": "भङ्गुरतया करोति",
+    "pos": "verb",
+    "meaning": "chop"
+  },
+  {
+    "devanagari": "कृणाति",
+    "pos": "verb",
+    "meaning": "cut"
+  },
+  {
+    "devanagari": "छिनति",
+    "pos": "verb",
+    "meaning": "peel"
+  },
+  {
+    "devanagari": "विभाजति",
+    "pos": "verb",
+    "meaning": "slice"
+  },
+  {
+    "devanagari": "पाठयति",
+    "pos": "verb",
+    "meaning": "teaches"
+  },
+  {
+    "devanagari": "रक्षति",
+    "pos": "verb",
+    "meaning": "protects"
+  },
+  {
+    "devanagari": "अस्ति",
+    "pos": "verb",
+    "meaning": "to be; exists"
+  }
+]
