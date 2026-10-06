@@ -1,0 +1,373 @@
+{
+  "metadata": {
+    "version": "1.0",
+    "reference": "Whitney, Sanskrit Grammar; Deshpande, Saṃskṛtasubodhinī"
+  },
+  "cases": [
+    {
+      "form": "गच्छति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "गच्छतः",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "dvi",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "गच्छन्ति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "bahu",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "गच्छसि",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "law",
+        "purusha": "maDyama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "गच्छामि",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "law",
+        "purusha": "uttama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "पठति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "paW",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "पठन्ति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "paW",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "bahu",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "पठामि",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "paW",
+        "lakara": "law",
+        "purusha": "uttama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "भवति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "BU",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "भवन्ति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "BU",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "bahu",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "अस्ति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "as",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "adAdi"
+      }
+    },
+    {
+      "form": "सन्ति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "as",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "bahu",
+        "gana": "adAdi"
+      }
+    },
+    {
+      "form": "अस्मि",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "as",
+        "lakara": "law",
+        "purusha": "uttama",
+        "vachana": "eka",
+        "gana": "adAdi"
+      }
+    },
+    {
+      "form": "पिबति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "pA",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "पिबामि",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "pA",
+        "lakara": "law",
+        "purusha": "uttama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "खादति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "KAd",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "खादन्ति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "KAd",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "bahu",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "हसति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "has",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "हसन्ति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "has",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "bahu",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "वदति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "vad",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "वदन्ति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "vad",
+        "lakara": "law",
+        "purusha": "praTama",
+        "vachana": "bahu",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "अगच्छत्",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "laG",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "अपठत्",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "paW",
+        "lakara": "laG",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "गमिष्यति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "gam",
+        "lakara": "lfw",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "पठिष्यति",
+      "expected": {
+        "is_verb": true,
+        "root_slp1": "paW",
+        "lakara": "lfw",
+        "purusha": "praTama",
+        "vachana": "eka",
+        "gana": "BvAdi"
+      }
+    },
+    {
+      "form": "रामः",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "वनम्",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "सीता",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "फलम्",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "पुस्तकम्",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "बालकः",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "बालिका",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "गृहम्",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "जलम्",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "अहम्",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "त्वम्",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "सः",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "सा",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "तत्",
+      "expected": {
+        "is_verb": false
+      }
+    },
+    {
+      "form": "मित्रम्",
+      "expected": {
+        "is_verb": false
+      }
+    }
+  ]
+}
